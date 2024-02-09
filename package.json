@@ -4,7 +4,8 @@
   "description": "Official Airstack Frames SDK",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "npx graphql-codegen"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,16 @@
   },
   "homepage": "https://github.com/Airstack-xyz/airstack-frames-sdk#readme",
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.4",
+    "@graphql-codegen/typescript-operations": "^4.1.2",
+    "@parcel/watcher": "^2.4.0",
     "@types/node": "^20.11.17",
+    "dotenv": "^16.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@airstack/node": "^0.0.5"
   }
 }

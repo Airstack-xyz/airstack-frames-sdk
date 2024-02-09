@@ -1,1 +1,2 @@
-console.log("Hello, world!");
+export { init } from "@airstack/node";
+export * from "./functions";
