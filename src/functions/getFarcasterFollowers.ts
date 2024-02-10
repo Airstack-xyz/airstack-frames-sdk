@@ -42,11 +42,11 @@ export interface FarcasterFollowersOutputData {
  * @param {Number} input.limit Number of JSON responses returned per API call
  * @returns Farcaster followers array with their profile details
  */
-export const getFarcasterFollowers = async (
+export async function getFarcasterFollowers(
   input: FarcasterFollowersInput
 ): Promise<
   IteratePaginationResponse<FarcasterFollowersOutputData[] | null | undefined>
-> => {
+> {
   const { fid, limit } = input ?? {};
   const variable: FarcasterFollowersQueryVariables = {
     identity: `fc_fid:${fid}`,
@@ -68,4 +68,4 @@ export const getFarcasterFollowers = async (
         FarcasterFollowersOutputData[] | null | undefined
       >(fid, getNextPage, formatFarcasterFollowers),
   };
-};
+}

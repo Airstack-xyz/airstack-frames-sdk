@@ -1,10 +1,10 @@
 import { FarcasterFollowersQuery } from "../graphql/types";
 
-export const formatFarcasterFollowers = (
+export function formatFarcasterFollowers(
   data: FarcasterFollowersQuery,
   fid: number
-) =>
-  data?.SocialFollowers?.Follower?.map(({ followerAddress }) => {
+) {
+  return data?.SocialFollowers?.Follower?.map(({ followerAddress }) => {
     const {
       profileName,
       fnames,
@@ -24,3 +24,4 @@ export const formatFarcasterFollowers = (
       followingCount,
     };
   });
+}

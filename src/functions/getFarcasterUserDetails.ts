@@ -40,9 +40,9 @@ export interface FarcasterUserDetailsOutput {
  * @param {Number} input.fid Farcaster user FID
  * @returns Farcaster user details, including profile name, fname, fid, images, etc.
  */
-export const getFarcasterUserDetails = async (
+export async function getFarcasterUserDetails(
   input: FarcasterUserDetailsInput
-): Promise<FarcasterUserDetailsOutput> => {
+): Promise<FarcasterUserDetailsOutput> {
   const { fid } = input ?? {};
   const variable: FarcasterUserDetailsQueryVariables = {
     fid: fid.toString(),
@@ -69,4 +69,4 @@ export const getFarcasterUserDetails = async (
     },
     error,
   };
-};
+}
