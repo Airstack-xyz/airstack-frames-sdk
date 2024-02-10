@@ -1562,9 +1562,17 @@ export type XmtPsOutput = {
   pageInfo: Maybe<PageInfo>;
 };
 
+export type FarcasterFollowersQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+  limit?: Scalars['Int']['input'];
+}>;
+
+
+export type FarcasterFollowersQuery = { SocialFollowers: { Follower: Array<{ followerAddress: { socials: Array<{ profileName: string | null, fnames: Array<string | null> | null, userId: string | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null }> | null } | null };
+
 export type FarcasterUserDetailsQueryVariables = Exact<{
   fid: Scalars['String']['input'];
 }>;
 
 
-export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userId: string | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
+export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };

@@ -1,6 +1,9 @@
 import { fetchQuery } from "@airstack/node";
 import { farcasterUserDetailsQuery as query } from "../graphql/query/farcasterUserDetails.query";
-import type { FarcasterUserDetailsQuery } from "../graphql/types";
+import type {
+  FarcasterUserDetailsQuery,
+  FarcasterUserDetailsQueryVariables,
+} from "../graphql/types";
 
 export interface FarcasterUserDetailsInput {
   fid: number;
@@ -8,7 +11,7 @@ export interface FarcasterUserDetailsInput {
 
 export interface FarcasterUserDetailsOutput {
   error: any;
-  userDetails: {
+  data: {
     profileName: string | null | undefined;
     fid: number;
     fnames: (string | null)[] | null | undefined;
@@ -31,7 +34,9 @@ export interface FarcasterUserDetailsOutput {
 /**
  * @description Fetch Farcaster user details provided fid
  * @example
- * const { userDetails, error } = await getFarcasterUserDetails({ fid: 1 });
+ * const { data: userDetails, error } = await getFarcasterUserDetails({
+ *  fid: 1
+ * });
  * @param {Number} input.fid Farcaster user FID
  * @returns Farcaster user details, including profile name, fname, fid, images, etc.
  */
@@ -39,9 +44,10 @@ export const getFarcasterUserDetails = async (
   input: FarcasterUserDetailsInput
 ): Promise<FarcasterUserDetailsOutput> => {
   const { fid } = input ?? {};
-  const { data, error } = await fetchQuery(query, {
+  const variable: FarcasterUserDetailsQueryVariables = {
     fid: fid.toString(),
-  });
+  };
+  const { data, error } = await fetchQuery(query, variable);
   const {
     profileName,
     fnames,
@@ -52,7 +58,7 @@ export const getFarcasterUserDetails = async (
   } = (data as FarcasterUserDetailsQuery)?.Socials?.Social?.[0] ?? {};
   const { image: profileImage } = profileImageContentValue ?? {};
   return {
-    userDetails: {
+    data: {
       profileName,
       fid,
       fnames,
