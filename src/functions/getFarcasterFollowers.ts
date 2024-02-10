@@ -1,6 +1,9 @@
 import { fetchQueryWithPagination } from "@airstack/node";
 import { farcasterFollowersQuery as query } from "../graphql/query/farcasterFollowers.query";
-import type { FarcasterFollowersQueryVariables } from "../graphql/types";
+import type {
+  FarcasterFollowersQuery,
+  FarcasterFollowersQueryVariables,
+} from "../graphql/types";
 import { formatFarcasterFollowers } from "../utils/formatFarcasterFollowers";
 import {
   iteratePagination,
@@ -55,17 +58,25 @@ export async function getFarcasterFollowers(
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
     await fetchQueryWithPagination(query, variable);
   return {
-    data: error ? null : formatFarcasterFollowers(data, fid),
+    data: error ? null : formatFarcasterFollowers({ data, fid }),
     error,
     hasPrevPage,
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        FarcasterFollowersOutputData[] | null | undefined
+        FarcasterFollowersOutputData[] | null | undefined,
+        {
+          data: FarcasterFollowersQuery;
+          fid: number;
+        }
       >(fid, getPrevPage, formatFarcasterFollowers),
     getNextPage: async () =>
       await iteratePagination<
-        FarcasterFollowersOutputData[] | null | undefined
+        FarcasterFollowersOutputData[] | null | undefined,
+        {
+          data: FarcasterFollowersQuery;
+          fid: number;
+        }
       >(fid, getNextPage, formatFarcasterFollowers),
   };
 }

@@ -1584,3 +1584,11 @@ export type FarcasterUserDetailsQueryVariables = Exact<{
 
 
 export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
+
+export type FarcasterUserPoaPsQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type FarcasterUserPoaPsQuery = { Poaps: { Poap: Array<{ poapEvent: { eventName: string | null, eventId: string | null, eventURL: string | null, isVirtualEvent: boolean | null, startDate: any | null, endDate: any | null, city: string | null } | null }> | null } | null };

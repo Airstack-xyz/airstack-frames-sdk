@@ -8,7 +8,6 @@ describe("getFarcasterFollowers", () => {
   it("should fail if no api key is porivded", async () => {
     const { data, error } = await getFarcasterFollowers({ fid: 1 });
     expect(error).toBeTruthy();
-    // expect(data).toHaveLength(10);
     expect(data).toBeNull();
   });
 
@@ -17,6 +16,7 @@ describe("getFarcasterFollowers", () => {
     const { data, error } = await getFarcasterFollowers({ fid: 2 });
     expect(error).toBeNull();
     expect(data).toBeTruthy();
+    // By default, without any limit input, should return a maximum of 200 followers
     expect(data?.length).toBeLessThanOrEqual(200);
   });
 

@@ -20,16 +20,17 @@ export interface IteratePaginationResponse<Data> {
  * @param iteratePage Either `getNextPage` or `getPrevPage` from `fetchQueryWithPagination`
  * @returns Next/previous page result of Airstack queries w/ formatting included
  */
-export async function iteratePagination<Data>(
+export async function iteratePagination<Data, FormatFunctionInput>(
   fid: number,
   iteratePage: (() => Promise<FetchQuery | null>) | undefined,
-  formatFunction: (data: any, fid: number) => any
+  formatFunction: (input: FormatFunctionInput) => any
   // TODO: need to generalize this output type
 ): Promise<IteratePaginationResponse<Data>> {
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
     (await iteratePage?.()) ?? {};
+  const input = { data, fid };
   return {
-    data: formatFunction?.(data, fid),
+    data: formatFunction?.(input as FormatFunctionInput),
     error,
     hasPrevPage,
     hasNextPage,
