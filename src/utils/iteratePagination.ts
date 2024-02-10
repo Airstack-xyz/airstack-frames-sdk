@@ -1,7 +1,7 @@
 import { FetchQuery } from "@airstack/node/dist/types/types";
 
 export interface IteratePaginationResponse<Data> {
-  data: Data;
+  data: Data | null | undefined;
   error?: any;
   hasPrevPage: boolean | undefined;
   hasNextPage: boolean | undefined;

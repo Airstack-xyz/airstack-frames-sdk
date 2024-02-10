@@ -11,24 +11,27 @@ export interface FarcasterUserDetailsInput {
 
 export interface FarcasterUserDetailsOutput {
   error: any;
-  data: {
-    profileName: string | null | undefined;
-    fid: number;
-    fnames: (string | null)[] | null | undefined;
-    userAssociatedAddresses: string[] | null | undefined;
-    followerCount: number | null | undefined;
-    followingCount: number | null | undefined;
-    profileImage:
-      | {
-          extraSmall: string | null;
-          small: string | null;
-          medium: string | null;
-          large: string | null;
-          original: string | null | undefined;
-        }
-      | null
-      | undefined;
-  };
+  data:
+    | {
+        profileName: string | null | undefined;
+        fid: number;
+        fnames: (string | null)[] | null | undefined;
+        userAssociatedAddresses: string[] | null | undefined;
+        followerCount: number | null | undefined;
+        followingCount: number | null | undefined;
+        profileImage:
+          | {
+              extraSmall: string | null;
+              small: string | null;
+              medium: string | null;
+              large: string | null;
+              original: string | null | undefined;
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
 }
 
 /**
@@ -58,15 +61,17 @@ export async function getFarcasterUserDetails(
   } = (data as FarcasterUserDetailsQuery)?.Socials?.Social?.[0] ?? {};
   const { image: profileImage } = profileImageContentValue ?? {};
   return {
-    data: {
-      profileName,
-      fid,
-      fnames,
-      profileImage,
-      userAssociatedAddresses,
-      followerCount,
-      followingCount,
-    },
+    data: error
+      ? null
+      : {
+          profileName,
+          fid,
+          fnames,
+          profileImage,
+          userAssociatedAddresses,
+          followerCount,
+          followingCount,
+        },
     error,
   };
 }

@@ -9,7 +9,7 @@ import {
 
 export interface FarcasterFollowingsInput {
   fid: number;
-  limit: number;
+  limit?: number;
 }
 
 export interface FarcasterFollowingsOutputData {
@@ -55,7 +55,7 @@ export async function getFarcasterFollowings(
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
     await fetchQueryWithPagination(query, variable);
   return {
-    data: formatFarcasterFollowings(data, fid),
+    data: error ? null : formatFarcasterFollowings(data, fid),
     error,
     hasPrevPage,
     hasNextPage,
