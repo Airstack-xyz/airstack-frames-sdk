@@ -1,4 +1,4 @@
-import { init, getFarcasterFollowers } from "../index";
+import { init, getFarcasterFollowings } from "../index";
 import { config } from "dotenv";
 
 config();
@@ -11,8 +11,8 @@ const main = async () => {
     data: followers,
     hasNextPage,
     getNextPage,
-  } = await getFarcasterFollowers({
-    fid: 1,
+  } = await getFarcasterFollowings({
+    fid: 2,
     limit: 5,
   });
   console.log(followers);
