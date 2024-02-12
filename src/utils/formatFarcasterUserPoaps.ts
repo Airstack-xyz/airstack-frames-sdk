@@ -1,8 +1,5 @@
 import { FarcasterUserPoaPsQuery } from "../graphql/types";
 
-export function formatFarcasterUserPoaps(input: {
-  data: FarcasterUserPoaPsQuery;
-}) {
-  const { data } = input ?? {};
+export function formatFarcasterUserPoaps(data: FarcasterUserPoaPsQuery) {
   return data?.Poaps?.Poap?.map(({ poapEvent }) => poapEvent);
 }

@@ -49,16 +49,12 @@ export async function getFarcasterUserPoaps(
     getPrevPage: async () =>
       await iteratePagination<
         (FarcasterFarcasterUserPoapsOutputData | null)[] | null | undefined,
-        {
-          data: FarcasterUserPoaPsQuery;
-        }
+        FarcasterUserPoaPsQuery
       >(fid, getPrevPage, formatFarcasterUserPoaps),
     getNextPage: async () =>
       await iteratePagination<
         (FarcasterFarcasterUserPoapsOutputData | null)[] | null | undefined,
-        {
-          data: FarcasterUserPoaPsQuery;
-        }
+        FarcasterUserPoaPsQuery
       >(fid, getNextPage, formatFarcasterUserPoaps),
   };
 }

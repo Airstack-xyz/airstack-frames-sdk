@@ -14,7 +14,6 @@ export interface FarcasterUserDetailsOutput {
   data:
     | {
         profileName: string | null | undefined;
-        fid: number;
         fnames: (string | null)[] | null | undefined;
         userAssociatedAddresses: string[] | null | undefined;
         followerCount: number | null | undefined;
@@ -65,7 +64,6 @@ export async function getFarcasterUserDetails(
       ? null
       : {
           profileName,
-          fid,
           fnames,
           profileImage,
           userAssociatedAddresses,

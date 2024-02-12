@@ -17,8 +17,8 @@ export interface FarcasterFollowersInput {
 
 export interface FarcasterFollowersOutputData {
   profileName: string | null | undefined;
-  fid: number;
   fnames: (string | null)[] | null | undefined;
+  fid: string | null | undefined;
   userAssociatedAddresses: string[] | null | undefined;
   followerCount: number | null | undefined;
   followingCount: number | null | undefined;
@@ -58,25 +58,19 @@ export async function getFarcasterFollowers(
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
     await fetchQueryWithPagination(query, variable);
   return {
-    data: error ? null : formatFarcasterFollowers({ data, fid }),
+    data: error ? null : formatFarcasterFollowers(data),
     error,
     hasPrevPage,
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
         FarcasterFollowersOutputData[] | null | undefined,
-        {
-          data: FarcasterFollowersQuery;
-          fid: number;
-        }
+        FarcasterFollowersQuery
       >(fid, getPrevPage, formatFarcasterFollowers),
     getNextPage: async () =>
       await iteratePagination<
         FarcasterFollowersOutputData[] | null | undefined,
-        {
-          data: FarcasterFollowersQuery;
-          fid: number;
-        }
+        FarcasterFollowersQuery
       >(fid, getNextPage, formatFarcasterFollowers),
   };
 }
