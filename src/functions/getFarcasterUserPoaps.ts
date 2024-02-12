@@ -12,8 +12,6 @@ import { formatFarcasterUserPoaps } from "../utils/formatFarcasterUserPoaps";
 
 export interface FarcasterUserPoapsInput {
   fid: number;
-  startDate?: string;
-  endDate?: string;
   limit?: number;
 }
 
