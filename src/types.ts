@@ -179,3 +179,18 @@ export interface SearchFarcastersOutput {
     | null
     | undefined;
 }
+
+export interface CheckIsFollowingFarcasterUserInput {
+  fid: number;
+  isFollowing: number[];
+}
+
+export interface CheckIsFollowingFarcasterUserOutput {
+  error: any;
+  data:
+    | {
+        fid: number;
+        isFollowing: boolean;
+      }[]
+    | null;
+}
