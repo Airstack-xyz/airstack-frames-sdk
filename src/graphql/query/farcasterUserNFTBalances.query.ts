@@ -12,6 +12,7 @@ export const farcasterUserNFTBalances = /* GraphQL */ `
       }
     ) {
       TokenBalance {
+        tokenType
         blockchain
         tokenAddress
         formattedAmount
@@ -57,6 +58,7 @@ export const farcasterUserNFTBalances = /* GraphQL */ `
       }
     ) {
       TokenBalance {
+        tokenType
         blockchain
         tokenAddress
         formattedAmount
@@ -102,6 +104,7 @@ export const farcasterUserNFTBalances = /* GraphQL */ `
       }
     ) {
       TokenBalance {
+        tokenType
         blockchain
         tokenAddress
         formattedAmount
@@ -147,6 +150,7 @@ export const farcasterUserNFTBalances = /* GraphQL */ `
       }
     ) {
       TokenBalance {
+        tokenType
         blockchain
         tokenAddress
         formattedAmount

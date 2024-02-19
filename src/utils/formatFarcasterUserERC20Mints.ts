@@ -1,48 +1,44 @@
-import { FarcasterNftBalancesQuery } from "../graphql/types";
+import { FarcasterUserErc20MintsQuery, Token } from "../graphql/types";
 
-export function formatFarcasterUserNFTBalances(
-  data: FarcasterNftBalancesQuery
+export function formatFarcasterUserERC20Mints(
+  data: FarcasterUserErc20MintsQuery
 ) {
   const { ethereum, polygon, base, zora } = data ?? {};
   return [
-    ...(ethereum?.TokenBalance?.map(
+    ...(ethereum?.TokenTransfer?.map(
       ({
         blockchain,
         tokenAddress,
         formattedAmount: amount,
         amount: amountInWei,
         token,
-        tokenNfts,
-        tokenType,
+        blockTimestamp,
+        blockNumber,
       }) => {
         const { name, symbol } = token ?? {};
-        const { contentValue, metaData } = tokenNfts ?? {};
-        const { image } = contentValue ?? {};
         return {
           blockchain,
           tokenAddress,
-          tokenType,
           amount,
           amountInWei,
           name,
           symbol,
-          image,
-          metaData,
+          blockTimestamp,
+          blockNumber,
         };
       }
     ) ?? []),
-    ...(polygon?.TokenBalance?.map(
+    ...(polygon?.TokenTransfer?.map(
       ({
         blockchain,
         tokenAddress,
         formattedAmount: amount,
         amount: amountInWei,
         token,
-        tokenNfts,
+        blockTimestamp,
+        blockNumber,
       }) => {
         const { name, symbol } = token ?? {};
-        const { contentValue, metaData } = tokenNfts ?? {};
-        const { image } = contentValue ?? {};
         return {
           blockchain,
           tokenAddress,
@@ -50,23 +46,22 @@ export function formatFarcasterUserNFTBalances(
           amountInWei,
           name,
           symbol,
-          image,
-          metaData,
+          blockTimestamp,
+          blockNumber,
         };
       }
     ) ?? []),
-    ...(base?.TokenBalance?.map(
+    ...(base?.TokenTransfer?.map(
       ({
         blockchain,
         tokenAddress,
         formattedAmount: amount,
         amount: amountInWei,
         token,
-        tokenNfts,
+        blockTimestamp,
+        blockNumber,
       }) => {
         const { name, symbol } = token ?? {};
-        const { contentValue, metaData } = tokenNfts ?? {};
-        const { image } = contentValue ?? {};
         return {
           blockchain,
           tokenAddress,
@@ -74,23 +69,22 @@ export function formatFarcasterUserNFTBalances(
           amountInWei,
           name,
           symbol,
-          image,
-          metaData,
+          blockTimestamp,
+          blockNumber,
         };
       }
     ) ?? []),
-    ...(zora?.TokenBalance?.map(
+    ...(zora?.TokenTransfer?.map(
       ({
         blockchain,
         tokenAddress,
         formattedAmount: amount,
         amount: amountInWei,
         token,
-        tokenNfts,
+        blockTimestamp,
+        blockNumber,
       }) => {
         const { name, symbol } = token ?? {};
-        const { contentValue, metaData } = tokenNfts ?? {};
-        const { image } = contentValue ?? {};
         return {
           blockchain,
           tokenAddress,
@@ -98,8 +92,8 @@ export function formatFarcasterUserNFTBalances(
           amountInWei,
           name,
           symbol,
-          image,
-          metaData,
+          blockTimestamp,
+          blockNumber,
         };
       }
     ) ?? []),
