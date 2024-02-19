@@ -1,4 +1,4 @@
-import { FarcasterUserErc20MintsQuery, Token } from "../graphql/types";
+import { FarcasterUserErc20MintsQuery } from "../graphql/types";
 
 export function formatFarcasterUserERC20Mints(
   data: FarcasterUserErc20MintsQuery
