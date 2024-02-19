@@ -66,11 +66,11 @@ export async function getFarcasterFollowers(
       await iteratePagination<
         FarcasterFollowersOutputData[] | null | undefined,
         FarcasterFollowersQuery
-      >(fid, getPrevPage, formatFarcasterFollowers),
+      >(getPrevPage, formatFarcasterFollowers),
     getNextPage: async () =>
       await iteratePagination<
         FarcasterFollowersOutputData[] | null | undefined,
         FarcasterFollowersQuery
-      >(fid, getNextPage, formatFarcasterFollowers),
+      >(getNextPage, formatFarcasterFollowers),
   };
 }

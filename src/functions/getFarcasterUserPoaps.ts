@@ -15,7 +15,7 @@ export interface FarcasterUserPoapsInput {
   limit?: number;
 }
 
-export interface FarcasterFarcasterUserPoapsOutputData {
+export interface FarcasterUserPoapsOutputData {
   eventName: string | null;
   eventId: string | null;
   eventURL: string | null;
@@ -29,7 +29,7 @@ export async function getFarcasterUserPoaps(
   input: FarcasterUserPoapsInput
 ): Promise<
   IteratePaginationResponse<
-    (FarcasterFarcasterUserPoapsOutputData | null)[] | null | undefined
+    (FarcasterUserPoapsOutputData | null)[] | null | undefined
   >
 > {
   const { fid, limit } = input ?? {};
@@ -46,13 +46,13 @@ export async function getFarcasterUserPoaps(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterFarcasterUserPoapsOutputData | null)[] | null | undefined,
+        (FarcasterUserPoapsOutputData | null)[] | null | undefined,
         FarcasterUserPoaPsQuery
-      >(fid, getPrevPage, formatFarcasterUserPoaps),
+      >(getPrevPage, formatFarcasterUserPoaps),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterFarcasterUserPoapsOutputData | null)[] | null | undefined,
+        (FarcasterUserPoapsOutputData | null)[] | null | undefined,
         FarcasterUserPoaPsQuery
-      >(fid, getNextPage, formatFarcasterUserPoaps),
+      >(getNextPage, formatFarcasterUserPoaps),
   };
 }

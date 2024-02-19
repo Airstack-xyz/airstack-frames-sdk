@@ -49,11 +49,11 @@ export async function getFarcasterUserERC20Balances(
       await iteratePagination<
         (FarcasterUserERC20BalancesOutputData | null)[] | null | undefined,
         FarcasterErc20BalancesQuery
-      >(fid, getPrevPage, formatFarcasterUserERC20Balances),
+      >(getPrevPage, formatFarcasterUserERC20Balances),
     getNextPage: async () =>
       await iteratePagination<
         (FarcasterUserERC20BalancesOutputData | null)[] | null | undefined,
         FarcasterErc20BalancesQuery
-      >(fid, getNextPage, formatFarcasterUserERC20Balances),
+      >(getNextPage, formatFarcasterUserERC20Balances),
   };
 }

@@ -53,11 +53,11 @@ export async function getFarcasterUserNFTBalances(
       await iteratePagination<
         (FarcasterUserNFTBalancesOutputData | null)[] | null | undefined,
         FarcasterNftBalancesQuery
-      >(fid, getPrevPage, formatFarcasterUserNFTBalances),
+      >(getPrevPage, formatFarcasterUserNFTBalances),
     getNextPage: async () =>
       await iteratePagination<
         (FarcasterUserNFTBalancesOutputData | null)[] | null | undefined,
         FarcasterNftBalancesQuery
-      >(fid, getNextPage, formatFarcasterUserNFTBalances),
+      >(getNextPage, formatFarcasterUserNFTBalances),
   };
 }

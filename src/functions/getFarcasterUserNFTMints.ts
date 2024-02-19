@@ -51,11 +51,11 @@ export async function getFarcasterUserNFTMints(
       await iteratePagination<
         (FarcasterNFTMintsOutputData | null)[] | null | undefined,
         FarcasterUserNftMintsQuery
-      >(fid, getPrevPage, formatFarcasterUserNFTMints),
+      >(getPrevPage, formatFarcasterUserNFTMints),
     getNextPage: async () =>
       await iteratePagination<
         (FarcasterNFTMintsOutputData | null)[] | null | undefined,
         FarcasterUserNftMintsQuery
-      >(fid, getNextPage, formatFarcasterUserNFTMints),
+      >(getNextPage, formatFarcasterUserNFTMints),
   };
 }

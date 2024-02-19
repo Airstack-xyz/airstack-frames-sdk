@@ -1626,3 +1626,10 @@ export type FarcasterUserPoaPsQueryVariables = Exact<{
 
 
 export type FarcasterUserPoaPsQuery = { Poaps: { Poap: Array<{ poapEvent: { eventName: string | null, eventId: string | null, eventURL: string | null, isVirtualEvent: boolean | null, startDate: any | null, endDate: any | null, city: string | null } | null }> | null } | null };
+
+export type SearchFarcasterUsersQueryVariables = Exact<{
+  profileName: Scalars['String']['input'];
+}>;
+
+
+export type SearchFarcasterUsersQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
