@@ -12,6 +12,7 @@ import { formatSearchFarcasterUsers } from "../utils/formatSearchFarcasterUsers"
 
 export interface SearchFarcasterUsersInput {
   profileName: string;
+  limit?: number;
 }
 
 export interface SearchFarcastersOutputData {
@@ -40,9 +41,10 @@ export async function searchFarcasterUsers(
     (SearchFarcastersOutputData | null)[] | null | undefined
   >
 > {
-  const { profileName } = input ?? {};
+  const { profileName, limit } = input ?? {};
   const variable: SearchFarcasterUsersQueryVariables = {
     profileName,
+    limit,
   };
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
     await fetchQueryWithPagination(query, variable);

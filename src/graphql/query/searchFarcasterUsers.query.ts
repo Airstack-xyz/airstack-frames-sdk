@@ -1,5 +1,5 @@
 export const searchFarcasterUsersQuery = /* GraphQL */ `
-  query SearchFarcasterUsers($profileName: String!) {
+  query SearchFarcasterUsers($profileName: String!, $limit: Int = 200) {
     Socials(
       input: {
         filter: {
@@ -8,6 +8,7 @@ export const searchFarcasterUsersQuery = /* GraphQL */ `
         }
         blockchain: ethereum
         order: { followerCount: DESC }
+        limit: $limit
       }
     ) {
       Social {

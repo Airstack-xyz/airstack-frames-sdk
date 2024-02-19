@@ -1629,6 +1629,7 @@ export type FarcasterUserPoaPsQuery = { Poaps: { Poap: Array<{ poapEvent: { even
 
 export type SearchFarcasterUsersQueryVariables = Exact<{
   profileName: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
