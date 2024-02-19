@@ -9,36 +9,13 @@ import {
   iteratePagination,
 } from "../utils/iteratePagination";
 import { formatSearchFarcasterUsers } from "../utils/formatSearchFarcasterUsers";
-
-export interface SearchFarcasterUsersInput {
-  profileName: string;
-  limit?: number;
-}
-
-export interface SearchFarcastersOutputData {
-  profileName: string | null;
-  fnames: Array<string | null> | null;
-  userAssociatedAddresses: Array<any> | null;
-  followerCount: number | null;
-  followingCount: number | null;
-  fid: string | null;
-  profileImage:
-    | {
-        extraSmall: string | null;
-        small: string | null;
-        medium: string | null;
-        large: string | null;
-        original: string | null;
-      }
-    | null
-    | undefined;
-}
+import { SearchFarcasterUsersInput, SearchFarcastersOutput } from "../types";
 
 export async function searchFarcasterUsers(
   input: SearchFarcasterUsersInput
 ): Promise<
   IteratePaginationResponse<
-    (SearchFarcastersOutputData | null)[] | null | undefined
+    (SearchFarcastersOutput | null)[] | null | undefined
   >
 > {
   const { profileName, limit } = input ?? {};
@@ -55,12 +32,12 @@ export async function searchFarcasterUsers(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (SearchFarcastersOutputData | null)[] | null | undefined,
+        (SearchFarcastersOutput | null)[] | null | undefined,
         SearchFarcasterUsersQuery
       >(getPrevPage, formatSearchFarcasterUsers),
     getNextPage: async () =>
       await iteratePagination<
-        (SearchFarcastersOutputData | null)[] | null | undefined,
+        (SearchFarcastersOutput | null)[] | null | undefined,
         SearchFarcasterUsersQuery
       >(getNextPage, formatSearchFarcasterUsers),
   };

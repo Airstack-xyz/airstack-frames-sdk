@@ -2,7 +2,6 @@ import { fetchQueryWithPagination } from "@airstack/node";
 import {
   FarcasterUserNftMintsQuery,
   FarcasterUserNftMintsQueryVariables,
-  TokenBlockchain,
 } from "../graphql/types";
 import {
   IteratePaginationResponse,
@@ -10,29 +9,13 @@ import {
 } from "../utils/iteratePagination";
 import { farcasterUserNFTMints as query } from "../graphql/query/farcasterUserNFTMints.query";
 import { formatFarcasterUserNFTMints } from "../utils/formatFarcasterUserNFTMints";
-
-export interface FarcasterUserNFTMintsInput {
-  fid: number;
-  chains?: TokenBlockchain[];
-  limit?: number;
-}
-
-export interface FarcasterNFTMintsOutputData {
-  blockchain: TokenBlockchain | null;
-  tokenAddress: string;
-  amount: number | null;
-  amountInWei: string | null;
-  name: string | null | undefined;
-  symbol: string | null | undefined;
-  blockTimestamp: any | null;
-  blockNumber: number | null;
-}
+import { FarcasterNFTMintsOutput, FarcasterUserNFTMintsInput } from "../types";
 
 export async function getFarcasterUserNFTMints(
   input: FarcasterUserNFTMintsInput
 ): Promise<
   IteratePaginationResponse<
-    (FarcasterNFTMintsOutputData | null)[] | null | undefined
+    (FarcasterNFTMintsOutput | null)[] | null | undefined
   >
 > {
   const { fid, limit } = input ?? {};
@@ -49,12 +32,12 @@ export async function getFarcasterUserNFTMints(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterNFTMintsOutputData | null)[] | null | undefined,
+        (FarcasterNFTMintsOutput | null)[] | null | undefined,
         FarcasterUserNftMintsQuery
       >(getPrevPage, formatFarcasterUserNFTMints),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterNFTMintsOutputData | null)[] | null | undefined,
+        (FarcasterNFTMintsOutput | null)[] | null | undefined,
         FarcasterUserNftMintsQuery
       >(getNextPage, formatFarcasterUserNFTMints),
   };

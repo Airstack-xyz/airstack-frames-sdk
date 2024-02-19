@@ -9,30 +9,7 @@ import {
   iteratePagination,
   IteratePaginationResponse,
 } from "../utils/iteratePagination";
-
-export interface FarcasterFollowersInput {
-  fid: number;
-  limit?: number;
-}
-
-export interface FarcasterFollowersOutputData {
-  profileName: string | null | undefined;
-  fnames: (string | null)[] | null | undefined;
-  fid: string | null | undefined;
-  userAssociatedAddresses: string[] | null | undefined;
-  followerCount: number | null | undefined;
-  followingCount: number | null | undefined;
-  profileImage:
-    | {
-        extraSmall: string | null;
-        small: string | null;
-        medium: string | null;
-        large: string | null;
-        original: string | null | undefined;
-      }
-    | null
-    | undefined;
-}
+import { FarcasterFollowersInput, FarcasterFollowersOutput } from "../types";
 
 /**
  * @description Fetch Farcaster followers of a gived FID
@@ -48,7 +25,7 @@ export interface FarcasterFollowersOutputData {
 export async function getFarcasterFollowers(
   input: FarcasterFollowersInput
 ): Promise<
-  IteratePaginationResponse<FarcasterFollowersOutputData[] | null | undefined>
+  IteratePaginationResponse<FarcasterFollowersOutput[] | null | undefined>
 > {
   const { fid, limit } = input ?? {};
   const variable: FarcasterFollowersQueryVariables = {
@@ -64,12 +41,12 @@ export async function getFarcasterFollowers(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        FarcasterFollowersOutputData[] | null | undefined,
+        FarcasterFollowersOutput[] | null | undefined,
         FarcasterFollowersQuery
       >(getPrevPage, formatFarcasterFollowers),
     getNextPage: async () =>
       await iteratePagination<
-        FarcasterFollowersOutputData[] | null | undefined,
+        FarcasterFollowersOutput[] | null | undefined,
         FarcasterFollowersQuery
       >(getNextPage, formatFarcasterFollowers),
   };

@@ -2,7 +2,6 @@ import { fetchQueryWithPagination } from "@airstack/node";
 import {
   FarcasterUserErc20MintsQuery,
   FarcasterUserErc20MintsQueryVariables,
-  TokenBlockchain,
 } from "../graphql/types";
 import {
   IteratePaginationResponse,
@@ -10,29 +9,16 @@ import {
 } from "../utils/iteratePagination";
 import { farcasterUserERC20Mints as query } from "../graphql/query/farcasterUserERC20Mints.query";
 import { formatFarcasterUserERC20Mints } from "../utils/formatFarcasterUserERC20Mints";
-
-export interface FarcasterUserERC20MintsInput {
-  fid: number;
-  chains?: TokenBlockchain[];
-  limit?: number;
-}
-
-export interface FarcasterERC20MintsOutputData {
-  blockchain: TokenBlockchain | null;
-  tokenAddress: string;
-  amount: number | null;
-  amountInWei: string | null;
-  name: string | null | undefined;
-  symbol: string | null | undefined;
-  blockTimestamp: any | null;
-  blockNumber: number | null;
-}
+import {
+  FarcasterERC20MintsOutput,
+  FarcasterUserERC20MintsInput,
+} from "../types";
 
 export async function getFarcasterUserERC20Mints(
   input: FarcasterUserERC20MintsInput
 ): Promise<
   IteratePaginationResponse<
-    (FarcasterERC20MintsOutputData | null)[] | null | undefined
+    (FarcasterERC20MintsOutput | null)[] | null | undefined
   >
 > {
   const { fid, limit } = input ?? {};
@@ -49,12 +35,12 @@ export async function getFarcasterUserERC20Mints(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterERC20MintsOutputData | null)[] | null | undefined,
+        (FarcasterERC20MintsOutput | null)[] | null | undefined,
         FarcasterUserErc20MintsQuery
       >(getPrevPage, formatFarcasterUserERC20Mints),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterERC20MintsOutputData | null)[] | null | undefined,
+        (FarcasterERC20MintsOutput | null)[] | null | undefined,
         FarcasterUserErc20MintsQuery
       >(getNextPage, formatFarcasterUserERC20Mints),
   };

@@ -4,34 +4,10 @@ import type {
   FarcasterUserDetailsQuery,
   FarcasterUserDetailsQueryVariables,
 } from "../graphql/types";
-
-export interface FarcasterUserDetailsInput {
-  fid: number;
-}
-
-export interface FarcasterUserDetailsOutput {
-  error: any;
-  data:
-    | {
-        profileName: string | null | undefined;
-        fnames: (string | null)[] | null | undefined;
-        userAssociatedAddresses: string[] | null | undefined;
-        followerCount: number | null | undefined;
-        followingCount: number | null | undefined;
-        profileImage:
-          | {
-              extraSmall: string | null;
-              small: string | null;
-              medium: string | null;
-              large: string | null;
-              original: string | null | undefined;
-            }
-          | null
-          | undefined;
-      }
-    | null
-    | undefined;
-}
+import {
+  FarcasterUserDetailsInput,
+  FarcasterUserDetailsOutput,
+} from "../types";
 
 /**
  * @description Fetch Farcaster user details provided fid

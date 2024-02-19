@@ -9,27 +9,13 @@ import {
   iteratePagination,
 } from "../utils/iteratePagination";
 import { formatFarcasterUserPoaps } from "../utils/formatFarcasterUserPoaps";
-
-export interface FarcasterUserPoapsInput {
-  fid: number;
-  limit?: number;
-}
-
-export interface FarcasterUserPoapsOutputData {
-  eventName: string | null;
-  eventId: string | null;
-  eventURL: string | null;
-  city: string | null;
-  isVirtualEvent: boolean | null;
-  startDate: any;
-  endDate: any;
-}
+import { FarcasterUserPoapsInput, FarcasterUserPoapsOutput } from "../types";
 
 export async function getFarcasterUserPoaps(
   input: FarcasterUserPoapsInput
 ): Promise<
   IteratePaginationResponse<
-    (FarcasterUserPoapsOutputData | null)[] | null | undefined
+    (FarcasterUserPoapsOutput | null)[] | null | undefined
   >
 > {
   const { fid, limit } = input ?? {};
@@ -46,12 +32,12 @@ export async function getFarcasterUserPoaps(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterUserPoapsOutputData | null)[] | null | undefined,
+        (FarcasterUserPoapsOutput | null)[] | null | undefined,
         FarcasterUserPoaPsQuery
       >(getPrevPage, formatFarcasterUserPoaps),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterUserPoapsOutputData | null)[] | null | undefined,
+        (FarcasterUserPoapsOutput | null)[] | null | undefined,
         FarcasterUserPoaPsQuery
       >(getNextPage, formatFarcasterUserPoaps),
   };

@@ -3,37 +3,22 @@ import { farcasterUserNFTBalances as query } from "../graphql/query/farcasterUse
 import {
   FarcasterNftBalancesQuery,
   FarcasterNftBalancesQueryVariables,
-  InputMaybe,
-  TokenBlockchain,
-  TokenType,
 } from "../graphql/types";
 import {
   IteratePaginationResponse,
   iteratePagination,
 } from "../utils/iteratePagination";
 import { formatFarcasterUserNFTBalances } from "../utils/formatFarcasterUserNFTBalances";
-
-export interface FarcasterUserNFTBalancesInput {
-  fid: number;
-  tokenType?: InputMaybe<TokenType | TokenType[]>;
-  chains?: TokenBlockchain[];
-  limit?: number;
-}
-
-export interface FarcasterUserNFTBalancesOutputData {
-  blockchain: TokenBlockchain | null;
-  tokenAddress: string;
-  amount: number | null;
-  amountInWei: string;
-  name: string | null | undefined;
-  symbol: string | null | undefined;
-}
+import {
+  FarcasterUserNFTBalancesInput,
+  FarcasterUserNFTBalancesOutput,
+} from "../types";
 
 export async function getFarcasterUserNFTBalances(
   input: FarcasterUserNFTBalancesInput
 ): Promise<
   IteratePaginationResponse<
-    (FarcasterUserNFTBalancesOutputData | null)[] | null | undefined
+    (FarcasterUserNFTBalancesOutput | null)[] | null | undefined
   >
 > {
   const { fid, limit, tokenType } = input ?? {};
@@ -51,12 +36,12 @@ export async function getFarcasterUserNFTBalances(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterUserNFTBalancesOutputData | null)[] | null | undefined,
+        (FarcasterUserNFTBalancesOutput | null)[] | null | undefined,
         FarcasterNftBalancesQuery
       >(getPrevPage, formatFarcasterUserNFTBalances),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterUserNFTBalancesOutputData | null)[] | null | undefined,
+        (FarcasterUserNFTBalancesOutput | null)[] | null | undefined,
         FarcasterNftBalancesQuery
       >(getNextPage, formatFarcasterUserNFTBalances),
   };
