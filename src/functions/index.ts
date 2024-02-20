@@ -11,3 +11,4 @@ export * from "./getFarcasterUserNFTMints";
 export * from "./checkIsFollowingFarcasterUser";
 export * from "./checkIsFollowedByFarcasterUser";
 export * from "./checkPoapAttendedByFarcasterUser";
+export * from "./getFarcasterUserTokenSentFrom";

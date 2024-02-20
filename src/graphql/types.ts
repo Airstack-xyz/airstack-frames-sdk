@@ -1609,15 +1609,6 @@ export type FarcasterUserDetailsQueryVariables = Exact<{
 
 export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
 
-export type FarcasterUserNftMintsQueryVariables = Exact<{
-  identity: Scalars['Identity']['input'];
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  tokenType?: InputMaybe<Array<TokenType> | TokenType>;
-}>;
-
-
-export type FarcasterUserNftMintsQuery = { ethereum: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, tokenType: TokenType | null, formattedAmount: number | null, amount: string | null, tokenAddress: any | null, blockNumber: number | null, blockTimestamp: any | null, transactionHash: string, token: { name: string | null, symbol: string | null } | null, tokenNft: { contentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, metaData: { name: string | null, description: string | null, image: string | null, imageData: string | null, externalUrl: string | null, animationUrl: string | null, youtubeUrl: string | null, backgroundColor: string | null, attributes: Array<{ displayType: string | null, maxValue: string | null, trait_type: string | null, value: string | null }> | null } | null } | null }> | null } | null, polygon: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, tokenType: TokenType | null, formattedAmount: number | null, amount: string | null, tokenAddress: any | null, blockNumber: number | null, blockTimestamp: any | null, transactionHash: string, token: { name: string | null, symbol: string | null } | null, tokenNft: { contentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, metaData: { name: string | null, description: string | null, image: string | null, imageData: string | null, externalUrl: string | null, animationUrl: string | null, youtubeUrl: string | null, backgroundColor: string | null, attributes: Array<{ displayType: string | null, maxValue: string | null, trait_type: string | null, value: string | null }> | null } | null } | null }> | null } | null, base: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, tokenType: TokenType | null, formattedAmount: number | null, amount: string | null, tokenAddress: any | null, blockNumber: number | null, blockTimestamp: any | null, transactionHash: string, token: { name: string | null, symbol: string | null } | null, tokenNft: { contentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, metaData: { name: string | null, description: string | null, image: string | null, imageData: string | null, externalUrl: string | null, animationUrl: string | null, youtubeUrl: string | null, backgroundColor: string | null, attributes: Array<{ displayType: string | null, maxValue: string | null, trait_type: string | null, value: string | null }> | null } | null } | null }> | null } | null, zora: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, tokenType: TokenType | null, formattedAmount: number | null, amount: string | null, tokenAddress: any | null, blockNumber: number | null, blockTimestamp: any | null, transactionHash: string, token: { name: string | null, symbol: string | null } | null, tokenNft: { contentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, metaData: { name: string | null, description: string | null, image: string | null, imageData: string | null, externalUrl: string | null, animationUrl: string | null, youtubeUrl: string | null, backgroundColor: string | null, attributes: Array<{ displayType: string | null, maxValue: string | null, trait_type: string | null, value: string | null }> | null } | null } | null }> | null } | null };
-
 export type FarcasterUserPoaPsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1625,6 +1616,15 @@ export type FarcasterUserPoaPsQueryVariables = Exact<{
 
 
 export type FarcasterUserPoaPsQuery = { Poaps: { Poap: Array<{ poapEvent: { eventName: string | null, eventId: string | null, eventURL: string | null, isVirtualEvent: boolean | null, startDate: any | null, endDate: any | null, city: string | null } | null }> | null } | null };
+
+export type FarcasterUserTokenSentFromQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+  tokenType?: InputMaybe<Array<TokenType> | TokenType>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type FarcasterUserTokenSentFromQuery = { ethereum: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, blockTimestamp: any | null, blockNumber: number | null, tokenAddress: any | null, tokenId: string | null, tokenType: TokenType | null, amountInWei: string | null, amount: number | null, txHash: string, token: { name: string | null, symbol: string | null } | null, receiver: { addresses: Array<any> | null, socials: Array<{ fid: string | null }> | null } | null, tokenNft: { contentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, metaData: { name: string | null, description: string | null, image: string | null, imageData: string | null, externalUrl: string | null, animationUrl: string | null, youtubeUrl: string | null, backgroundColor: string | null, attributes: Array<{ displayType: string | null, maxValue: string | null, trait_type: string | null, value: string | null }> | null } | null } | null }> | null } | null };
 
 export type SearchFarcasterUsersQueryVariables = Exact<{
   profileName: Scalars['String']['input'];

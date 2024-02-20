@@ -664,3 +664,21 @@ export type FarcasterUserNftMintsQuery = {
     }> | null;
   } | null;
 };
+
+export interface FarcasterUserTokenSentFromInput {
+  fid: number;
+  chains?: TokenBlockchain[];
+  tokenType?: InputMaybe<NFTType | NFTType[]>;
+  limit?: number;
+}
+
+export interface FarcasterUserTokenSentFromOutput {
+  blockchain: TokenBlockchain | null;
+  tokenAddress: string;
+  amount: number | null;
+  amountInWei: string | null;
+  name: string | null | undefined;
+  symbol: string | null | undefined;
+  blockTimestamp: any | null;
+  blockNumber: number | null;
+}
