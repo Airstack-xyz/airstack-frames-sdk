@@ -12,3 +12,4 @@ export * from "./checkIsFollowingFarcasterUser";
 export * from "./checkIsFollowedByFarcasterUser";
 export * from "./checkPoapAttendedByFarcasterUser";
 export * from "./getFarcasterUserTokenSentFrom";
+export * from "./getFarcasterUserTokenReceivedBy";

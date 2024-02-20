@@ -12,7 +12,7 @@ import {
   FarcasterUserTokenReceivedByQuery,
 } from "../types";
 
-export async function getFarcasterUserTokenSentFrom(
+export async function getFarcasterUserTokenReceivedBy(
   input: FarcasterUserTokenReceivedByInput
 ): Promise<
   IteratePaginationResponse<
