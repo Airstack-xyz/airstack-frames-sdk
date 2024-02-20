@@ -1,4 +1,4 @@
-import { FarcasterErc20BalancesQuery } from "../graphql/types";
+import { FarcasterErc20BalancesQuery } from "../types";
 
 export function formatFarcasterUserERC20Balances(
   data: FarcasterErc20BalancesQuery

@@ -1609,14 +1609,6 @@ export type FarcasterUserDetailsQueryVariables = Exact<{
 
 export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
 
-export type FarcasterErc20BalancesQueryVariables = Exact<{
-  identity?: InputMaybe<Scalars['Identity']['input']>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type FarcasterErc20BalancesQuery = { ethereum: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, formattedAmount: number | null, amount: string, token: { name: string | null, symbol: string | null } | null }> | null } | null, polygon: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, formattedAmount: number | null, amount: string, token: { name: string | null, symbol: string | null } | null }> | null } | null, base: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, formattedAmount: number | null, amount: string, token: { name: string | null, symbol: string | null } | null }> | null } | null, zora: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, formattedAmount: number | null, amount: string, token: { name: string | null, symbol: string | null } | null }> | null } | null };
-
 export type FarcasterUserErc20MintsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;

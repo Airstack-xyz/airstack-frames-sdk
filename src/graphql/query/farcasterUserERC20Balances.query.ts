@@ -1,9 +1,23 @@
-export const farcasterUserERC20Balances = /* GraphQL */ `
+import { TokenBlockchain } from "../types";
+
+export const farcasterUserERC20Balances = (
+  chains: TokenBlockchain[] | null | undefined = [
+    TokenBlockchain.Ethereum,
+    TokenBlockchain.Polygon,
+    TokenBlockchain.Base,
+    TokenBlockchain.Zora,
+  ]
+) => {
+  return (
+    /* GraphQL */ `
   query FarcasterERC20Balances($identity: Identity = "", $limit: Int = 200) {
-    ethereum: TokenBalances(
+    ` +
+    chains
+      ?.map(
+        (chain) => `${chain}: TokenBalances(
       input: {
         filter: { owner: { _eq: $identity }, tokenType: { _eq: ERC20 } }
-        blockchain: ethereum
+        blockchain: ${chain}
         limit: $limit
       }
     ) {
@@ -17,60 +31,11 @@ export const farcasterUserERC20Balances = /* GraphQL */ `
           symbol
         }
       }
-    }
-    polygon: TokenBalances(
-      input: {
-        filter: { owner: { _eq: $identity }, tokenType: { _eq: ERC20 } }
-        blockchain: polygon
-        limit: $limit
-      }
-    ) {
-      TokenBalance {
-        blockchain
-        tokenAddress
-        formattedAmount
-        amount
-        token {
-          name
-          symbol
-        }
-      }
-    }
-    base: TokenBalances(
-      input: {
-        filter: { owner: { _eq: $identity }, tokenType: { _eq: ERC20 } }
-        blockchain: base
-        limit: $limit
-      }
-    ) {
-      TokenBalance {
-        blockchain
-        tokenAddress
-        formattedAmount
-        amount
-        token {
-          name
-          symbol
-        }
-      }
-    }
-    zora: TokenBalances(
-      input: {
-        filter: { owner: { _eq: $identity }, tokenType: { _eq: ERC20 } }
-        blockchain: zora
-        limit: $limit
-      }
-    ) {
-      TokenBalance {
-        blockchain
-        tokenAddress
-        formattedAmount
-        amount
-        token {
-          name
-          symbol
-        }
-      }
-    }
+    }`
+      )
+      .join("") +
+    `
   }
-`;
+`
+  );
+};

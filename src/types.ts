@@ -1,4 +1,10 @@
-import { InputMaybe, TokenBlockchain, TokenType } from "./graphql/types";
+import {
+  Exact,
+  InputMaybe,
+  Scalars,
+  TokenBlockchain,
+  TokenType,
+} from "./graphql/types";
 
 export interface FarcasterFollowersInput {
   fid: number;
@@ -224,3 +230,49 @@ export interface CheckPoapAttendedByFarcasterUserOutput {
       }[]
     | null;
 }
+
+export type FarcasterErc20BalancesQueryVariables = Exact<{
+  identity?: InputMaybe<Scalars["Identity"]["input"]>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type FarcasterErc20BalancesQuery = {
+  ethereum?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  polygon?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  base?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  zora?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+};
+
+export { TokenBlockchain } from "./graphql/types";
