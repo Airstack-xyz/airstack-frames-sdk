@@ -1,13 +1,26 @@
-export const farcasterUserTokenSentFromQuery = /* GraphQL */ `
+import { TokenBlockchain } from "../types";
+
+export const farcasterUserTokenSentFromQuery = (
+  chains: TokenBlockchain[] | null | undefined = [
+    TokenBlockchain.Ethereum,
+    TokenBlockchain.Polygon,
+    TokenBlockchain.Base,
+    TokenBlockchain.Zora,
+  ]
+) =>
+  /* GraphQL */ `
   query FarcasterUserTokenSentFrom(
     $identity: Identity!
     $tokenType: [TokenType!] = [ERC20, ERC721, ERC1155]
     $limit: Int = 200
-  ) {
-    ethereum: TokenTransfers(
+  ) {` +
+  chains
+    ?.map?.(
+      (chain) =>
+        `${chain}: TokenTransfers(
       input: {
         filter: { from: { _eq: $identity }, tokenType: { _in: $tokenType } }
-        blockchain: ethereum
+        blockchain: ${chain}
         limit: $limit
         order: { blockTimestamp: DESC }
       }
@@ -61,5 +74,9 @@ export const farcasterUserTokenSentFromQuery = /* GraphQL */ `
         }
       }
     }
+    `
+    )
+    .join("") +
+  `
   }
 `;

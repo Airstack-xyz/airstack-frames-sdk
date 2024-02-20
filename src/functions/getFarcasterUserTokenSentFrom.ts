@@ -1,10 +1,6 @@
 import { fetchQueryWithPagination } from "@airstack/node";
 import { farcasterUserTokenSentFromQuery as query } from "../graphql/query/farcasterUserTokenSentFrom.query";
 import {
-  FarcasterUserTokenSentFromQuery,
-  FarcasterUserTokenSentFromQueryVariables,
-} from "../graphql/types";
-import {
   IteratePaginationResponse,
   iteratePagination,
 } from "../utils/iteratePagination";
@@ -12,6 +8,8 @@ import { formatFarcasterUserTokenSentFrom } from "../utils/formatFarcasterUserTo
 import {
   FarcasterUserTokenSentFromInput,
   FarcasterUserTokenSentFromOutput,
+  FarcasterUserTokenSentFromQuery,
+  FarcasterUserTokenSentFromQueryVariables,
 } from "../types";
 
 export async function getFarcasterUserTokenSentFrom(
@@ -21,13 +19,14 @@ export async function getFarcasterUserTokenSentFrom(
     (FarcasterUserTokenSentFromOutput | null)[] | null | undefined
   >
 > {
-  const { fid, limit } = input ?? {};
+  const { fid, tokenType, chains, limit } = input ?? {};
   const variable: FarcasterUserTokenSentFromQueryVariables = {
     identity: `fc_fid:${fid}`,
+    tokenType,
     limit,
   };
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
-    await fetchQueryWithPagination(query, variable);
+    await fetchQueryWithPagination(query(chains), variable);
   return {
     data: error ? null : formatFarcasterUserTokenSentFrom(data),
     error,

@@ -1,10 +1,4 @@
-import {
-  Exact,
-  InputMaybe,
-  Scalars,
-  TokenBlockchain,
-  TokenType,
-} from "./graphql/types";
+import { Exact, InputMaybe, Scalars, TokenBlockchain } from "./graphql/types";
 
 export interface FarcasterFollowersInput {
   fid: number;
@@ -668,7 +662,7 @@ export type FarcasterUserNftMintsQuery = {
 export interface FarcasterUserTokenSentFromInput {
   fid: number;
   chains?: TokenBlockchain[];
-  tokenType?: InputMaybe<NFTType | NFTType[]>;
+  tokenType?: InputMaybe<TokenType | TokenType[]>;
   limit?: number;
 }
 
@@ -681,4 +675,199 @@ export interface FarcasterUserTokenSentFromOutput {
   symbol: string | null | undefined;
   blockTimestamp: any | null;
   blockNumber: number | null;
+}
+
+export type FarcasterUserTokenSentFromQueryVariables = Exact<{
+  identity: Scalars["Identity"]["input"];
+  tokenType?: InputMaybe<Array<TokenType> | TokenType>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type FarcasterUserTokenSentFromQuery = {
+  ethereum?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      receiver: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  polygon?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      receiver: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  base?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      receiver: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      receiver: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+};
+
+export enum TokenType {
+  ERC20 = "ERC20",
+  ERC721 = "ERC721",
+  ERC1155 = "ERC1155",
 }

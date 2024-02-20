@@ -1,9 +1,9 @@
-import { FarcasterUserTokenSentFromQuery, TokenType } from "../graphql/types";
+import { FarcasterUserTokenSentFromQuery, TokenType } from "../types";
 
 export function formatFarcasterUserTokenSentFrom(
   data: FarcasterUserTokenSentFromQuery
 ) {
-  const { ethereum } = data ?? {};
+  const { ethereum, polygon, base, zora } = data ?? {};
   return [
     ...(ethereum?.TokenTransfer?.map(
       ({
@@ -24,7 +24,7 @@ export function formatFarcasterUserTokenSentFrom(
         const { name, symbol } = token ?? {};
         const { contentValue, metaData } = tokenNft ?? {};
         const { image } = contentValue ?? {};
-        if (tokenType !== TokenType.Erc20)
+        if (tokenType !== TokenType.ERC20)
           nftData = { ...nftData, metaData, image, tokenId };
         return {
           blockchain,
@@ -36,94 +36,122 @@ export function formatFarcasterUserTokenSentFrom(
           blockTimestamp,
           blockNumber,
           txHash,
+          tokenType,
           receiver,
           ...nftData,
         };
       }
     ) ?? []),
-    // ...(polygon?.TokenTransfer?.map(
-    //   ({
-    //     blockchain,
-    //     tokenAddress,
-    //     formattedAmount: amount,
-    //     amount: amountInWei,
-    //     token,
-    //     blockTimestamp,
-    //     blockNumber,
-    //     tokenNft,
-    //   }) => {
-    //     const { name, symbol } = token ?? {};
-    //     const { contentValue, metaData } = tokenNft ?? {};
-    //     const { image } = contentValue ?? {};
-    //     return {
-    //       blockchain,
-    //       tokenAddress,
-    //       amount,
-    //       amountInWei,
-    //       name,
-    //       symbol,
-    //       blockTimestamp,
-    //       blockNumber,
-    //       image,
-    //       metaData,
-    //     };
-    //   }
-    // ) ?? []),
-    // ...(base?.TokenTransfer?.map(
-    //   ({
-    //     blockchain,
-    //     tokenAddress,
-    //     formattedAmount: amount,
-    //     amount: amountInWei,
-    //     token,
-    //     blockTimestamp,
-    //     blockNumber,
-    //     tokenNft,
-    //   }) => {
-    //     const { name, symbol } = token ?? {};
-    //     const { contentValue, metaData } = tokenNft ?? {};
-    //     const { image } = contentValue ?? {};
-    //     return {
-    //       blockchain,
-    //       tokenAddress,
-    //       amount,
-    //       amountInWei,
-    //       name,
-    //       symbol,
-    //       blockTimestamp,
-    //       blockNumber,
-    //       image,
-    //       metaData,
-    //     };
-    //   }
-    // ) ?? []),
-    // ...(zora?.TokenTransfer?.map(
-    //   ({
-    //     blockchain,
-    //     tokenAddress,
-    //     formattedAmount: amount,
-    //     amount: amountInWei,
-    //     token,
-    //     blockTimestamp,
-    //     blockNumber,
-    //     tokenNft,
-    //   }) => {
-    //     const { name, symbol } = token ?? {};
-    //     const { contentValue, metaData } = tokenNft ?? {};
-    //     const { image } = contentValue ?? {};
-    //     return {
-    //       blockchain,
-    //       tokenAddress,
-    //       amount,
-    //       amountInWei,
-    //       name,
-    //       symbol,
-    //       blockTimestamp,
-    //       blockNumber,
-    //       image,
-    //       metaData,
-    //     };
-    //   }
-    // ) ?? []),
+    ...(polygon?.TokenTransfer?.map(
+      ({
+        blockchain,
+        tokenAddress,
+        amount,
+        amountInWei,
+        token,
+        blockTimestamp,
+        blockNumber,
+        txHash,
+        receiver,
+        tokenNft,
+        tokenType,
+        tokenId,
+      }) => {
+        let nftData = {};
+        const { name, symbol } = token ?? {};
+        const { contentValue, metaData } = tokenNft ?? {};
+        const { image } = contentValue ?? {};
+        if (tokenType !== TokenType.ERC20)
+          nftData = { ...nftData, metaData, image, tokenId };
+        return {
+          blockchain,
+          tokenAddress,
+          amount,
+          amountInWei,
+          name,
+          symbol,
+          blockTimestamp,
+          blockNumber,
+          tokenType,
+          txHash,
+          receiver,
+          ...nftData,
+        };
+      }
+    ) ?? []),
+    ...(base?.TokenTransfer?.map(
+      ({
+        blockchain,
+        tokenAddress,
+        amount,
+        amountInWei,
+        token,
+        blockTimestamp,
+        blockNumber,
+        txHash,
+        receiver,
+        tokenNft,
+        tokenType,
+        tokenId,
+      }) => {
+        let nftData = {};
+        const { name, symbol } = token ?? {};
+        const { contentValue, metaData } = tokenNft ?? {};
+        const { image } = contentValue ?? {};
+        if (tokenType !== TokenType.ERC20)
+          nftData = { ...nftData, metaData, image, tokenId };
+        return {
+          blockchain,
+          tokenAddress,
+          amount,
+          amountInWei,
+          name,
+          symbol,
+          blockTimestamp,
+          blockNumber,
+          tokenType,
+          txHash,
+          receiver,
+          ...nftData,
+        };
+      }
+    ) ?? []),
+    ...(zora?.TokenTransfer?.map(
+      ({
+        blockchain,
+        tokenAddress,
+        amount,
+        amountInWei,
+        token,
+        blockTimestamp,
+        blockNumber,
+        txHash,
+        receiver,
+        tokenNft,
+        tokenType,
+        tokenId,
+      }) => {
+        let nftData = {};
+        const { name, symbol } = token ?? {};
+        const { contentValue, metaData } = tokenNft ?? {};
+        const { image } = contentValue ?? {};
+        if (tokenType !== TokenType.ERC20)
+          nftData = { ...nftData, metaData, image, tokenId };
+        return {
+          blockchain,
+          tokenAddress,
+          amount,
+          amountInWei,
+          name,
+          symbol,
+          blockTimestamp,
+          blockNumber,
+          tokenType,
+          txHash,
+          receiver,
+          ...nftData,
+        };
+      }
+    ) ?? []),
   ];
 }
