@@ -194,3 +194,18 @@ export interface CheckIsFollowingFarcasterUserOutput {
       }[]
     | null;
 }
+
+export interface CheckIsFollowedByFarcasterUserInput {
+  fid: number;
+  isFollowedBy: number[];
+}
+
+export interface CheckIsFollowedByFarcasterUserOutput {
+  error: any;
+  data:
+    | {
+        fid: number;
+        isFollowedBy: boolean;
+      }[]
+    | null;
+}

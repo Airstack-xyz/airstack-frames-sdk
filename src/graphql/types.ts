@@ -1562,6 +1562,14 @@ export type XmtPsOutput = {
   pageInfo: Maybe<PageInfo>;
 };
 
+export type CheckIsFollowedByFarcasterUserQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+  isFollowedBy: InputMaybe<Array<Scalars['Identity']['input']> | Scalars['Identity']['input']>;
+}>;
+
+
+export type CheckIsFollowedByFarcasterUserQuery = { Wallet: { socialFollowings: { Following: Array<{ followerAddress: { farcaster: Array<{ fid: string | null }> | null } | null }> | null } | null } | null };
+
 export type CheckIsFollowingFarcasterUserQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
   isFollowing: InputMaybe<Array<Scalars['Identity']['input']> | Scalars['Identity']['input']>;
