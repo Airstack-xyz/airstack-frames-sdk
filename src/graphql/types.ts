@@ -1609,14 +1609,6 @@ export type FarcasterUserDetailsQueryVariables = Exact<{
 
 export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
 
-export type FarcasterUserErc20MintsQueryVariables = Exact<{
-  identity: Scalars['Identity']['input'];
-  limit?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type FarcasterUserErc20MintsQuery = { ethereum: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, formattedAmount: number | null, amount: string | null, tokenAddress: any | null, blockNumber: number | null, blockTimestamp: any | null, transactionHash: string, token: { name: string | null, symbol: string | null } | null }> | null } | null, polygon: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, formattedAmount: number | null, amount: string | null, tokenAddress: any | null, blockNumber: number | null, blockTimestamp: any | null, transactionHash: string, token: { name: string | null, symbol: string | null } | null }> | null } | null, base: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, formattedAmount: number | null, amount: string | null, tokenAddress: any | null, blockNumber: number | null, blockTimestamp: any | null, transactionHash: string, token: { name: string | null, symbol: string | null } | null }> | null } | null, zora: { TokenTransfer: Array<{ blockchain: TokenBlockchain | null, formattedAmount: number | null, amount: string | null, tokenAddress: any | null, blockNumber: number | null, blockTimestamp: any | null, transactionHash: string, token: { name: string | null, symbol: string | null } | null }> | null } | null };
-
 export type FarcasterNftBalancesQueryVariables = Exact<{
   identity?: InputMaybe<Scalars['Identity']['input']>;
   tokenType?: InputMaybe<Array<TokenType> | TokenType>;

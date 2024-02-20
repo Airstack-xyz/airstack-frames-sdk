@@ -276,3 +276,59 @@ export type FarcasterErc20BalancesQuery = {
 };
 
 export { TokenBlockchain } from "./graphql/types";
+
+export type FarcasterUserErc20MintsQueryVariables = Exact<{
+  identity: Scalars["Identity"]["input"];
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type FarcasterUserErc20MintsQuery = {
+  ethereum?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      formattedAmount: number | null;
+      amount: string | null;
+      tokenAddress: any | null;
+      blockNumber: number | null;
+      blockTimestamp: any | null;
+      transactionHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  polygon?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      formattedAmount: number | null;
+      amount: string | null;
+      tokenAddress: any | null;
+      blockNumber: number | null;
+      blockTimestamp: any | null;
+      transactionHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  base?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      formattedAmount: number | null;
+      amount: string | null;
+      tokenAddress: any | null;
+      blockNumber: number | null;
+      blockTimestamp: any | null;
+      transactionHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      formattedAmount: number | null;
+      amount: string | null;
+      tokenAddress: any | null;
+      blockNumber: number | null;
+      blockTimestamp: any | null;
+      transactionHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+};

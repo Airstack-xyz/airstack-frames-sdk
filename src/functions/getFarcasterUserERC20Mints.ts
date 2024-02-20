@@ -1,9 +1,5 @@
 import { fetchQueryWithPagination } from "@airstack/node";
 import {
-  FarcasterUserErc20MintsQuery,
-  FarcasterUserErc20MintsQueryVariables,
-} from "../graphql/types";
-import {
   IteratePaginationResponse,
   iteratePagination,
 } from "../utils/iteratePagination";
@@ -12,6 +8,8 @@ import { formatFarcasterUserERC20Mints } from "../utils/formatFarcasterUserERC20
 import {
   FarcasterERC20MintsOutput,
   FarcasterUserERC20MintsInput,
+  FarcasterUserErc20MintsQuery,
+  FarcasterUserErc20MintsQueryVariables,
 } from "../types";
 
 export async function getFarcasterUserERC20Mints(
@@ -21,13 +19,13 @@ export async function getFarcasterUserERC20Mints(
     (FarcasterERC20MintsOutput | null)[] | null | undefined
   >
 > {
-  const { fid, limit } = input ?? {};
+  const { fid, limit, chains } = input ?? {};
   const variable: FarcasterUserErc20MintsQueryVariables = {
     identity: `fc_fid:${fid}`,
     limit,
   };
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
-    await fetchQueryWithPagination(query, variable);
+    await fetchQueryWithPagination(query(chains), variable);
   return {
     data: error ? null : formatFarcasterUserERC20Mints(data),
     error,
