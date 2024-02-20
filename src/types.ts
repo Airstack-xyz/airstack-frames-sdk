@@ -675,6 +675,31 @@ export interface FarcasterUserTokenSentFromOutput {
   symbol: string | null | undefined;
   blockTimestamp: any | null;
   blockNumber: number | null;
+  tokenType: TokenType | null;
+  tokenId?: number | null;
+  metaData?: {
+    name: string | null;
+    description: string | null;
+    image: string | null;
+    imageData: string | null;
+    externalUrl: string | null;
+    animationUrl: string | null;
+    youtubeUrl: string | null;
+    backgroundColor: string | null;
+    attributes: Array<{
+      displayType: string | null;
+      maxValue: string | null;
+      trait_type: string | null;
+      value: string | null;
+    }> | null;
+  } | null;
+  image?: {
+    extraSmall: string | null;
+    small: string | null;
+    medium: string | null;
+    large: string | null;
+    original: string | null;
+  } | null;
 }
 
 export type FarcasterUserTokenSentFromQueryVariables = Exact<{
@@ -870,4 +895,236 @@ export enum TokenType {
   ERC20 = "ERC20",
   ERC721 = "ERC721",
   ERC1155 = "ERC1155",
+}
+
+export type FarcasterUserTokenReceivedByQueryVariables = Exact<{
+  identity: Scalars["Identity"]["input"];
+  tokenType?: InputMaybe<Array<TokenType> | TokenType>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type FarcasterUserTokenReceivedByQuery = {
+  ethereum?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      sender: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  polygon?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      sender: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  base?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      sender: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      sender: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+};
+
+export interface FarcasterUserTokenReceivedByInput {
+  fid: number;
+  chains?: TokenBlockchain[];
+  tokenType?: InputMaybe<TokenType | TokenType[]>;
+  limit?: number;
+}
+
+export interface FarcasterUserTokenReceivedByOutput {
+  blockchain: TokenBlockchain | null;
+  tokenAddress: string;
+  amount: number | null;
+  amountInWei: string | null;
+  name: string | null | undefined;
+  symbol: string | null | undefined;
+  blockTimestamp: any | null;
+  blockNumber: number | null;
+  tokenType: TokenType | null;
+  tokenId?: string | null;
+  metaData?: {
+    name: string | null;
+    description: string | null;
+    image: string | null;
+    imageData: string | null;
+    externalUrl: string | null;
+    animationUrl: string | null;
+    youtubeUrl: string | null;
+    backgroundColor: string | null;
+    attributes: Array<{
+      displayType: string | null;
+      maxValue: string | null;
+      trait_type: string | null;
+      value: string | null;
+    }> | null;
+  } | null;
+  image?: {
+    extraSmall: string | null;
+    small: string | null;
+    medium: string | null;
+    large: string | null;
+    original: string | null;
+  } | null;
 }
