@@ -1,18 +1,12 @@
-import {
-  init,
-  TokenBlockchain,
-  getFarcasterUserNFTBalances,
-  NFTType,
-} from "../";
+import { init, getFarcasterUserERC20Balances, TokenBlockchain } from "../";
 import { config } from "dotenv";
 
 config();
 (async () => {
   init(process.env.AIRSTACK_API_KEY ?? "");
-  const { data } = await getFarcasterUserNFTBalances({
+  const { data } = await getFarcasterUserERC20Balances({
     fid: 602,
     chains: [TokenBlockchain.Base],
-    tokenType: [NFTType.ERC721],
     limit: 10,
   });
   console.log(data);

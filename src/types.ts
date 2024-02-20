@@ -116,7 +116,7 @@ export interface FarcasterERC20MintsOutput {
 
 export interface FarcasterUserNFTBalancesInput {
   fid: number;
-  tokenType?: InputMaybe<TokenType | TokenType[]>;
+  tokenType?: InputMaybe<NFTType | NFTType[]>;
   chains?: TokenBlockchain[];
   limit?: number;
 }
@@ -329,6 +329,168 @@ export type FarcasterUserErc20MintsQuery = {
       blockTimestamp: any | null;
       transactionHash: string;
       token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+};
+
+export enum NFTType {
+  ERC721 = "ERC721",
+  ERC1155 = "ERC1155",
+}
+
+export type FarcasterNftBalancesQueryVariables = Exact<{
+  identity?: InputMaybe<Scalars["Identity"]["input"]>;
+  tokenType?: InputMaybe<Array<NFTType> | NFTType>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type FarcasterNftBalancesQuery = {
+  ethereum?: {
+    TokenBalance: Array<{
+      tokenType: TokenType | null;
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+      tokenNfts: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  polygon?: {
+    TokenBalance: Array<{
+      tokenType: TokenType | null;
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+      tokenNfts: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  base?: {
+    TokenBalance: Array<{
+      tokenType: TokenType | null;
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+      tokenNfts: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  zora?: {
+    TokenBalance: Array<{
+      tokenType: TokenType | null;
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+      tokenNfts: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
     }> | null;
   } | null;
 };

@@ -1,4 +1,4 @@
-import { FarcasterNftBalancesQuery } from "../graphql/types";
+import { FarcasterNftBalancesQuery } from "../types";
 
 export function formatFarcasterUserNFTBalances(
   data: FarcasterNftBalancesQuery
