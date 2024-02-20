@@ -1,4 +1,4 @@
-import { FarcasterUserNftMintsQuery } from "../graphql/types";
+import { FarcasterUserNftMintsQuery } from "../types";
 
 export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
   const { ethereum, polygon, base, zora } = data ?? {};

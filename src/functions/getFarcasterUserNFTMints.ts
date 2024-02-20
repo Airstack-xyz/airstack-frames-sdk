@@ -1,15 +1,16 @@
 import { fetchQueryWithPagination } from "@airstack/node";
 import {
-  FarcasterUserNftMintsQuery,
-  FarcasterUserNftMintsQueryVariables,
-} from "../graphql/types";
-import {
   IteratePaginationResponse,
   iteratePagination,
 } from "../utils/iteratePagination";
 import { farcasterUserNFTMints as query } from "../graphql/query/farcasterUserNFTMints.query";
 import { formatFarcasterUserNFTMints } from "../utils/formatFarcasterUserNFTMints";
-import { FarcasterNFTMintsOutput, FarcasterUserNFTMintsInput } from "../types";
+import {
+  FarcasterNFTMintsOutput,
+  FarcasterUserNFTMintsInput,
+  FarcasterUserNftMintsQuery,
+  FarcasterUserNftMintsQueryVariables,
+} from "../types";
 
 export async function getFarcasterUserNFTMints(
   input: FarcasterUserNFTMintsInput
@@ -18,13 +19,14 @@ export async function getFarcasterUserNFTMints(
     (FarcasterNFTMintsOutput | null)[] | null | undefined
   >
 > {
-  const { fid, limit } = input ?? {};
+  const { fid, limit, chains, tokenType } = input ?? {};
   const variable: FarcasterUserNftMintsQueryVariables = {
     identity: `fc_fid:${fid}`,
+    tokenType,
     limit,
   };
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
-    await fetchQueryWithPagination(query, variable);
+    await fetchQueryWithPagination(query(chains), variable);
   return {
     data: error ? null : formatFarcasterUserNFTMints(data),
     error,
