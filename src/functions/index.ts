@@ -9,3 +9,5 @@ export * from "./getFarcasterUserERC20Mints";
 export * from "./getFarcasterUserNFTBalances";
 export * from "./getFarcasterUserNFTMints";
 export * from "./checkIsFollowingFarcasterUser";
+export * from "./checkIsFollowedByFarcasterUser";
+export * from "./checkPoapAttendedByFarcasterUser";

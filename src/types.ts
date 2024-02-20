@@ -209,3 +209,18 @@ export interface CheckIsFollowedByFarcasterUserOutput {
       }[]
     | null;
 }
+
+export interface CheckPoapAttendedByFarcasterUserInput {
+  fid: number;
+  eventId: number[];
+}
+
+export interface CheckPoapAttendedByFarcasterUserOutput {
+  error: any;
+  data:
+    | {
+        eventId: number;
+        isAttended: boolean;
+      }[]
+    | null;
+}

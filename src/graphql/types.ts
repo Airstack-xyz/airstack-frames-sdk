@@ -1578,6 +1578,14 @@ export type CheckIsFollowingFarcasterUserQueryVariables = Exact<{
 
 export type CheckIsFollowingFarcasterUserQuery = { Wallet: { socialFollowers: { Follower: Array<{ followingAddress: { farcaster: Array<{ fid: string | null }> | null } | null }> | null } | null } | null };
 
+export type CheckPoapAttendedByFarcasterUserQueryVariables = Exact<{
+  owner: Scalars['Identity']['input'];
+  eventId: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+}>;
+
+
+export type CheckPoapAttendedByFarcasterUserQuery = { Poaps: { Poap: Array<{ eventId: string | null }> | null } | null };
+
 export type FarcasterFollowersQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
   limit?: Scalars['Int']['input'];

@@ -10,6 +10,7 @@ export const checkIsFollowedByFarcasterUserQuery = /* GraphQL */ `
             identity: { _in: $isFollowedBy }
             dappName: { _eq: farcaster }
           }
+          limit: 200
         }
       ) {
         Following {

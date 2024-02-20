@@ -10,6 +10,7 @@ export const checkIsFollowingFarcasterUser = /* GraphQL */ `
             identity: { _in: $isFollowing }
             dappName: { _eq: farcaster }
           }
+          limit: 200
         }
       ) {
         Follower {
