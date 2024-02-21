@@ -2,8 +2,7 @@
   "name": "@airstack/frames",
   "version": "1.0.0",
   "description": "Official Airstack Frames SDK",
-  "main": "dist/index.js",
-  "typings": "dist/types.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "jest --coverage --passWithNoTests",
     "generate": "npx graphql-codegen",
