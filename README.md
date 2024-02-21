@@ -671,20 +671,33 @@ console.log(data);
 
 ### `searchFarcasterUsers`
 
-Search Farcaster users that contain a given string input.
+Search Farcaster users that contain a given string input, e.g. all Farcaster users that contains "a" in their profile name.
 
 **Code Sample**
 
 ```ts
-import { searchFarcasteUsers } from "@airstack/frames";
+import {
+  searchFarcasteUsers,
+  SearchFarcasterUsersInput,
+  SearchFarcastersOutput,
+} from "@airstack/frames";
 
-const { farcasterUsers, error, hasNextPage, getNextPage } =
-  await searchFarcasteUsers({
-    profileName: "a", // All user that contains 'a' in their profile name
-    limit: 100,
-  });
-console.log(farcasterUsers);
-if (hasNextPage) await getNextPage();
+const input: SearchFarcasterUsersInput = {
+  profileName: "a",
+  limit: 10,
+};
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: SearchFarcastersOutput = await searchFarcasterUsers(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -692,19 +705,22 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "profileName": "",
-    "fid": "",
-    "fnames": [],
+    "profileName": "zachterrell",
+    "fnames": ["zachterrell.eth", "zachterrell"],
+    "userAssociatedAddresses": [
+      "0xbce5a0d16dc2031dc53da79c34ddb366e76dc482",
+      "0x5a492d1e15f2ae4b418e424ba9a1d112d6e9706a"
+    ],
+    "followerCount": 112210,
+    "followingCount": 430,
+    "fid": "457",
     "profileImage": {
-      "extraSmall": "",
-      "small": "",
-      "original": "",
-      "medium": "",
-      "large": ""
-    },
-    "userAssociatedAddresses": [],
-    "followerCounts": 0,
-    "followingCounts": 0
+      "extraSmall": "https://assets.airstack.xyz/image/social/u/+rRF4VjBM2b96BzHIZBcRKdFQ3MzIbCkEp6TV3KlQ=/extra_small.jpg",
+      "small": "https://assets.airstack.xyz/image/social/u/+rRF4VjBM2b96BzHIZBcRKdFQ3MzIbCkEp6TV3KlQ=/small.jpg",
+      "medium": "https://assets.airstack.xyz/image/social/u/+rRF4VjBM2b96BzHIZBcRKdFQ3MzIbCkEp6TV3KlQ=/medium.jpg",
+      "large": "https://assets.airstack.xyz/image/social/u/+rRF4VjBM2b96BzHIZBcRKdFQ3MzIbCkEp6TV3KlQ=/large.jpg",
+      "original": "https://assets.airstack.xyz/image/social/u/+rRF4VjBM2b96BzHIZBcRKdFQ3MzIbCkEp6TV3KlQ=/original_image.jpg"
+    }
   }
 ]
 ```
