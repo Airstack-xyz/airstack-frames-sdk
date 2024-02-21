@@ -544,10 +544,21 @@ const input: FarcasterUserTokenSentFromInput = {
     TokenBlockchain.Zora,
   ],
   tokenType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC1155],
-  limit: 10,
+  limit: 100,
 };
-const { data }: FarcasterUserTokenSentFromOutput =
-  await getFarcasterUserTokenSentFrom(input);
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterUserTokenSentFromOutput = await getFarcasterUserTokenSentFrom(
+  input
+);
+
+if (error) throw new Error(error);
+
 console.log(data);
 ```
 
@@ -581,17 +592,39 @@ Fetch all token transfers received by a Farcaster user of a given FID across Eth
 **Code Sample**
 
 ```ts
-import { getFarcasterUserTokenReceivedBy } from "@airstack/frames";
+import {
+  getFarcasterUserTokenReceivedBy,
+  FarcasterUserTokenReceivedByInput,
+  FarcasterUserTokenReceivedByOutput,
+  TokenBlockchain,
+  TokenType,
+} from "@airstack/frames";
 
-const { tokenReceived, error, hasNextPage, getNextPage } =
-  await getFarcasterUserTokenReceivedBy({
-    fid: "2",
-    chain: ["ethereum", "polygon", "base", "zora"],
-    tokenType: ["ERC20", "ERC721", "ERC1155"],
-    limit: 100,
-  });
-console.log(tokenReceived);
-if (hasNextPage) await getNextPage();
+const input: FarcasterUserTokenReceivedByInput = {
+  fid: 602,
+  chains: [
+    TokenBlockchain.Ethereum,
+    TokenBlockchain.Polygon,
+    TokenBlockchain.Base,
+    TokenBlockchain.Zora,
+  ],
+  tokenType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC1155],
+  limit: 100,
+};
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterUserTokenReceivedByOutput = await getFarcasterUserTokenReceivedBy(
+  input
+);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -599,24 +632,39 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "tokenAddress": "",
-    "tokenId": "",
+    "blockchain": "zora",
+    "tokenAddress": "0xe03ef4b9db1a47464de84fb476f9baf493b3e886",
+    "amount": 1,
+    "amountInWei": "1",
+    "name": "Farcaster OG",
+    "symbol": "$FCOG",
+    "blockTimestamp": "2023-10-11T21:02:39Z",
+    "blockNumber": 5182160,
     "tokenType": "ERC721",
-    "metaData": {},
-    "images": {
-      "medium": ""
-    },
-    "amount": 0,
-    "amountInWei": 0,
+    "txHash": "0x116d7d7d2f6e8adb7b6991348ff1869742dae538f0b68f36624ed2496bc2091e",
     "sender": {
-      "addresses": [""],
-      "domains": [],
-      "farcaster": [],
-      "xmtp": true
+      "addresses": ["0x3a23f943181408eac424116af7b7790c94cb97a5"],
+      "socials": null
     },
-    "txHash": "",
-    "blockTimestamp": "",
-    "blockNumber": ""
+    "metaData": {
+      "name": "Farcaster OG 43",
+      "description": "Celebrating Farcaster at permissionless.",
+      "image": "ipfs://bafybeihbx6nx4h2wblf6nlsy6nkotzqynzsrgimgqzwqgw6gf7d27ewfqu",
+      "imageData": "",
+      "externalUrl": "",
+      "animationUrl": "",
+      "youtubeUrl": "",
+      "backgroundColor": "",
+      "attributes": null
+    },
+    "image": {
+      "extraSmall": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/extra_small.png",
+      "small": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/small.png",
+      "medium": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/medium.png",
+      "large": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/large.png",
+      "original": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/original_image.png"
+    },
+    "tokenId": "110"
   }
 ]
 ```
