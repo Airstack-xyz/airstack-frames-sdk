@@ -6,7 +6,8 @@
   "typings": "src/types.ts",
   "scripts": {
     "test": "jest --coverage --passWithNoTests",
-    "generate": "npx graphql-codegen"
+    "generate": "npx graphql-codegen",
+    "build": "tsc ./src/index.ts --outDir ./dist"
   },
   "repository": {
     "type": "git",

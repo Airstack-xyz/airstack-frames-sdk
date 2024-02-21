@@ -12,5 +12,6 @@
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["src/**/*.test.ts", "node_modules"]
 }
