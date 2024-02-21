@@ -720,6 +720,14 @@ export interface FarcasterUserTokenSentFromOutputData {
   blockNumber: number | null;
   tokenType: TokenType | null;
   tokenId?: number | null;
+  receiver: {
+    addresses: any[] | null;
+    socials:
+      | {
+          fid: string | null;
+        }[]
+      | null;
+  } | null;
   metaData?: {
     name: string | null;
     description: string | null;

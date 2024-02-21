@@ -522,20 +522,33 @@ console.log(data);
 
 ### `getFarcasterUserTokenSentFrom`
 
+Fetch all token transfers sent from a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+
 **Code Sample**
 
 ```ts
-import { getFarcasterUserTokenSentFrom } from "@airstack/frames";
+import {
+  getFarcasterUserTokenSentFrom,
+  FarcasterUserTokenSentFromInput,
+  FarcasterUserTokenSentFromOutput,
+  TokenBlockchain,
+  TokenType,
+} from "@airstack/frames";
 
-const { tokenSent, error, hasNextPage, getNextPage } =
-  await getFarcasterUserTokenSentFrom({
-    fid: "2",
-    chain: ["ethereum", "polygon", "base", "zora"],
-    tokenType: ["ERC20", "ERC721", "ERC1155"],
-    limit: 100,
-  });
-console.log(tokenSent);
-if (hasNextPage) await getNextPage();
+const input: FarcasterUserTokenSentFromInput = {
+  fid: 602,
+  chains: [
+    TokenBlockchain.Ethereum,
+    TokenBlockchain.Polygon,
+    TokenBlockchain.Base,
+    TokenBlockchain.Zora,
+  ],
+  tokenType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC1155],
+  limit: 10,
+};
+const { data }: FarcasterUserTokenSentFromOutput =
+  await getFarcasterUserTokenSentFrom(input);
+console.log(data);
 ```
 
 **Response Sample**
@@ -543,29 +556,27 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "tokenAddress": "",
-    "tokenId": "",
-    "tokenType": "ERC721",
-    "metaData": {},
-    "images": {
-      "medium": ""
-    },
-    "amount": 0,
-    "amountInWei": 0,
+    "blockchain": "base",
+    "tokenAddress": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "amount": 100,
+    "amountInWei": "100000000",
+    "name": "USD Coin",
+    "symbol": "USDC",
+    "blockTimestamp": "2023-12-18T15:15:35Z",
+    "blockNumber": 8061594,
+    "tokenType": "ERC20",
+    "txHash": "0xf30a550eece968e1abdcae4de3bdb5f7b84f3d0b2335150149a7398b351567f5",
     "receiver": {
-      "addresses": [""],
-      "domains": [],
-      "farcaster": [],
-      "xmtp": true
-    },
-    "txHash": "",
-    "blockTimestamp": "",
-    "blockNumber": ""
+      "addresses": ["0x3a23f943181408eac424116af7b7790c94cb97a5"],
+      "socials": null
+    }
   }
 ]
 ```
 
 ### `getFarcasterUserTokenReceivedBy`
+
+Fetch all token transfers received by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
 
 **Code Sample**
 
@@ -612,6 +623,8 @@ if (hasNextPage) await getNextPage();
 
 ### `searchFarcasterUsers`
 
+Search Farcaster users that contains a given string input.
+
 **Code Sample**
 
 ```ts
@@ -630,27 +643,27 @@ if (hasNextPage) await getNextPage();
 
 ```json
 [
-	// User Search #1
-	{
-		"profileName": "".
-		"fid": "",
-		"fnames": [],
-		"profileImage": {
-			"extraSmall": "",
-			"small": "",
-			"original": "",
-			"medium": "",
-			"large": ""
-		},
-	  "userAssociatedAddresses": [],
-		"followerCounts": 0,
-		"followingCounts": 0
-	},
-	// User Search #2 and so on
+  {
+    "profileName": "",
+    "fid": "",
+    "fnames": [],
+    "profileImage": {
+      "extraSmall": "",
+      "small": "",
+      "original": "",
+      "medium": "",
+      "large": ""
+    },
+    "userAssociatedAddresses": [],
+    "followerCounts": 0,
+    "followingCounts": 0
+  }
 ]
 ```
 
 ### `checkPoapAttendedByFarcasterUser`
+
+Check If Farcaster user of a given FID has attended a list of POAP events.
 
 **Code Sample**
 
@@ -669,26 +682,25 @@ if (hasNextPage) await getNextPage();
 **Response Sample**
 
 ```json
-[true, false, true]
-
-// Revised (below)
 [
-	{
-		"eventId": "1",
-		"isAttended": true
-	},
-	{
-		"eventId": "2",
-		"isAttended": false
-	},
-	{
-		"eventId": "3",
-		"isAttended": true
-	}
+  {
+    "eventId": "1",
+    "isAttended": true
+  },
+  {
+    "eventId": "2",
+    "isAttended": false
+  },
+  {
+    "eventId": "3",
+    "isAttended": true
+  }
 ]
 ```
 
 ### `checkTokenHoldByFarcasterUser`
+
+Check If Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
 
 **Code Sample**
 
@@ -744,6 +756,8 @@ if (hasNextPage) await getNextPage();
 
 ### `checkIsFollowingFarcasterUser`
 
+Check If Farcaster user of a given FID is following an array of Farcaster users with certain FIDs.
+
 **Code Sample**
 
 ```ts
@@ -783,6 +797,8 @@ if (hasNextPage) await getNextPage();
 ```
 
 ### `checkIsFollowedByFarcasterUser`
+
+Check If Farcaster user of a given FID is followed by an array of Farcaster users with certain FIDs.
 
 **Code Sample**
 
