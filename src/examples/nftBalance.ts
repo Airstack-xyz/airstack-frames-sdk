@@ -4,6 +4,7 @@ import {
   FarcasterUserNFTBalancesInput,
   FarcasterUserNFTBalancesOutput,
   TokenBlockchain,
+  NFTType,
 } from "..";
 import { config } from "dotenv";
 
@@ -13,10 +14,27 @@ config();
   init(process.env.AIRSTACK_API_KEY ?? "");
   const variables: FarcasterUserNFTBalancesInput = {
     fid: 602,
-    chains: [TokenBlockchain.Base],
+    tokenType: [NFTType.ERC721, NFTType.ERC1155],
+    chains: [
+      TokenBlockchain.Ethereum,
+      TokenBlockchain.Polygon,
+      TokenBlockchain.Base,
+      TokenBlockchain.Zora,
+    ],
     limit: 10,
   };
-  const { data, error }: FarcasterUserNFTBalancesOutput =
-    await getFarcasterUserNFTBalances(variables);
+  const {
+    data,
+    error,
+    hasNextPage,
+    hasPrevPage,
+    getNextPage,
+    getPrevPage,
+  }: FarcasterUserNFTBalancesOutput = await getFarcasterUserNFTBalances(
+    variables
+  );
+
+  if (error) throw new Error(error);
+
   console.log(data);
 })();

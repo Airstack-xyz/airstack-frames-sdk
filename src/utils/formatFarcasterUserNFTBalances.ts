@@ -14,6 +14,7 @@ export function formatFarcasterUserNFTBalances(
         token,
         tokenNfts,
         tokenType,
+        tokenId,
       }) => {
         const { name, symbol } = token ?? {};
         const { contentValue, metaData } = tokenNfts ?? {};
@@ -21,6 +22,7 @@ export function formatFarcasterUserNFTBalances(
         return {
           blockchain,
           tokenAddress,
+          tokenId,
           tokenType,
           amount,
           amountInWei,
@@ -39,6 +41,8 @@ export function formatFarcasterUserNFTBalances(
         amount: amountInWei,
         token,
         tokenNfts,
+        tokenId,
+        tokenType,
       }) => {
         const { name, symbol } = token ?? {};
         const { contentValue, metaData } = tokenNfts ?? {};
@@ -46,12 +50,14 @@ export function formatFarcasterUserNFTBalances(
         return {
           blockchain,
           tokenAddress,
+          tokenId,
           amount,
           amountInWei,
           name,
           symbol,
           image,
           metaData,
+          tokenType,
         };
       }
     ) ?? []),
@@ -63,6 +69,8 @@ export function formatFarcasterUserNFTBalances(
         amount: amountInWei,
         token,
         tokenNfts,
+        tokenId,
+        tokenType,
       }) => {
         const { name, symbol } = token ?? {};
         const { contentValue, metaData } = tokenNfts ?? {};
@@ -70,12 +78,14 @@ export function formatFarcasterUserNFTBalances(
         return {
           blockchain,
           tokenAddress,
+          tokenId,
           amount,
           amountInWei,
           name,
           symbol,
           image,
           metaData,
+          tokenType,
         };
       }
     ) ?? []),
@@ -87,6 +97,8 @@ export function formatFarcasterUserNFTBalances(
         amount: amountInWei,
         token,
         tokenNfts,
+        tokenId,
+        tokenType,
       }) => {
         const { name, symbol } = token ?? {};
         const { contentValue, metaData } = tokenNfts ?? {};
@@ -94,12 +106,14 @@ export function formatFarcasterUserNFTBalances(
         return {
           blockchain,
           tokenAddress,
+          tokenId,
           amount,
           amountInWei,
           name,
           symbol,
           image,
           metaData,
+          tokenType,
         };
       }
     ) ?? []),

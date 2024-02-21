@@ -29,6 +29,7 @@ export const farcasterUserNFTBalances = (
         tokenType
         blockchain
         tokenAddress
+        tokenId
         formattedAmount
         amount
         token {

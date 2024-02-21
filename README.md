@@ -258,19 +258,42 @@ console.log(data);
 
 ### `getFarcasterUserERC20Balances`
 
+Fetch ERC20 tokens owned by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+
 **Code Sample**
 
 ```ts
-import { getFarcasterUserERC20Balances } from "@airstack/frames";
+import {
+  getFarcasterUserERC20Balances,
+  FarcasterUserERC20BalancesInput,
+  FarcasterUserERC20BalancesOutput,
+  TokenBlockchain,
+} from "@airstack/frames";
 
-const { erc20Balances, error, hasNextPage, getNextPage } =
-  await getFarcasterUserERC20Balances({
-    fid: "2",
-    chain: ["ethereum", "polygon", "base", "zora"],
-    limit: 100,
-  });
-console.log(erc20Balances);
-if (hasNextPage) await getNextPage();
+const input: FarcasterUserERC20BalancesInput = {
+  fid: 602,
+  chains: [
+    TokenBlockchain.Ethereum,
+    TokenBlockchain.Polygon,
+    TokenBlockchain.Base,
+    TokenBlockchain.Zora,
+  ],
+  limit: 100,
+};
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterUserERC20BalancesOutput = await getFarcasterUserERC20Balances(
+  input
+);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -279,35 +302,55 @@ if (hasNextPage) await getNextPage();
 [
   {
     "blockchain": "ethereum",
-    "tokenAddress": "",
-    "amount": 0,
-    "amountInWei": 0,
-    "blockTimestamp": "",
-    "blockNumber": ""
+    "tokenAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "amount": 125,
+    "amountInWei": "125000000",
+    "name": "USD Coin",
+    "symbol": "USDC"
   }
 ]
 ```
 
 ### `getFarcasterUserNFTBalances`
 
+Fetch ERC721 and ERC1155 NFT collections owned by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+
 **Code Sample**
 
 ```ts
-import { getFarcasterUserNFTBalances } from "@airstack/frames";
+import {
+  getFarcasterUserNFTBalances,
+  FarcasterUserNFTBalancesInput,
+  FarcasterUserNFTBalancesOutput,
+  TokenBlockchain,
+  NFTType,
+} from "@airstack/frames";
 
+const variables: FarcasterUserNFTBalancesInput = {
+  fid: 602,
+  tokenType: [NFTType.ERC721, NFTType.ERC1155],
+  chains: [
+    TokenBlockchain.Ethereum,
+    TokenBlockchain.Polygon,
+    TokenBlockchain.Base,
+    TokenBlockchain.Zora,
+  ],
+  limit: 100,
+};
 const {
-	nftBalances,
-	error,
-	hasNextPage,
-	getNextPage
-} = await getFarcasterUserNFTBalances({
-	fid: "2",
-	chain: ["ethereum", "polygon", "base", "zora"],
-	tokenType: ["ERC721", "ERC1155"]
-	limit: 100
-});
-console.log(nftBalances);
-if (hasNextPage) await getNextPage();
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterUserNFTBalancesOutput = await getFarcasterUserNFTBalances(
+  variables
+);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -315,24 +358,39 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "blockchain": "ethereum",
-    "tokenAddress": "",
-    "tokenId": "",
-    "tokenType": "ERC721",
-    "metaData": {},
-    "images": {
-      "medium": ""
+    "blockchain": "zora",
+    "tokenAddress": "0xe03ef4b9db1a47464de84fb476f9baf493b3e886",
+    "tokenId": "110",
+    "amount": 1,
+    "amountInWei": "1",
+    "name": "Farcaster OG",
+    "symbol": "$FCOG",
+    "image": {
+      "extraSmall": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/extra_small.png",
+      "small": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/small.png",
+      "medium": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/medium.png",
+      "large": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/large.png",
+      "original": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/original_image.png"
     },
-    "amount": 0,
-    "amountInWei": 0,
-    "txHash": "",
-    "blockTimestamp": "",
-    "blockNumber": ""
+    "metaData": {
+      "name": "Farcaster OG 43",
+      "description": "Celebrating Farcaster at permissionless.",
+      "image": "ipfs://bafybeihbx6nx4h2wblf6nlsy6nkotzqynzsrgimgqzwqgw6gf7d27ewfqu",
+      "imageData": "",
+      "externalUrl": "",
+      "animationUrl": "",
+      "youtubeUrl": "",
+      "backgroundColor": "",
+      "attributes": null
+    },
+    "tokenType": "ERC721"
   }
 ]
 ```
 
 ### `getFarcasterUserERC20Mints`
+
+Fetch ERC20 tokens minted by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
 
 **Code Sample**
 
@@ -366,6 +424,8 @@ if (hasNextPage) await getNextPage();
 ```
 
 ### `getFarcasterUserNFTMints`
+
+Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
 
 **Code Sample**
 

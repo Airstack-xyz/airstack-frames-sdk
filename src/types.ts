@@ -134,6 +134,7 @@ export interface FarcasterUserNFTBalancesInput {
 export interface FarcasterUserNFTBalancesOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
+  tokenId: string;
   amount: number | null;
   amountInWei: string;
   name: string | null | undefined;
@@ -380,6 +381,7 @@ export type FarcasterNftBalancesQuery = {
       formattedAmount: number | null;
       amount: string;
       token: { name: string | null; symbol: string | null } | null;
+      tokenId: string;
       tokenNfts: {
         contentValue: {
           image: {
@@ -414,6 +416,7 @@ export type FarcasterNftBalancesQuery = {
       tokenType: TokenType | null;
       blockchain: TokenBlockchain | null;
       tokenAddress: any;
+      tokenId: string;
       formattedAmount: number | null;
       amount: string;
       token: { name: string | null; symbol: string | null } | null;
@@ -451,6 +454,7 @@ export type FarcasterNftBalancesQuery = {
       tokenType: TokenType | null;
       blockchain: TokenBlockchain | null;
       tokenAddress: any;
+      tokenId: string;
       formattedAmount: number | null;
       amount: string;
       token: { name: string | null; symbol: string | null } | null;
@@ -488,6 +492,7 @@ export type FarcasterNftBalancesQuery = {
       tokenType: TokenType | null;
       blockchain: TokenBlockchain | null;
       tokenAddress: any;
+      tokenId: string;
       formattedAmount: number | null;
       amount: string;
       token: { name: string | null; symbol: string | null } | null;
