@@ -1182,6 +1182,14 @@ export interface FarcasterUserTokenReceivedByOutputData {
     large: string | null;
     original: string | null;
   } | null;
+  sender: {
+    addresses: any[] | null;
+    socials:
+      | {
+          fid: string | null;
+        }[]
+      | null;
+  } | null;
 }
 
 export type FarcasterUserTokenReceivedByOutput = IteratePaginationResponse<
