@@ -1586,14 +1586,6 @@ export type CheckPoapAttendedByFarcasterUserQueryVariables = Exact<{
 
 export type CheckPoapAttendedByFarcasterUserQuery = { Poaps: { Poap: Array<{ eventId: string | null }> | null } | null };
 
-export type CheckTokenHoldByFarcasterUserQueryVariables = Exact<{
-  owner: Scalars['Identity']['input'];
-  ethereumTokens: InputMaybe<Array<Scalars['Address']['input']> | Scalars['Address']['input']>;
-}>;
-
-
-export type CheckTokenHoldByFarcasterUserQuery = { ethereum: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, amount: string }> | null } | null };
-
 export type FarcasterFollowersQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
   limit?: Scalars['Int']['input'];

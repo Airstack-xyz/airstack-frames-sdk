@@ -14,8 +14,9 @@ export const checkTokenHoldByFarcasterUserQuery = (
     `
     ) {
     ` +
-    chains?.map(
-      (chain) => `
+    chains
+      ?.map(
+        (chain) => `
       ${chain}: TokenBalances(
         input: {
           filter: {
@@ -32,7 +33,8 @@ export const checkTokenHoldByFarcasterUserQuery = (
           amount
         }
       }`
-    ) +
+      )
+      ?.join("") +
     `
     }
   `

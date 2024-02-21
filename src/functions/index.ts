@@ -14,3 +14,4 @@ export * from "./checkPoapAttendedByFarcasterUser";
 export * from "./getFarcasterUserTokenSentFrom";
 export * from "./getFarcasterUserTokenReceivedBy";
 export * from "./checkTokenHoldByFarcasterUser";
+export * from "./checkTokenMintedByFarcasterUser";

@@ -1194,3 +1194,73 @@ export interface CheckTokenHoldByFarcasterUserOutput {
       }[]
     | null;
 }
+
+export type CheckTokenMintedByFarcasterUserQueryVariables = Exact<{
+  identity: Scalars["Identity"]["input"];
+  ethereumTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  polygonTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  baseTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  zoraTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+}>;
+
+export type CheckTokenMintedByFarcasterUserQuery = {
+  ethereum?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: TokenType | null;
+      formattedAmount: number | null;
+      tokenAddress: any | null;
+    }> | null;
+  } | null;
+  polygon?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: TokenType | null;
+      formattedAmount: number | null;
+      tokenAddress: any | null;
+    }> | null;
+  } | null;
+  base?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: TokenType | null;
+      formattedAmount: number | null;
+      tokenAddress: any | null;
+    }> | null;
+  } | null;
+  zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: TokenType | null;
+      formattedAmount: number | null;
+      tokenAddress: any | null;
+    }> | null;
+  } | null;
+};
+
+export interface CheckTokenMintedByFarcasterUserInput {
+  fid: number;
+  token: {
+    tokenAddress: string;
+    chain: TokenBlockchain;
+  }[];
+}
+
+export interface CheckTokenMintedByFarcasterUserOutput {
+  error: any;
+  data:
+    | {
+        chain: TokenBlockchain;
+        tokenAddress: string;
+        isMinted: boolean;
+      }[]
+    | null;
+}
