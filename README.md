@@ -410,7 +410,7 @@ const input: FarcasterUserERC20MintsInput = {
     TokenBlockchain.Base,
     TokenBlockchain.Zora,
   ],
-  limit: 10,
+  limit: 100,
 };
 const {
   data,
@@ -450,16 +450,37 @@ Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given F
 **Code Sample**
 
 ```ts
-import { getFarcasterUserNFTMints } from "@airstack/frames";
+import {
+  getFarcasterUserNFTMints,
+  FarcasterUserNFTMintsInput,
+  FarcasterUserNFTMintsOutput,
+  TokenBlockchain,
+  NFTType,
+} from "@airstack/frames";
 
-const { nftMints, error, hasNextPage, getNextPage } =
-  await getFarcasterUserNFTMints({
-    fid: "2",
-    chain: ["ethereum", "polygon", "base", "zora"],
-    limit: 100,
-  });
-console.log(nftBalances);
-if (hasNextPage) await getNextPage();
+const input: FarcasterUserNFTMintsInput = {
+  fid: 602,
+  chains: [
+    TokenBlockchain.Ethereum,
+    TokenBlockchain.Polygon,
+    TokenBlockchain.Base,
+    TokenBlockchain.Zora,
+  ],
+  tokenType: [NFTType.ERC721, NFTType.ERC1155],
+  limit: 100,
+};
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterUserNFTMintsOutput = await getFarcasterUserNFTMints(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -467,19 +488,34 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "blockchain": "ethereum",
-    "tokenAddress": "",
-    "tokenId": "",
+    "blockchain": "base",
+    "tokenAddress": "0x7d5861cfe1c74aaa0999b7e2651bf2ebd2a62d89",
+    "tokenId": "94613",
     "tokenType": "ERC721",
-    "metaData": {},
-    "images": {
-      "medium": ""
+    "amount": 1,
+    "amountInWei": "1",
+    "name": "Base Day One",
+    "symbol": "$BASEDAYONE",
+    "blockTimestamp": "2023-08-11T08:23:43Z",
+    "blockNumber": 2476438,
+    "image": {
+      "extraSmall": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/extra_small.gif",
+      "small": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/small.gif",
+      "medium": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/medium.gif",
+      "large": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/large.gif",
+      "original": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/original_image.gif"
     },
-    "amount": 0,
-    "amountInWei": 0,
-    "txHash": "",
-    "blockTimestamp": "",
-    "blockNumber": ""
+    "metaData": {
+      "name": "Base Day One 94613",
+      "description": "Base Day One commemorates the first day of Base. Watch it evolve as more people come onchain and collectively create our story. All proceeds will support the next generation of builders on Base; this does not confer any other rights. GET ONCHAIN at onchainsummer.xyz and mint to join us.",
+      "image": "ipfs://bafybeidkxtd2qck3omiccqhi2iebklr5yfsm33vivmgyfarlh62l462zka",
+      "imageData": "",
+      "externalUrl": "",
+      "animationUrl": "",
+      "youtubeUrl": "",
+      "backgroundColor": "",
+      "attributes": null
+    }
   }
 ]
 ```

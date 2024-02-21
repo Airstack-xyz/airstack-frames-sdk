@@ -3,8 +3,8 @@ import { iteratePagination } from "../utils/iteratePagination";
 import { farcasterUserNFTMints as query } from "../graphql/query/farcasterUserNFTMints.query";
 import { formatFarcasterUserNFTMints } from "../utils/formatFarcasterUserNFTMints";
 import {
-  FarcasterNFTMintsOutputData,
-  FarcasterNFTMintsOutput,
+  FarcasterUserNFTMintsOutputData,
+  FarcasterUserNFTMintsOutput,
   FarcasterUserNFTMintsInput,
   FarcasterUserNftMintsQuery,
   FarcasterUserNftMintsQueryVariables,
@@ -12,7 +12,7 @@ import {
 
 export async function getFarcasterUserNFTMints(
   input: FarcasterUserNFTMintsInput
-): Promise<FarcasterNFTMintsOutput> {
+): Promise<FarcasterUserNFTMintsOutput> {
   const { fid, limit, chains, tokenType } = input ?? {};
   const variable: FarcasterUserNftMintsQueryVariables = {
     identity: `fc_fid:${fid}`,
@@ -28,12 +28,12 @@ export async function getFarcasterUserNFTMints(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterNFTMintsOutputData | null)[] | null | undefined,
+        (FarcasterUserNFTMintsOutputData | null)[] | null | undefined,
         FarcasterUserNftMintsQuery
       >(getPrevPage, formatFarcasterUserNFTMints),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterNFTMintsOutputData | null)[] | null | undefined,
+        (FarcasterUserNFTMintsOutputData | null)[] | null | undefined,
         FarcasterUserNftMintsQuery
       >(getNextPage, formatFarcasterUserNFTMints),
   };

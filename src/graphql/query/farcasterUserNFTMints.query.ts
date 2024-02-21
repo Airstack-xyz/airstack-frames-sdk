@@ -37,13 +37,10 @@ export const farcasterUserNFTMints = (
         formattedAmount
         amount
         tokenAddress
+        tokenId
         blockNumber
         blockTimestamp
         transactionHash
-        token {
-          name
-          symbol
-        }
         token {
           name
           symbol

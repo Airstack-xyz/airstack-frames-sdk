@@ -10,6 +10,8 @@ export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
         formattedAmount: amount,
         amount: amountInWei,
         token,
+        tokenId,
+        tokenType,
         blockTimestamp,
         blockNumber,
         tokenNft,
@@ -20,6 +22,8 @@ export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
         return {
           blockchain,
           tokenAddress,
+          tokenId,
+          tokenType,
           amount,
           amountInWei,
           name,
@@ -35,6 +39,8 @@ export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
       ({
         blockchain,
         tokenAddress,
+        tokenId,
+        tokenType,
         formattedAmount: amount,
         amount: amountInWei,
         token,
@@ -48,6 +54,8 @@ export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
         return {
           blockchain,
           tokenAddress,
+          tokenId,
+          tokenType,
           amount,
           amountInWei,
           name,
@@ -63,6 +71,8 @@ export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
       ({
         blockchain,
         tokenAddress,
+        tokenId,
+        tokenType,
         formattedAmount: amount,
         amount: amountInWei,
         token,
@@ -76,6 +86,8 @@ export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
         return {
           blockchain,
           tokenAddress,
+          tokenId,
+          tokenType,
           amount,
           amountInWei,
           name,
@@ -91,6 +103,8 @@ export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
       ({
         blockchain,
         tokenAddress,
+        tokenId,
+        tokenType,
         formattedAmount: amount,
         amount: amountInWei,
         token,
@@ -104,6 +118,8 @@ export function formatFarcasterUserNFTMints(data: FarcasterUserNftMintsQuery) {
         return {
           blockchain,
           tokenAddress,
+          tokenId,
+          tokenType,
           amount,
           amountInWei,
           name,

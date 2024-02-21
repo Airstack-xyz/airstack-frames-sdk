@@ -152,7 +152,7 @@ export interface FarcasterUserNFTMintsInput {
   limit?: number;
 }
 
-export interface FarcasterNFTMintsOutputData {
+export interface FarcasterUserNFTMintsOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
   amount: number | null;
@@ -161,10 +161,12 @@ export interface FarcasterNFTMintsOutputData {
   symbol: string | null | undefined;
   blockTimestamp: any | null;
   blockNumber: number | null;
+  tokenId: string;
+  tokenType: NFTType | null;
 }
 
-export type FarcasterNFTMintsOutput = IteratePaginationResponse<
-  (FarcasterNFTMintsOutputData | null)[] | null | undefined
+export type FarcasterUserNFTMintsOutput = IteratePaginationResponse<
+  (FarcasterUserNFTMintsOutputData | null)[] | null | undefined
 >;
 
 export interface FarcasterUserPoapsInput {
@@ -537,7 +539,7 @@ export type FarcasterUserNftMintsQuery = {
   ethereum?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
-      tokenType: TokenType | null;
+      tokenType: NFTType | null;
       formattedAmount: number | null;
       amount: string | null;
       tokenAddress: any | null;
@@ -545,6 +547,7 @@ export type FarcasterUserNftMintsQuery = {
       blockTimestamp: any | null;
       transactionHash: string;
       token: { name: string | null; symbol: string | null } | null;
+      tokenId: string;
       tokenNft: {
         contentValue: {
           image: {
@@ -577,10 +580,11 @@ export type FarcasterUserNftMintsQuery = {
   polygon?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
-      tokenType: TokenType | null;
+      tokenType: NFTType | null;
       formattedAmount: number | null;
       amount: string | null;
       tokenAddress: any | null;
+      tokenId: string;
       blockNumber: number | null;
       blockTimestamp: any | null;
       transactionHash: string;
@@ -617,10 +621,11 @@ export type FarcasterUserNftMintsQuery = {
   base?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
-      tokenType: TokenType | null;
+      tokenType: NFTType | null;
       formattedAmount: number | null;
       amount: string | null;
       tokenAddress: any | null;
+      tokenId: string;
       blockNumber: number | null;
       blockTimestamp: any | null;
       transactionHash: string;
@@ -657,10 +662,11 @@ export type FarcasterUserNftMintsQuery = {
   zora?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
-      tokenType: TokenType | null;
+      tokenType: NFTType | null;
       formattedAmount: number | null;
       amount: string | null;
       tokenAddress: any | null;
+      tokenId: string;
       blockNumber: number | null;
       blockTimestamp: any | null;
       transactionHash: string;
