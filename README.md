@@ -15,52 +15,21 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [Get Started](#get-started)
   - [Functions](#functions)
     - [`getFarcasterUserDetails`](#getfarcasteruserdetails)
-      - [Code Sample](#code-sample)
-      - [Response Sample](#response-sample)
     - [`getFarcasterFollowers`](#getfarcasterfollowers)
-      - [Code Sample](#code-sample-1)
-      - [Response Sample](#response-sample-1)
     - [`getFarcasterFollowings`](#getfarcasterfollowings)
-      - [Code Sample](#code-sample-2)
-      - [Response Sample](#response-sample-2)
     - [`getFarcasterUserPoaps`](#getfarcasteruserpoaps)
-      - [Code Sample](#code-sample-3)
-      - [Response Sample](#response-sample-3)
     - [`getFarcasterUserERC20Balances`](#getfarcasterusererc20balances)
-      - [Code Sample](#code-sample-4)
-      - [Response Sample](#response-sample-4)
     - [`getFarcasterUserNFTBalances`](#getfarcasterusernftbalances)
-      - [Code Sample](#code-sample-5)
-      - [Response Sample](#response-sample-5)
     - [`getFarcasterUserERC20Mints`](#getfarcasterusererc20mints)
-      - [Code Sample](#code-sample-6)
-      - [Response Sample](#response-sample-6)
     - [`getFarcasterUserNFTMints`](#getfarcasterusernftmints)
-      - [Code Sample](#code-sample-7)
-      - [Response Sample](#response-sample-7)
     - [`getFarcasterUserTokenSentFrom`](#getfarcasterusertokensentfrom)
-      - [Code Sample](#code-sample-8)
-      - [Response Sample](#response-sample-8)
     - [`getFarcasterUserTokenReceivedBy`](#getfarcasterusertokenreceivedby)
-      - [Code Sample](#code-sample-9)
-      - [Response Sample](#response-sample-9)
     - [`searchFarcasterUsers`](#searchfarcasterusers)
-      - [Code Sample](#code-sample-10)
-      - [Response Sample](#response-sample-10)
     - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
-      - [Code Sample](#code-sample-11)
-      - [Response Sample](#response-sample-11)
     - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
-      - [Code Sample](#code-sample-12)
     - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
-      - [Code Sample](#code-sample-13)
-      - [Response Sample](#response-sample-12)
     - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
-      - [Code Sample](#code-sample-14)
-      - [Response Sample](#response-sample-13)
     - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
-      - [Code Sample](#code-sample-15)
-      - [Response Sample](#response-sample-14)
 
 ## Install
 
@@ -90,7 +59,7 @@ init(process.AIRSTACK_API_KEY);
 
 ### `getFarcasterUserDetails`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import {
@@ -110,7 +79,7 @@ if (error) throw new Error(error);
 console.log(data);
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 {
@@ -134,7 +103,7 @@ console.log(data);
 
 ### `getFarcasterFollowers`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterFollowers } from "@airstack/frames";
@@ -148,7 +117,7 @@ console.log(followers);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -172,7 +141,7 @@ if (hasNextPage) await getNextPage();
 
 ### `getFarcasterFollowings`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterFollowings } from "@airstack/frames";
@@ -186,7 +155,7 @@ console.log(followings);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -210,7 +179,7 @@ if (hasNextPage) await getNextPage();
 
 ### `getFarcasterUserPoaps`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterUserPoaps } from "@airstack/frames";
@@ -225,7 +194,7 @@ console.log(poaps);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -243,7 +212,7 @@ if (hasNextPage) await getNextPage();
 
 ### `getFarcasterUserERC20Balances`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterUserERC20Balances } from "@airstack/frames";
@@ -258,7 +227,7 @@ console.log(erc20Balances);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -275,7 +244,7 @@ if (hasNextPage) await getNextPage();
 
 ### `getFarcasterUserNFTBalances`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterUserNFTBalances } from "@airstack/frames";
@@ -295,7 +264,7 @@ console.log(nftBalances);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -319,7 +288,7 @@ if (hasNextPage) await getNextPage();
 
 ### `getFarcasterUserERC20Mints`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterUserERC20Mints } from "@airstack/frames";
@@ -334,7 +303,7 @@ console.log(erc20Balances);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -352,7 +321,7 @@ if (hasNextPage) await getNextPage();
 
 ### `getFarcasterUserNFTMints`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterUserNFTMints } from "@airstack/frames";
@@ -367,7 +336,7 @@ console.log(nftBalances);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -391,7 +360,7 @@ if (hasNextPage) await getNextPage();
 
 ### `getFarcasterUserTokenSentFrom`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterUserTokenSentFrom } from "@airstack/frames";
@@ -407,7 +376,7 @@ console.log(tokenSent);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -436,7 +405,7 @@ if (hasNextPage) await getNextPage();
 
 ### `getFarcasterUserTokenReceivedBy`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { getFarcasterUserTokenReceivedBy } from "@airstack/frames";
@@ -452,7 +421,7 @@ console.log(tokenReceived);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -481,7 +450,7 @@ if (hasNextPage) await getNextPage();
 
 ### `searchFarcasterUsers`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { searchFarcasteUsers } from "@airstack/frames";
@@ -495,7 +464,7 @@ console.log(farcasterUsers);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -521,7 +490,7 @@ if (hasNextPage) await getNextPage();
 
 ### `checkPoapAttendedByFarcasterUser`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { checkPoapAttendedByFarcasterUser } from "@airstack/frames";
@@ -535,7 +504,7 @@ console.log(isPoapAttended);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [true, false, true]
@@ -559,7 +528,7 @@ if (hasNextPage) await getNextPage();
 
 ### `checkTokenHoldByFarcasterUser`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { checkTokenHoldByFarcasterUser } from "@airstack/frames";
@@ -580,7 +549,7 @@ if (hasNextPage) await getNextPage();
 
 ### `checkTokenMintedByFarcasterUser`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { checkTokenMintedByFarcasterUser } from "@airstack/frames";
@@ -599,7 +568,7 @@ console.log(isTokenMinted);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -613,7 +582,7 @@ if (hasNextPage) await getNextPage();
 
 ### `checkIsFollowingFarcasterUser`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { checkIsFollowingFarcasterUser } from "@airstack/frames";
@@ -632,7 +601,7 @@ console.log(isFollowing);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
@@ -653,7 +622,7 @@ if (hasNextPage) await getNextPage();
 
 ### `checkIsFollowedByFarcasterUser`
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import { checkIsFollowedByFarcasterUser } from "@airstack/frames";
@@ -672,7 +641,7 @@ console.log(isFollowedBy);
 if (hasNextPage) await getNextPage();
 ```
 
-#### Response Sample
+**Response Sample**
 
 ```json
 [
