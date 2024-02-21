@@ -105,6 +105,8 @@ console.log(data);
 
 ### `getFarcasterFollowers`
 
+Fetch all Farcaster followers of a given FID.
+
 **Code Sample**
 
 ```ts
@@ -156,18 +158,33 @@ console.log(data);
 
 ### `getFarcasterFollowings`
 
+Fetch all Farcaster followings of a given FID.
+
 **Code Sample**
 
 ```ts
-import { getFarcasterFollowings } from "@airstack/frames";
+import {
+  getFarcasterFollowings,
+  FarcasterFollowingsInput,
+  FarcasterFollowingsOutput,
+} from "@airstack/frames";
 
-const { followings, error, hasNextPage, getNextPage } =
-  await getFarcasterFollowings({
-    fid: "2",
-    limit: 100,
-  });
-console.log(followings);
-if (hasNextPage) await getNextPage();
+const input: FarcasterFollowingsInput = {
+  fid: 602,
+  limit: 100,
+};
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterFollowingsOutput = await getFarcasterFollowings(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -175,38 +192,52 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "profileName": "",
-    "fid": "",
-    "fnames": [],
+    "profileName": "jayhuq",
+    "fnames": ["jayhuq"],
+    "fid": "1775",
     "profileImage": {
-      "extraSmall": "",
-      "small": "",
-      "original": "",
-      "medium": "",
-      "large": ""
+      "extraSmall": "https://assets.airstack.xyz/image/social/HmDDiN8HQWR/6f6nrPI8+P6fwctlKaEu/dM8+QnZz/Y=/extra_small.png",
+      "small": "https://assets.airstack.xyz/image/social/HmDDiN8HQWR/6f6nrPI8+P6fwctlKaEu/dM8+QnZz/Y=/small.png",
+      "medium": "https://assets.airstack.xyz/image/social/HmDDiN8HQWR/6f6nrPI8+P6fwctlKaEu/dM8+QnZz/Y=/medium.png",
+      "large": "https://assets.airstack.xyz/image/social/HmDDiN8HQWR/6f6nrPI8+P6fwctlKaEu/dM8+QnZz/Y=/large.png",
+      "original": "https://assets.airstack.xyz/image/social/HmDDiN8HQWR/6f6nrPI8+P6fwctlKaEu/dM8+QnZz/Y=/original_image.png"
     },
-    "userAssociatedAddresses": [],
-    "followerCounts": 0,
-    "followingCounts": 0
+    "userAssociatedAddresses": ["0xda52abca28fadeab9771ba45a2ff346c4db97d7f"],
+    "followerCount": 58,
+    "followingCount": 0
   }
 ]
 ```
 
 ### `getFarcasterUserPoaps`
 
+Fetch all POAPs owned by a Farcaster user of a given FID.
+
 **Code Sample**
 
 ```ts
-import { getFarcasterUserPoaps } from "@airstack/frames";
+import {
+  getFarcasterUserPoaps,
+  FarcasterUserPoapsInput,
+  FarcasterUserPoapsOutput,
+} from "@airstack/frames";
 
-const { poaps, error, hasNextPage, getNextPage } = await getFarcasterUserPoaps({
-  fid: "2",
-  startDate: "",
-  endDate: "",
+const input: FarcasterUserPoapsInput = {
+  fid: 602,
   limit: 100,
-});
-console.log(poaps);
-if (hasNextPage) await getNextPage();
+};
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterUserPoapsOutput = await getFarcasterUserPoaps(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -214,13 +245,13 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "eventName": "",
-    "eventId": "",
-    "eventUrl": "",
-    "city": "",
-    "isVirtual": "",
-    "startDate": "",
-    "endDate": ""
+    "eventName": "ETHGlobal New York 2023 Speaker",
+    "eventId": "151055",
+    "eventURL": "https://ethglobal.com/events/newyork2023",
+    "isVirtualEvent": false,
+    "startDate": "2023-09-22T00:00:00Z",
+    "endDate": "2023-09-25T00:00:00Z",
+    "city": "New York City"
   }
 ]
 ```
