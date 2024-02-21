@@ -1,6 +1,6 @@
 {
   "name": "@airstack/frames",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Official Airstack Frames SDK",
   "main": "src/index.ts",
   "scripts": {
@@ -16,7 +16,7 @@
   "author": {
     "name": "Yoseph Kurnia Soenggoro"
   },
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Airstack-xyz/airstack-frames-sdk/issues"
   },
