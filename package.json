@@ -1,9 +1,9 @@
 {
   "name": "@airstack/frames",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Official Airstack Frames SDK",
-  "main": "src/index.ts",
-  "typings": "src/types.ts",
+  "main": "dist/index.js",
+  "typings": "dist/types.js",
   "scripts": {
     "test": "jest --coverage --passWithNoTests",
     "generate": "npx graphql-codegen",

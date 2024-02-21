@@ -671,7 +671,7 @@ console.log(data);
 
 ### `searchFarcasterUsers`
 
-Search Farcaster users that contains a given string input.
+Search Farcaster users that contain a given string input.
 
 **Code Sample**
 
@@ -711,83 +711,76 @@ if (hasNextPage) await getNextPage();
 
 ### `checkPoapAttendedByFarcasterUser`
 
-Check If Farcaster user of a given FID has attended a list of POAP events.
+Check If a Farcaster user of a given FID has attended a list of POAP events.
 
 **Code Sample**
 
 ```ts
-import { checkPoapAttendedByFarcasterUser } from "@airstack/frames";
+import {
+  checkPoapAttendedByFarcasterUser,
+  CheckPoapAttendedByFarcasterUserInput,
+  CheckPoapAttendedByFarcasterUserOutput,
+} from "@airstack/frames";
 
-const { isPoapAttended, error } = await checkPoapAttendedByFarcasterUser({
-  fid: "2",
-  eventId: ["1", "2", "3"],
-  limit: 100,
-});
-console.log(isPoapAttended);
-if (hasNextPage) await getNextPage();
+const input: CheckPoapAttendedByFarcasterUserInput = {
+  fid: 15971,
+  eventId: [160005, 159993, 13242],
+};
+const { data, error }: CheckPoapAttendedByFarcasterUserOutput =
+  await checkPoapAttendedByFarcasterUser(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
 
 ```json
 [
-  {
-    "eventId": "1",
-    "isAttended": true
-  },
-  {
-    "eventId": "2",
-    "isAttended": false
-  },
-  {
-    "eventId": "3",
-    "isAttended": true
-  }
+  { "eventId": 160005, "isAttended": true },
+  { "eventId": 159993, "isAttended": true },
+  { "eventId": 13242, "isAttended": false }
 ]
 ```
 
 ### `checkTokenHoldByFarcasterUser`
 
-Check If Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
+Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
 
 **Code Sample**
 
 ```ts
-import { checkTokenHoldByFarcasterUser } from "@airstack/frames";
+import {
+  checkTokenHoldByFarcasterUser,
+  CheckTokenHoldByFarcasterUserInput,
+  CheckTokenHoldByFarcasterUserOutput,
+  TokenBlockchain,
+} from "@airstack/frames";
 
-const { isTokenHold, error } = await checkTokenHoldByFarcasterUser({
-  fid: "2",
+const input: CheckTokenHoldByFarcasterUserInput = {
+  fid: 15971,
   token: [
     {
-      tokenAddress: "0x...",
-      chain: "ethereum",
+      chain: TokenBlockchain.Base,
+      tokenAddress: "0x4c17ff12d9a925a0dec822a8cbf06f46c6268553",
     },
-  ],
-  limit: 100,
-});
-console.log(isTokenHold);
-if (hasNextPage) await getNextPage();
-```
-
-### `checkTokenMintedByFarcasterUser`
-
-**Code Sample**
-
-```ts
-import { checkTokenMintedByFarcasterUser } from "@airstack/frames";
-
-const { isTokenMinted, error } = await checkTokenMintedByFarcasterUser({
-  fid: "2",
-  token: [
     {
-      tokenAddress: "0x...",
-      chain: "ethereum",
+      chain: TokenBlockchain.Ethereum,
+      tokenAddress: "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+    },
+    {
+      chain: TokenBlockchain.Zora,
+      tokenAddress: "0xa15bb830acd9ab46164e6840e3ef2dbbf9c5e2b3",
     },
   ],
-  limit: 100,
-});
-console.log(isTokenMinted);
-if (hasNextPage) await getNextPage();
+};
+const { data, error }: CheckTokenHoldByFarcasterUserOutput =
+  await checkTokenHoldByFarcasterUser(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -795,93 +788,150 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "tokenAdress": "0x...",
+    "chain": "base",
+    "tokenAddress": "0x4c17ff12d9a925a0dec822a8cbf06f46c6268553",
+    "isHold": false
+  },
+  {
     "chain": "ethereum",
+    "tokenAddress": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+    "isHold": true
+  },
+  {
+    "chain": "zora",
+    "tokenAddress": "0xa15bb830acd9ab46164e6840e3ef2dbbf9c5e2b3",
+    "isHold": true
+  }
+]
+```
+
+### `checkTokenMintedByFarcasterUser`
+
+Check If a Farcaster user of a given FID minted a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
+
+**Code Sample**
+
+```ts
+import {
+  checkTokenMintedByFarcasterUser,
+  CheckTokenMintedByFarcasterUserInput,
+  CheckTokenMintedByFarcasterUserOutput,
+  TokenBlockchain,
+} from "@airstack/frames";
+
+const input: CheckTokenMintedByFarcasterUserInput = {
+  fid: 15971,
+  token: [
+    {
+      chain: TokenBlockchain.Base,
+      tokenAddress: "0x57965af45c3b33571aa5419cc5e9012d8dcab181",
+    },
+    {
+      chain: TokenBlockchain.Ethereum,
+      tokenAddress: "0xad08067c7d3d3dbc14a9df8d671ff2565fc5a1ae",
+    },
+    {
+      chain: TokenBlockchain.Zora,
+      tokenAddress: "0xa15bb830acd9ab46164e6840e3ef2dbbf9c5e2b3",
+    },
+  ],
+};
+const { data, error }: CheckTokenMintedByFarcasterUserOutput =
+  await checkTokenMintedByFarcasterUser(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "chain": "base",
+    "tokenAddress": "0x57965af45c3b33571aa5419cc5e9012d8dcab181",
     "isMinted": true
+  },
+  {
+    "chain": "ethereum",
+    "tokenAddress": "0xad08067c7d3d3dbc14a9df8d671ff2565fc5a1ae",
+    "isMinted": true
+  },
+  {
+    "chain": "zora",
+    "tokenAddress": "0xa15bb830acd9ab46164e6840e3ef2dbbf9c5e2b3",
+    "isMinted": false
   }
 ]
 ```
 
 ### `checkIsFollowingFarcasterUser`
 
-Check If Farcaster user of a given FID is following an array of Farcaster users with certain FIDs.
+Check If a Farcaster user of a given FID is following an array of Farcaster users with certain FIDs.
 
 **Code Sample**
 
 ```ts
-import { checkIsFollowingFarcasterUser } from "@airstack/frames";
+import {
+  checkIsFollowingFarcasterUser,
+  CheckIsFollowingFarcasterUserInput,
+  CheckIsFollowingFarcasterUserOutput,
+} from "@airstack/frames";
 
-const { isFollowing, error } = await checkIsFollowingFarcasterUser({
-  fid: "2",
-  isFollowing: [
-    // provide fids
-    "1",
-    "10",
-    "100",
-  ],
-  limit: 100,
-});
-console.log(isFollowing);
-if (hasNextPage) await getNextPage();
+const input: CheckIsFollowingFarcasterUserInput = {
+  fid: 602,
+  isFollowing: [2602, 15971, 13242],
+};
+const { data, error }: CheckIsFollowingFarcasterUserOutput =
+  await checkIsFollowingFarcasterUser(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
 
 ```json
 [
-  {
-    "fid": "1",
-    "isFollowing": true
-  },
-  {
-    "fid": "10",
-    "isFollowing": false
-  },
-  {
-    "fid": "100",
-    "isFollowing": true
-  }
+  { "fid": 2602, "isFollowing": true },
+  { "fid": 15971, "isFollowing": true },
+  { "fid": 13242, "isFollowing": false }
 ]
 ```
 
 ### `checkIsFollowedByFarcasterUser`
 
-Check If Farcaster user of a given FID is followed by an array of Farcaster users with certain FIDs.
+Check If a Farcaster user of a given FID is followed by an array of Farcaster users with certain FIDs.
 
 **Code Sample**
 
 ```ts
-import { checkIsFollowedByFarcasterUser } from "@airstack/frames";
+import {
+  checkIsFollowedByFarcasterUser,
+  CheckIsFollowedByFarcasterUserInput,
+  CheckIsFollowedByFarcasterUserOutput,
+} from "@airstack/frames";
 
-const { isFollowedBy, error } = await checkIsFollowedByFarcasterUser({
-  fid: "2",
-  isFollowedBy: [
-    // provide fids
-    "1",
-    "10",
-    "100",
-  ],
-  limit: 100,
-});
-console.log(isFollowedBy);
-if (hasNextPage) await getNextPage();
+const input: CheckIsFollowedByFarcasterUserInput = {
+  fid: 602,
+  isFollowedBy: [2602, 15971, 13242],
+};
+const { data, error }: CheckIsFollowedByFarcasterUserOutput =
+  await checkIsFollowedByFarcasterUser(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
 
 ```json
 [
-  {
-    "fid": "1",
-    "isFollowed": true
-  },
-  {
-    "fid": "10",
-    "isFollowed": false
-  },
-  {
-    "fid": "100",
-    "isFollowed": true
-  }
+  { "fid": 2602, "isFollowedBy": true },
+  { "fid": 15971, "isFollowedBy": true },
+  { "fid": 13242, "isFollowedBy": false }
 ]
 ```

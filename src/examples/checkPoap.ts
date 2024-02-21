@@ -13,7 +13,10 @@ config();
     fid: 15971,
     eventId: [160005, 159993, 13242],
   };
-  const { data }: CheckPoapAttendedByFarcasterUserOutput =
+  const { data, error }: CheckPoapAttendedByFarcasterUserOutput =
     await checkPoapAttendedByFarcasterUser(input);
+
+  if (error) throw new Error(error);
+
   console.log(data);
 })();
