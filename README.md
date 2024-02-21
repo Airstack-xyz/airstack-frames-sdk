@@ -59,6 +59,8 @@ init(process.AIRSTACK_API_KEY);
 
 ### `getFarcasterUserDetails`
 
+Fetch Farcaster user details, including profile name, fnames, profile images (resized), user-associated addresses (connected addresses), follower count and following count.
+
 **Code Sample**
 
 ```ts
@@ -106,15 +108,28 @@ console.log(data);
 **Code Sample**
 
 ```ts
-import { getFarcasterFollowers } from "@airstack/frames";
+import {
+  getFarcasterFollowers,
+  FarcasterFollowersInput,
+  FarcasterFollowersOutput,
+} from "@airstack/frames";
 
-const { followers, error, hasNextPage, getNextPage } =
-  await getFarcasterFollowers({
-    fid: "2",
-    limit: 100,
-  });
-console.log(followers);
-if (hasNextPage) await getNextPage();
+const input: FarcasterFollowersInput = {
+  fid: 602,
+  limit: 100,
+};
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterFollowersOutput = await getFarcasterFollowers(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -122,19 +137,19 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "profileName": "",
-    "fid": "",
-    "fnames": [],
+    "profileName": "allison985",
+    "fnames": ["allison985"],
+    "fid": "220757",
     "profileImage": {
-      "extraSmall": "",
-      "small": "",
-      "original": "",
-      "medium": "",
-      "large": ""
+      "extraSmall": "https://assets.airstack.xyz/image/social/RS9r7sdCb5orXeB0+tLLRPxtnJo80la3zRRVAYc9gPR+ne8TitCLgEJ41Gp1LV6g/extra_small.jpg",
+      "small": "https://assets.airstack.xyz/image/social/RS9r7sdCb5orXeB0+tLLRPxtnJo80la3zRRVAYc9gPR+ne8TitCLgEJ41Gp1LV6g/small.jpg",
+      "medium": "https://assets.airstack.xyz/image/social/RS9r7sdCb5orXeB0+tLLRPxtnJo80la3zRRVAYc9gPR+ne8TitCLgEJ41Gp1LV6g/medium.jpg",
+      "large": "https://assets.airstack.xyz/image/social/RS9r7sdCb5orXeB0+tLLRPxtnJo80la3zRRVAYc9gPR+ne8TitCLgEJ41Gp1LV6g/large.jpg",
+      "original": "https://assets.airstack.xyz/image/social/RS9r7sdCb5orXeB0+tLLRPxtnJo80la3zRRVAYc9gPR+ne8TitCLgEJ41Gp1LV6g/original_image.jpg"
     },
-    "userAssociatedAddresses": [],
-    "followerCounts": 0,
-    "followingCounts": 0
+    "userAssociatedAddresses": ["0x42fae5a53f0194f6f9587926e206a852c5c726bf"],
+    "followerCount": 1,
+    "followingCount": 74
   }
 ]
 ```
