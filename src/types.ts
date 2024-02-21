@@ -109,7 +109,7 @@ export interface FarcasterUserERC20MintsInput {
   limit?: number;
 }
 
-export interface FarcasterERC20MintsOutputData {
+export interface FarcasterUserERC20MintsOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
   amount: number | null;
@@ -120,8 +120,8 @@ export interface FarcasterERC20MintsOutputData {
   blockNumber: number | null;
 }
 
-export type FarcasterERC20MintsOutput = IteratePaginationResponse<
-  (FarcasterERC20MintsOutputData | null)[] | null | undefined
+export type FarcasterUserERC20MintsOutput = IteratePaginationResponse<
+  (FarcasterUserERC20MintsOutputData | null)[] | null | undefined
 >;
 
 export interface FarcasterUserNFTBalancesInput {

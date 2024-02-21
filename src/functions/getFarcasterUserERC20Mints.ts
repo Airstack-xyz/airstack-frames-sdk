@@ -3,8 +3,8 @@ import { iteratePagination } from "../utils/iteratePagination";
 import { farcasterUserERC20Mints as query } from "../graphql/query/farcasterUserERC20Mints.query";
 import { formatFarcasterUserERC20Mints } from "../utils/formatFarcasterUserERC20Mints";
 import {
-  FarcasterERC20MintsOutputData,
-  FarcasterERC20MintsOutput,
+  FarcasterUserERC20MintsOutputData,
+  FarcasterUserERC20MintsOutput,
   FarcasterUserERC20MintsInput,
   FarcasterUserErc20MintsQuery,
   FarcasterUserErc20MintsQueryVariables,
@@ -12,7 +12,7 @@ import {
 
 export async function getFarcasterUserERC20Mints(
   input: FarcasterUserERC20MintsInput
-): Promise<FarcasterERC20MintsOutput> {
+): Promise<FarcasterUserERC20MintsOutput> {
   const { fid, limit, chains } = input ?? {};
   const variable: FarcasterUserErc20MintsQueryVariables = {
     identity: `fc_fid:${fid}`,
@@ -27,12 +27,12 @@ export async function getFarcasterUserERC20Mints(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterERC20MintsOutputData | null)[] | null | undefined,
+        (FarcasterUserERC20MintsOutputData | null)[] | null | undefined,
         FarcasterUserErc20MintsQuery
       >(getPrevPage, formatFarcasterUserERC20Mints),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterERC20MintsOutputData | null)[] | null | undefined,
+        (FarcasterUserERC20MintsOutputData | null)[] | null | undefined,
         FarcasterUserErc20MintsQuery
       >(getNextPage, formatFarcasterUserERC20Mints),
   };

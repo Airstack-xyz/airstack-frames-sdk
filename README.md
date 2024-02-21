@@ -395,16 +395,35 @@ Fetch ERC20 tokens minted by a Farcaster user of a given FID across Ethereum, Po
 **Code Sample**
 
 ```ts
-import { getFarcasterUserERC20Mints } from "@airstack/frames";
+import {
+  getFarcasterUserERC20Mints,
+  FarcasterUserERC20MintsInput,
+  FarcasterUserERC20MintsOutput,
+  TokenBlockchain,
+} from "@airstack/frames";
 
-const { erc20Mints, error, hasNextPage, getNextPage } =
-  await getFarcasterUserERC20Mints({
-    fid: "2",
-    chain: ["ethereum", "polygon", "base", "zora"],
-    limit: 100,
-  });
-console.log(erc20Balances);
-if (hasNextPage) await getNextPage();
+const input: FarcasterUserERC20MintsInput = {
+  fid: 602,
+  chains: [
+    TokenBlockchain.Ethereum,
+    TokenBlockchain.Polygon,
+    TokenBlockchain.Base,
+    TokenBlockchain.Zora,
+  ],
+  limit: 10,
+};
+const {
+  data,
+  error,
+  hasNextPage,
+  hasPrevPage,
+  getNextPage,
+  getPrevPage,
+}: FarcasterUserERC20MintsOutput = await getFarcasterUserERC20Mints(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 **Response Sample**
@@ -412,13 +431,14 @@ if (hasNextPage) await getNextPage();
 ```json
 [
   {
-    "blockchain": "ethereum",
-    "tokenAddress": "",
-    "amount": 0,
-    "amountInWei": 0,
-    "txHash": "",
-    "blockTimestamp": "",
-    "blockNumber": ""
+    "blockchain": "polygon",
+    "tokenAddress": "0x058d96baa6f9d16853970b333ed993acc0c35add",
+    "amount": 50,
+    "amountInWei": "50000000000000000000",
+    "name": "Staked SPORK",
+    "symbol": "sSPORK",
+    "blockTimestamp": "2024-01-03T18:43:02Z",
+    "blockNumber": 51901326
   }
 ]
 ```
