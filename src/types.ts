@@ -5,7 +5,7 @@ export interface FarcasterFollowersInput {
   limit?: number;
 }
 
-export interface FarcasterFollowersOutput {
+export interface FarcasterFollowersOutputData {
   profileName: string | null | undefined;
   fnames: (string | null)[] | null | undefined;
   fid: string | null | undefined;
@@ -23,13 +23,17 @@ export interface FarcasterFollowersOutput {
     | null
     | undefined;
 }
+
+export type FarcasterFollowersOutput = IteratePaginationResponse<
+  FarcasterFollowersOutputData[] | null | undefined
+>;
 
 export interface FarcasterFollowingsInput {
   fid: number;
   limit?: number;
 }
 
-export interface FarcasterFollowingsOutput {
+export interface FarcasterFollowingsOutputData {
   profileName: string | null | undefined;
   fnames: (string | null)[] | null | undefined;
   fid: string | null | undefined;
@@ -47,6 +51,10 @@ export interface FarcasterFollowingsOutput {
     | null
     | undefined;
 }
+
+export type FarcasterFollowingsOutput = IteratePaginationResponse<
+  FarcasterFollowingsOutputData[] | null | undefined
+>;
 
 export interface FarcasterUserDetailsInput {
   fid: number;
@@ -82,7 +90,7 @@ export interface FarcasterUserERC20BalancesInput {
   limit?: number;
 }
 
-export interface FarcasterUserERC20BalancesOutput {
+export interface FarcasterUserERC20BalancesOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
   amount: number | null;
@@ -91,13 +99,17 @@ export interface FarcasterUserERC20BalancesOutput {
   symbol: string | null | undefined;
 }
 
+export type FarcasterUserERC20BalancesOutput = IteratePaginationResponse<
+  (FarcasterUserERC20BalancesOutputData | null)[] | null | undefined
+>;
+
 export interface FarcasterUserERC20MintsInput {
   fid: number;
   chains?: TokenBlockchain[];
   limit?: number;
 }
 
-export interface FarcasterERC20MintsOutput {
+export interface FarcasterERC20MintsOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
   amount: number | null;
@@ -107,6 +119,10 @@ export interface FarcasterERC20MintsOutput {
   blockTimestamp: any | null;
   blockNumber: number | null;
 }
+
+export type FarcasterERC20MintsOutput = IteratePaginationResponse<
+  (FarcasterERC20MintsOutputData | null)[] | null | undefined
+>;
 
 export interface FarcasterUserNFTBalancesInput {
   fid: number;
@@ -115,7 +131,7 @@ export interface FarcasterUserNFTBalancesInput {
   limit?: number;
 }
 
-export interface FarcasterUserNFTBalancesOutput {
+export interface FarcasterUserNFTBalancesOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
   amount: number | null;
@@ -124,6 +140,10 @@ export interface FarcasterUserNFTBalancesOutput {
   symbol: string | null | undefined;
 }
 
+export type FarcasterUserNFTBalancesOutput = IteratePaginationResponse<
+  (FarcasterUserNFTBalancesOutputData | null)[] | null | undefined
+>;
+
 export interface FarcasterUserNFTMintsInput {
   fid: number;
   chains?: TokenBlockchain[];
@@ -131,7 +151,7 @@ export interface FarcasterUserNFTMintsInput {
   limit?: number;
 }
 
-export interface FarcasterNFTMintsOutput {
+export interface FarcasterNFTMintsOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
   amount: number | null;
@@ -141,6 +161,10 @@ export interface FarcasterNFTMintsOutput {
   blockTimestamp: any | null;
   blockNumber: number | null;
 }
+
+export type FarcasterNFTMintsOutput = IteratePaginationResponse<
+  (FarcasterNFTMintsOutputData | null)[] | null | undefined
+>;
 
 export interface FarcasterUserPoapsInput {
   fid: number;

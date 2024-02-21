@@ -1,12 +1,10 @@
 import { fetchQueryWithPagination } from "@airstack/node";
 import { farcasterUserNFTBalances as query } from "../graphql/query/farcasterUserNFTBalances.query";
-import {
-  IteratePaginationResponse,
-  iteratePagination,
-} from "../utils/iteratePagination";
+import { iteratePagination } from "../utils/iteratePagination";
 import { formatFarcasterUserNFTBalances } from "../utils/formatFarcasterUserNFTBalances";
 import {
   FarcasterUserNFTBalancesInput,
+  FarcasterUserNFTBalancesOutputData,
   FarcasterUserNFTBalancesOutput,
   FarcasterNftBalancesQuery,
   FarcasterNftBalancesQueryVariables,
@@ -14,11 +12,7 @@ import {
 
 export async function getFarcasterUserNFTBalances(
   input: FarcasterUserNFTBalancesInput
-): Promise<
-  IteratePaginationResponse<
-    (FarcasterUserNFTBalancesOutput | null)[] | null | undefined
-  >
-> {
+): Promise<FarcasterUserNFTBalancesOutput> {
   const { fid, limit, tokenType, chains } = input ?? {};
   const variable: FarcasterNftBalancesQueryVariables = {
     identity: `fc_fid:${fid}`,
@@ -34,12 +28,12 @@ export async function getFarcasterUserNFTBalances(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterUserNFTBalancesOutput | null)[] | null | undefined,
+        (FarcasterUserNFTBalancesOutputData | null)[] | null | undefined,
         FarcasterNftBalancesQuery
       >(getPrevPage, formatFarcasterUserNFTBalances),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterUserNFTBalancesOutput | null)[] | null | undefined,
+        (FarcasterUserNFTBalancesOutputData | null)[] | null | undefined,
         FarcasterNftBalancesQuery
       >(getNextPage, formatFarcasterUserNFTBalances),
   };

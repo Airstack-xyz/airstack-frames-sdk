@@ -8,8 +8,8 @@ import { formatFarcasterFollowings } from "../utils/formatFarcasterFollowings";
 import { iteratePagination } from "../utils/iteratePagination";
 import {
   FarcasterFollowingsInput,
+  FarcasterFollowingsOutputData,
   FarcasterFollowingsOutput,
-  IteratePaginationResponse,
 } from "../types";
 
 /**
@@ -25,9 +25,7 @@ import {
  */
 export async function getFarcasterFollowings(
   input: FarcasterFollowingsInput
-): Promise<
-  IteratePaginationResponse<FarcasterFollowingsOutput[] | null | undefined>
-> {
+): Promise<FarcasterFollowingsOutput> {
   const { fid, limit } = input ?? {};
   const variable: FarcasterFollowingsQueryVariables = {
     identity: `fc_fid:${fid}`,
@@ -42,12 +40,12 @@ export async function getFarcasterFollowings(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        FarcasterFollowingsOutput[] | null | undefined,
+        FarcasterFollowingsOutputData[] | null | undefined,
         FarcasterFollowingsQuery
       >(getPrevPage, formatFarcasterFollowings),
     getNextPage: async () =>
       await iteratePagination<
-        FarcasterFollowingsOutput[] | null | undefined,
+        FarcasterFollowingsOutputData[] | null | undefined,
         FarcasterFollowingsQuery
       >(getNextPage, formatFarcasterFollowings),
   };

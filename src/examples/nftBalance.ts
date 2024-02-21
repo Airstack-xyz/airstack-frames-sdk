@@ -4,7 +4,6 @@ import {
   FarcasterUserNFTBalancesInput,
   FarcasterUserNFTBalancesOutput,
   TokenBlockchain,
-  IteratePaginationResponse,
 } from "..";
 import { config } from "dotenv";
 
@@ -17,11 +16,7 @@ config();
     chains: [TokenBlockchain.Base],
     limit: 10,
   };
-  const {
-    data,
-    error,
-  }: IteratePaginationResponse<
-    (FarcasterUserNFTBalancesOutput | null)[] | null | undefined
-  > = await getFarcasterUserNFTBalances(variables);
+  const { data, error }: FarcasterUserNFTBalancesOutput =
+    await getFarcasterUserNFTBalances(variables);
   console.log(data);
 })();

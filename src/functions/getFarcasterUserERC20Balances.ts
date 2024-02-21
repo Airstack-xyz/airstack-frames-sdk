@@ -4,10 +4,10 @@ import { iteratePagination } from "../utils/iteratePagination";
 import { formatFarcasterUserERC20Balances } from "../utils/formatFarcasterUserERC20Balances";
 import {
   FarcasterUserERC20BalancesInput,
-  FarcasterUserERC20BalancesOutput,
+  FarcasterUserERC20BalancesOutputData,
   FarcasterErc20BalancesQuery,
   FarcasterErc20BalancesQueryVariables,
-  IteratePaginationResponse,
+  FarcasterUserERC20BalancesOutput,
 } from "../types";
 
 /**
@@ -24,11 +24,7 @@ import {
  */
 export async function getFarcasterUserERC20Balances(
   input: FarcasterUserERC20BalancesInput
-): Promise<
-  IteratePaginationResponse<
-    (FarcasterUserERC20BalancesOutput | null)[] | null | undefined
-  >
-> {
+): Promise<FarcasterUserERC20BalancesOutput> {
   const { fid, limit, chains } = input ?? {};
   const variable: FarcasterErc20BalancesQueryVariables = {
     identity: `fc_fid:${fid}`,
@@ -43,12 +39,12 @@ export async function getFarcasterUserERC20Balances(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterUserERC20BalancesOutput | null)[] | null | undefined,
+        (FarcasterUserERC20BalancesOutputData | null)[] | null | undefined,
         FarcasterErc20BalancesQuery
       >(getPrevPage, formatFarcasterUserERC20Balances),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterUserERC20BalancesOutput | null)[] | null | undefined,
+        (FarcasterUserERC20BalancesOutputData | null)[] | null | undefined,
         FarcasterErc20BalancesQuery
       >(getNextPage, formatFarcasterUserERC20Balances),
   };
