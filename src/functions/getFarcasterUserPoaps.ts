@@ -4,12 +4,13 @@ import {
   FarcasterUserPoaPsQuery,
   FarcasterUserPoaPsQueryVariables,
 } from "../graphql/types";
-import {
-  IteratePaginationResponse,
-  iteratePagination,
-} from "../utils/iteratePagination";
+import { iteratePagination } from "../utils/iteratePagination";
 import { formatFarcasterUserPoaps } from "../utils/formatFarcasterUserPoaps";
-import { FarcasterUserPoapsInput, FarcasterUserPoapsOutput } from "../types";
+import {
+  FarcasterUserPoapsInput,
+  FarcasterUserPoapsOutput,
+  IteratePaginationResponse,
+} from "../types";
 
 export async function getFarcasterUserPoaps(
   input: FarcasterUserPoapsInput

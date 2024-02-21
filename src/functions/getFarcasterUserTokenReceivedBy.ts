@@ -1,15 +1,13 @@
 import { fetchQueryWithPagination } from "@airstack/node";
 import { farcasterUserTokenReceivedByQuery as query } from "../graphql/query/farcasterUserTokenReceivedBy.query";
-import {
-  IteratePaginationResponse,
-  iteratePagination,
-} from "../utils/iteratePagination";
+import { iteratePagination } from "../utils/iteratePagination";
 import { formatFarcasterUserTokenReceivedBy } from "../utils/formatFarcasterUserTokenReceivedBy";
 import {
   FarcasterUserTokenReceivedByInput,
   FarcasterUserTokenReceivedByOutput,
   FarcasterUserTokenReceivedByQueryVariables,
   FarcasterUserTokenReceivedByQuery,
+  IteratePaginationResponse,
 } from "../types";
 
 export async function getFarcasterUserTokenReceivedBy(

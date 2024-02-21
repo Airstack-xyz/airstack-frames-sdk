@@ -1,13 +1,5 @@
 import { FetchQuery } from "@airstack/node/dist/types/types";
-
-export interface IteratePaginationResponse<Data> {
-  data: Data | null | undefined;
-  error?: any;
-  hasPrevPage: boolean | undefined;
-  hasNextPage: boolean | undefined;
-  getPrevPage: () => Promise<IteratePaginationResponse<Data>>;
-  getNextPage: () => Promise<IteratePaginationResponse<Data>>;
-}
+import { IteratePaginationResponse } from "../types";
 
 /**
  * @description Iterate through the pagination of Airstack queries w/ formatting included

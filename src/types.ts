@@ -1264,3 +1264,12 @@ export interface CheckTokenMintedByFarcasterUserOutput {
       }[]
     | null;
 }
+
+export interface IteratePaginationResponse<Data> {
+  data: Data | null | undefined;
+  error?: any;
+  hasPrevPage: boolean | undefined;
+  hasNextPage: boolean | undefined;
+  getPrevPage: () => Promise<IteratePaginationResponse<Data>>;
+  getNextPage: () => Promise<IteratePaginationResponse<Data>>;
+}

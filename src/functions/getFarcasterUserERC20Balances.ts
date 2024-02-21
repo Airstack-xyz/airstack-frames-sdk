@@ -1,15 +1,13 @@
 import { fetchQueryWithPagination } from "@airstack/node";
 import { farcasterUserERC20Balances as query } from "../graphql/query/farcasterUserERC20Balances.query";
-import {
-  IteratePaginationResponse,
-  iteratePagination,
-} from "../utils/iteratePagination";
+import { iteratePagination } from "../utils/iteratePagination";
 import { formatFarcasterUserERC20Balances } from "../utils/formatFarcasterUserERC20Balances";
 import {
   FarcasterUserERC20BalancesInput,
   FarcasterUserERC20BalancesOutput,
   FarcasterErc20BalancesQuery,
   FarcasterErc20BalancesQueryVariables,
+  IteratePaginationResponse,
 } from "../types";
 
 /**

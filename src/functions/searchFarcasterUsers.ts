@@ -4,12 +4,13 @@ import {
   SearchFarcasterUsersQuery,
   SearchFarcasterUsersQueryVariables,
 } from "../graphql/types";
-import {
-  IteratePaginationResponse,
-  iteratePagination,
-} from "../utils/iteratePagination";
+import { iteratePagination } from "../utils/iteratePagination";
 import { formatSearchFarcasterUsers } from "../utils/formatSearchFarcasterUsers";
-import { SearchFarcasterUsersInput, SearchFarcastersOutput } from "../types";
+import {
+  SearchFarcasterUsersInput,
+  SearchFarcastersOutput,
+  IteratePaginationResponse,
+} from "../types";
 
 export async function searchFarcasterUsers(
   input: SearchFarcasterUsersInput

@@ -5,11 +5,12 @@ import type {
   FarcasterFollowingsQueryVariables,
 } from "../graphql/types";
 import { formatFarcasterFollowings } from "../utils/formatFarcasterFollowings";
+import { iteratePagination } from "../utils/iteratePagination";
 import {
-  iteratePagination,
+  FarcasterFollowingsInput,
+  FarcasterFollowingsOutput,
   IteratePaginationResponse,
-} from "../utils/iteratePagination";
-import { FarcasterFollowingsInput, FarcasterFollowingsOutput } from "../types";
+} from "../types";
 
 /**
  * @description Fetch Farcaster followings of a gived FID
