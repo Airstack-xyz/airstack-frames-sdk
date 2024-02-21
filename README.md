@@ -37,31 +37,42 @@ init(process.AIRSTACK_API_KEY);
 #### Code Sample
 
 ```ts
-import { getFarcasterUserDetails } from "@airstack/frames";
+import {
+  getFarcasterUserDetails,
+  FarcasterUserDetailsInput,
+  FarcasterUserDetailsOutput,
+} from "@airstack/frames";
 
-const { userDetails, error } = await getFarcasterUserDetails({
-  fid: "2",
-});
-console.log(userDetails);
+const input: FarcasterUserDetailsInput = {
+  fid: 602,
+};
+const { data, error }: FarcasterUserDetailsOutput =
+  await getFarcasterUserDetails(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
 ```
 
 #### Response Sample
 
 ```json
 {
-  "profileName": "",
-  "fid": "",
-  "fnames": [],
+  "profileName": "betashop.eth",
+  "fnames": ["betashop", "betashop.eth", "jasongoldberg.eth"],
   "profileImage": {
-    "extraSmall": "",
-    "small": "",
-    "original": "",
-    "medium": "",
-    "large": ""
+    "extraSmall": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/extra_small.png",
+    "small": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/small.png",
+    "medium": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/medium.png",
+    "large": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/large.png",
+    "original": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/original_image.png"
   },
-  "userAssociatedAddresses": [],
-  "followerCounts": 0,
-  "followingCounts": 0
+  "userAssociatedAddresses": [
+    "0x66bd69c7064d35d146ca78e6b186e57679fba249",
+    "0xeaf55242a90bb3289db8184772b0b98562053559"
+  ],
+  "followerCount": 56141,
+  "followingCount": 2270
 }
 ```
 

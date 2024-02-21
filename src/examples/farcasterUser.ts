@@ -1,10 +1,10 @@
-import { init } from "@airstack/node";
-import { getFarcasterUserDetails } from "../functions/getFarcasterUserDetails";
-import { config } from "dotenv";
 import {
+  init,
+  getFarcasterUserDetails,
   FarcasterUserDetailsInput,
   FarcasterUserDetailsOutput,
-} from "../types";
+} from "..";
+import { config } from "dotenv";
 
 config();
 (async () => {
@@ -12,8 +12,10 @@ config();
   const input: FarcasterUserDetailsInput = {
     fid: 602,
   };
-  const { data }: FarcasterUserDetailsOutput = await getFarcasterUserDetails(
-    input
-  );
+  const { data, error }: FarcasterUserDetailsOutput =
+    await getFarcasterUserDetails(input);
+
+  if (error) throw new Error(error);
+
   console.log(data);
 })();
