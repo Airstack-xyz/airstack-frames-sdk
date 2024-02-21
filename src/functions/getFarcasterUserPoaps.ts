@@ -8,17 +8,13 @@ import { iteratePagination } from "../utils/iteratePagination";
 import { formatFarcasterUserPoaps } from "../utils/formatFarcasterUserPoaps";
 import {
   FarcasterUserPoapsInput,
+  FarcasterUserPoapsOutputData,
   FarcasterUserPoapsOutput,
-  IteratePaginationResponse,
 } from "../types";
 
 export async function getFarcasterUserPoaps(
   input: FarcasterUserPoapsInput
-): Promise<
-  IteratePaginationResponse<
-    (FarcasterUserPoapsOutput | null)[] | null | undefined
-  >
-> {
+): Promise<FarcasterUserPoapsOutput> {
   const { fid, limit } = input ?? {};
   const variable: FarcasterUserPoaPsQueryVariables = {
     identity: `fc_fid:${fid}`,
@@ -33,12 +29,12 @@ export async function getFarcasterUserPoaps(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterUserPoapsOutput | null)[] | null | undefined,
+        (FarcasterUserPoapsOutputData | null)[] | null | undefined,
         FarcasterUserPoaPsQuery
       >(getPrevPage, formatFarcasterUserPoaps),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterUserPoapsOutput | null)[] | null | undefined,
+        (FarcasterUserPoapsOutputData | null)[] | null | undefined,
         FarcasterUserPoaPsQuery
       >(getNextPage, formatFarcasterUserPoaps),
   };

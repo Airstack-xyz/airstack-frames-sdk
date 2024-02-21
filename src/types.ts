@@ -171,7 +171,7 @@ export interface FarcasterUserPoapsInput {
   limit?: number;
 }
 
-export interface FarcasterUserPoapsOutput {
+export interface FarcasterUserPoapsOutputData {
   eventName: string | null;
   eventId: string | null;
   eventURL: string | null;
@@ -181,12 +181,16 @@ export interface FarcasterUserPoapsOutput {
   endDate: any;
 }
 
+export type FarcasterUserPoapsOutput = IteratePaginationResponse<
+  (FarcasterUserPoapsOutputData | null)[] | null | undefined
+>;
+
 export interface SearchFarcasterUsersInput {
   profileName: string;
   limit?: number;
 }
 
-export interface SearchFarcastersOutput {
+export interface SearchFarcastersOutputData {
   profileName: string | null;
   fnames: Array<string | null> | null;
   userAssociatedAddresses: Array<any> | null;
@@ -204,6 +208,10 @@ export interface SearchFarcastersOutput {
     | null
     | undefined;
 }
+
+export type SearchFarcastersOutput = IteratePaginationResponse<
+  (SearchFarcastersOutputData | null)[] | null | undefined
+>;
 
 export interface CheckIsFollowingFarcasterUserInput {
   fid: number;
@@ -690,7 +698,7 @@ export interface FarcasterUserTokenSentFromInput {
   limit?: number;
 }
 
-export interface FarcasterUserTokenSentFromOutput {
+export interface FarcasterUserTokenSentFromOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
   amount: number | null;
@@ -725,6 +733,10 @@ export interface FarcasterUserTokenSentFromOutput {
     original: string | null;
   } | null;
 }
+
+export type FarcasterUserTokenSentFromOutput = IteratePaginationResponse<
+  (FarcasterUserTokenSentFromOutputData | null)[] | null | undefined
+>;
 
 export type FarcasterUserTokenSentFromQueryVariables = Exact<{
   identity: Scalars["Identity"]["input"];
@@ -1117,7 +1129,7 @@ export interface FarcasterUserTokenReceivedByInput {
   limit?: number;
 }
 
-export interface FarcasterUserTokenReceivedByOutput {
+export interface FarcasterUserTokenReceivedByOutputData {
   blockchain: TokenBlockchain | null;
   tokenAddress: string;
   amount: number | null;
@@ -1152,6 +1164,10 @@ export interface FarcasterUserTokenReceivedByOutput {
     original: string | null;
   } | null;
 }
+
+export type FarcasterUserTokenReceivedByOutput = IteratePaginationResponse<
+  (FarcasterUserTokenReceivedByOutputData | null)[] | null | undefined
+>;
 
 export type CheckTokenHoldByFarcasterUserQueryVariables = Exact<{
   owner: Scalars["Identity"]["input"];

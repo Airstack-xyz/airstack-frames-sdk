@@ -4,19 +4,15 @@ import { iteratePagination } from "../utils/iteratePagination";
 import { formatFarcasterUserTokenReceivedBy } from "../utils/formatFarcasterUserTokenReceivedBy";
 import {
   FarcasterUserTokenReceivedByInput,
+  FarcasterUserTokenReceivedByOutputData,
   FarcasterUserTokenReceivedByOutput,
   FarcasterUserTokenReceivedByQueryVariables,
   FarcasterUserTokenReceivedByQuery,
-  IteratePaginationResponse,
 } from "../types";
 
 export async function getFarcasterUserTokenReceivedBy(
   input: FarcasterUserTokenReceivedByInput
-): Promise<
-  IteratePaginationResponse<
-    (FarcasterUserTokenReceivedByOutput | null)[] | null | undefined
-  >
-> {
+): Promise<FarcasterUserTokenReceivedByOutput> {
   const { fid, tokenType, chains, limit } = input ?? {};
   const variable: FarcasterUserTokenReceivedByQueryVariables = {
     identity: `fc_fid:${fid}`,
@@ -32,12 +28,12 @@ export async function getFarcasterUserTokenReceivedBy(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (FarcasterUserTokenReceivedByOutput | null)[] | null | undefined,
+        (FarcasterUserTokenReceivedByOutputData | null)[] | null | undefined,
         FarcasterUserTokenReceivedByQuery
       >(getPrevPage, formatFarcasterUserTokenReceivedBy),
     getNextPage: async () =>
       await iteratePagination<
-        (FarcasterUserTokenReceivedByOutput | null)[] | null | undefined,
+        (FarcasterUserTokenReceivedByOutputData | null)[] | null | undefined,
         FarcasterUserTokenReceivedByQuery
       >(getNextPage, formatFarcasterUserTokenReceivedBy),
   };

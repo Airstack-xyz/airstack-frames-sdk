@@ -1,14 +1,30 @@
 # Official Airstack Frames SDK
 
+The Airstack Frames SDK empowers developers to seamlessly integrate onchain data, including token balances, token mints, Farcaster followers and followings, POAPs, and more, into their Frames using just a few lines of code.
+
+Additionally, developers can leverage the SDK to create an allow list feature, enabling checks for token ownership, token mints, following status, and more.
+
+Designed with TypeScript, the SDK offers full type support for those building Frames with TypeScript.
+
 ## Install
 
-```
+To install the Frames SDK, use the command below:
+
+```bash
 npm install @airstack/frames
+```
+
+## Set Environment Variables
+
+Create a `.env.local` file and add your [Airstack API key](https://app.airstack.xyz/profile-settings/api-keys) as an environment variable:
+
+```
+AIRSTACK_API_KEY="YOUR_AIRSTACK_API_KEY"
 ```
 
 ## Get Started
 
-```
+```ts
 import { init } from "@airstack/frames";
 
 init(process.AIRSTACK_API_KEY);
@@ -33,19 +49,19 @@ console.log(userDetails);
 
 ```json
 {
-	"profileName": "".
-	"fid": "",
-	"fnames": [],
-	"profileImage": {
-		"extraSmall": "",
-		"small": "",
-		"original": "",
-		"medium": "",
-		"large": ""
-	},
+  "profileName": "",
+  "fid": "",
+  "fnames": [],
+  "profileImage": {
+    "extraSmall": "",
+    "small": "",
+    "original": "",
+    "medium": "",
+    "large": ""
+  },
   "userAssociatedAddresses": [],
-	"followerCounts": 0,
-	"followingCounts": 0
+  "followerCounts": 0,
+  "followingCounts": 0
 }
 ```
 
@@ -69,23 +85,21 @@ if (hasNextPage) await getNextPage();
 
 ```json
 [
-	// Follower #1
-	{
-		"profileName": "".
-		"fid": "",
-		"fnames": [],
-		"profileImage": {
-			"extraSmall": "",
-			"small": "",
-			"original": "",
-			"medium": "",
-			"large": ""
-		},
-	  "userAssociatedAddresses": [],
-		"followerCounts": 0,
-		"followingCounts": 0
-	},
-	// Follower #2 and so on
+  {
+    "profileName": "",
+    "fid": "",
+    "fnames": [],
+    "profileImage": {
+      "extraSmall": "",
+      "small": "",
+      "original": "",
+      "medium": "",
+      "large": ""
+    },
+    "userAssociatedAddresses": [],
+    "followerCounts": 0,
+    "followingCounts": 0
+  }
 ]
 ```
 
@@ -109,23 +123,21 @@ if (hasNextPage) await getNextPage();
 
 ```json
 [
-	// Following #1
-	{
-		"profileName": "".
-		"fid": "",
-		"fnames": [],
-		"profileImage": {
-			"extraSmall": "",
-			"small": "",
-			"original": "",
-			"medium": "",
-			"large": ""
-		},
-	  "userAssociatedAddresses": [],
-		"followerCounts": 0,
-		"followingCounts": 0
-	},
-	// Following #2 and so on
+  {
+    "profileName": "",
+    "fid": "",
+    "fnames": [],
+    "profileImage": {
+      "extraSmall": "",
+      "small": "",
+      "original": "",
+      "medium": "",
+      "large": ""
+    },
+    "userAssociatedAddresses": [],
+    "followerCounts": 0,
+    "followingCounts": 0
+  }
 ]
 ```
 
@@ -150,7 +162,6 @@ if (hasNextPage) await getNextPage();
 
 ```json
 [
-  // POAP # 1
   {
     "eventName": "",
     "eventId": "",
@@ -160,7 +171,6 @@ if (hasNextPage) await getNextPage();
     "startDate": "",
     "endDate": ""
   }
-  // POAP #2 and so on
 ]
 ```
 

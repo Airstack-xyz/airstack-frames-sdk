@@ -8,17 +8,13 @@ import { iteratePagination } from "../utils/iteratePagination";
 import { formatSearchFarcasterUsers } from "../utils/formatSearchFarcasterUsers";
 import {
   SearchFarcasterUsersInput,
+  SearchFarcastersOutputData,
   SearchFarcastersOutput,
-  IteratePaginationResponse,
 } from "../types";
 
 export async function searchFarcasterUsers(
   input: SearchFarcasterUsersInput
-): Promise<
-  IteratePaginationResponse<
-    (SearchFarcastersOutput | null)[] | null | undefined
-  >
-> {
+): Promise<SearchFarcastersOutput> {
   const { profileName, limit } = input ?? {};
   const variable: SearchFarcasterUsersQueryVariables = {
     profileName,
@@ -33,12 +29,12 @@ export async function searchFarcasterUsers(
     hasNextPage,
     getPrevPage: async () =>
       await iteratePagination<
-        (SearchFarcastersOutput | null)[] | null | undefined,
+        (SearchFarcastersOutputData | null)[] | null | undefined,
         SearchFarcasterUsersQuery
       >(getPrevPage, formatSearchFarcasterUsers),
     getNextPage: async () =>
       await iteratePagination<
-        (SearchFarcastersOutput | null)[] | null | undefined,
+        (SearchFarcastersOutputData | null)[] | null | undefined,
         SearchFarcasterUsersQuery
       >(getNextPage, formatSearchFarcasterUsers),
   };
