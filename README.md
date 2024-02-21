@@ -30,6 +30,11 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
     - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
     - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
     - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
+  - [Enum](#enum)
+    - [`TokenBlockchain`](#tokenblockchain)
+    - [`TokenType`](#tokentype)
+    - [`NFTType`](#nfttype)
+  - [Paginations](#paginations)
 
 ## Install
 
@@ -49,6 +54,8 @@ AIRSTACK_API_KEY="YOUR_AIRSTACK_API_KEY"
 
 ## Get Started
 
+To use any of the functions offered by the SDK, you'll need to call the `init` function before calling the functions and input your [Airstack API key](https://app.airstack.xyz/profile-settings/api-keys).
+
 ```ts
 import { init } from "@airstack/frames";
 
@@ -60,6 +67,12 @@ init(process.AIRSTACK_API_KEY);
 ### `getFarcasterUserDetails`
 
 Fetch Farcaster user details, including profile name, fnames, profile images (resized), user-associated addresses (connected addresses), follower count and following count.
+
+**Input**
+
+| Field | Type     | Required | Description             |
+| ----- | -------- | -------- | ----------------------- |
+| `fid` | `number` | true     | FID of a Farcaster user |
 
 **Code Sample**
 
@@ -106,6 +119,13 @@ console.log(data);
 ### `getFarcasterFollowers`
 
 Fetch all Farcaster followers of a given FID.
+
+**Input**
+
+| Field   | Type     | Required | Description                                                                                           |
+| ------- | -------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `fid`   | `number` | true     | FID of a Farcaster user                                                                               |
+| `limit` | `number` | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
 
 **Code Sample**
 
@@ -160,6 +180,13 @@ console.log(data);
 
 Fetch all Farcaster followings of a given FID.
 
+**Input**
+
+| Field   | Type     | Required | Description                                                                                           |
+| ------- | -------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `fid`   | `number` | true     | FID of a Farcaster user                                                                               |
+| `limit` | `number` | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
 **Code Sample**
 
 ```ts
@@ -213,6 +240,13 @@ console.log(data);
 
 Fetch all POAPs owned by a Farcaster user of a given FID.
 
+**Input**
+
+| Field   | Type     | Required | Description                                                                                           |
+| ------- | -------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `fid`   | `number` | true     | FID of a Farcaster user                                                                               |
+| `limit` | `number` | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
 **Code Sample**
 
 ```ts
@@ -259,6 +293,14 @@ console.log(data);
 ### `getFarcasterUserERC20Balances`
 
 Fetch ERC20 tokens owned by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+
+**Input**
+
+| Field    | Type                                    | Required | Description                                                                                                                                              |
+| -------- | --------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                  |
+| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 balance. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
+| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                    |
 
 **Code Sample**
 
@@ -314,6 +356,14 @@ console.log(data);
 ### `getFarcasterUserNFTBalances`
 
 Fetch ERC721 and ERC1155 NFT collections owned by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+
+**Input**
+
+| Field    | Type                                    | Required | Description                                                                                                                                            |
+| -------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                |
+| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT balance. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
+| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                  |
 
 **Code Sample**
 
@@ -392,6 +442,14 @@ console.log(data);
 
 Fetch ERC20 tokens minted by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
 
+**Input**
+
+| Field    | Type                                    | Required | Description                                                                                                                                            |
+| -------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                |
+| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 mints. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
+| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                  |
+
 **Code Sample**
 
 ```ts
@@ -446,6 +504,14 @@ console.log(data);
 ### `getFarcasterUserNFTMints`
 
 Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+
+**Input**
+
+| Field    | Type                                    | Required | Description                                                                                                                                          |
+| -------- | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                              |
+| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT mints. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
+| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                |
 
 **Code Sample**
 
@@ -524,6 +590,15 @@ console.log(data);
 
 Fetch all token transfers sent from a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
 
+**Input**
+
+| Field       | Type                                    | Required | Description                                                                                                                                                |
+| ----------- | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                    |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                                        |
+| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                                     |
+
 **Code Sample**
 
 ```ts
@@ -588,6 +663,15 @@ console.log(data);
 ### `getFarcasterUserTokenReceivedBy`
 
 Fetch all token transfers received by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+
+**Input**
+
+| Field       | Type                                    | Required | Description                                                                                                                                                |
+| ----------- | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                    |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                                        |
+| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                                     |
 
 **Code Sample**
 
@@ -673,6 +757,13 @@ console.log(data);
 
 Search Farcaster users that contain a given string input, e.g. all Farcaster users that contains "a" in their profile name.
 
+**Input**
+
+| Field         | Type     | Required | Description                                                                                                                   |
+| ------------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `profileName` | `string` | true     | string to match with the profile name. Only profile name that contains this inputted string will be returned in the response. |
+| `limit`       | `number` | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).        |
+
 **Code Sample**
 
 ```ts
@@ -729,6 +820,13 @@ console.log(data);
 
 Check If a Farcaster user of a given FID has attended a list of POAP events.
 
+**Input**
+
+| Field     | Type       | Required | Description                                                         |
+| --------- | ---------- | -------- | ------------------------------------------------------------------- |
+| `fid`     | `string`   | true     | FID of a Farcaster user.                                            |
+| `eventId` | `number[]` | true     | List of POAP event IDs to check if the Farcaster user has attended. |
+
 **Code Sample**
 
 ```ts
@@ -763,6 +861,11 @@ console.log(data);
 ### `checkTokenHoldByFarcasterUser`
 
 Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
+
+| Field   | Type                                                 | Required | Description                                                     |
+| ------- | ---------------------------------------------------- | -------- | --------------------------------------------------------------- |
+| `fid`   | `string`                                             | true     | FID of a Farcaster user.                                        |
+| `token` | `{ chain: TokenBlockchain; tokenAddress: string }[]` | true     | List of tokens to check if the Farcaster user hold any of them. |
 
 **Code Sample**
 
@@ -825,6 +928,11 @@ console.log(data);
 
 Check If a Farcaster user of a given FID minted a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
 
+| Field   | Type                                                 | Required | Description                                                       |
+| ------- | ---------------------------------------------------- | -------- | ----------------------------------------------------------------- |
+| `fid`   | `string`                                             | true     | FID of a Farcaster user.                                          |
+| `token` | `{ chain: TokenBlockchain; tokenAddress: string }[]` | true     | List of tokens to check if the Farcaster user minted any of them. |
+
 **Code Sample**
 
 ```ts
@@ -886,6 +994,11 @@ console.log(data);
 
 Check If a Farcaster user of a given FID is following an array of Farcaster users with certain FIDs.
 
+| Field         | Type       | Required | Description                                                                                              |
+| ------------- | ---------- | -------- | -------------------------------------------------------------------------------------------------------- |
+| `fid`         | `string`   | true     | FID of a Farcaster user.                                                                                 |
+| `isFollowing` | `number[]` | true     | List of FIDs to check if the given user is following these list of Farcaster user with the provided FIDs |
+
 **Code Sample**
 
 ```ts
@@ -921,6 +1034,11 @@ console.log(data);
 
 Check If a Farcaster user of a given FID is followed by an array of Farcaster users with certain FIDs.
 
+| Field         | Type       | Required | Description                                                                                                |
+| ------------- | ---------- | -------- | ---------------------------------------------------------------------------------------------------------- |
+| `fid`         | `string`   | true     | FID of a Farcaster user.                                                                                   |
+| `isFollowing` | `number[]` | true     | List of FIDs to check if the given user is followed by these list of Farcaster user with the provided FIDs |
+
 **Code Sample**
 
 ```ts
@@ -950,4 +1068,71 @@ console.log(data);
   { "fid": 15971, "isFollowedBy": true },
   { "fid": 13242, "isFollowedBy": false }
 ]
+```
+
+## Enum
+
+The SDK offered several enums for some defined input values, such as blockchains and token types.
+
+### `TokenBlockchain`
+
+```ts
+export enum TokenBlockchain {
+  Base = "base",
+  Ethereum = "ethereum",
+  Polygon = "polygon",
+  Zora = "zora",
+}
+```
+
+### `TokenType`
+
+```ts
+export enum TokenType {
+  ERC20 = "ERC20",
+  ERC721 = "ERC721",
+  ERC1155 = "ERC1155",
+}
+```
+
+### `NFTType`
+
+```ts
+export enum NFTType {
+  ERC721 = "ERC721",
+  ERC1155 = "ERC1155",
+}
+```
+
+## Paginations
+
+Some functions provide pagination fields that you can use to paginate through the results.
+
+| Field         | Type                                                          | Description                                    |
+| ------------- | ------------------------------------------------------------- | ---------------------------------------------- |
+| `hasNextPage` | `boolean`                                                     | Indicate if there is any next page or not.     |
+| `hasPrevPage` | `boolean`                                                     | Indicate if there is any previous page or not. |
+| `getNextPage` | `getNextPage: () => Promise<IteratePaginationResponse<Data>>` | Fetch result for the next page, if any.        |
+| `getPrevPage` | `getNextPage: () => Promise<IteratePaginationResponse<Data>>` | Fetch result for the previous page, if any.    |
+
+If you are trying to fetch results from the next page, simply add the code below:
+
+```ts
+const { hasNextPage, getNextPage }: SearchFarcastersOutput =
+  await searchFarcasterUsers(input);
+
+if (hasNextPage) {
+  const { data, error } = await getNextPage();
+}
+```
+
+Similarly, for fetching results from the previous page, simply add the code below:
+
+```ts
+const { hasPrevPage, getPrevPage }: SearchFarcastersOutput =
+  await searchFarcasterUsers(input);
+
+if (hasPrevPage) {
+  const { data, error } = await getPrevPage();
+}
 ```
