@@ -6,6 +6,62 @@ Additionally, developers can leverage the SDK to create an allow list feature, e
 
 Designed with TypeScript, the SDK offers full type support for those building Frames with TypeScript.
 
+## Table Of Contents
+
+- [Official Airstack Frames SDK](#official-airstack-frames-sdk)
+  - [Table Of Contents](#table-of-contents)
+  - [Install](#install)
+  - [Set Environment Variables](#set-environment-variables)
+  - [Get Started](#get-started)
+  - [Functions](#functions)
+    - [`getFarcasterUserDetails`](#getfarcasteruserdetails)
+      - [Code Sample](#code-sample)
+      - [Response Sample](#response-sample)
+    - [`getFarcasterFollowers`](#getfarcasterfollowers)
+      - [Code Sample](#code-sample-1)
+      - [Response Sample](#response-sample-1)
+    - [`getFarcasterFollowings`](#getfarcasterfollowings)
+      - [Code Sample](#code-sample-2)
+      - [Response Sample](#response-sample-2)
+    - [`getFarcasterUserPoaps`](#getfarcasteruserpoaps)
+      - [Code Sample](#code-sample-3)
+      - [Response Sample](#response-sample-3)
+    - [`getFarcasterUserERC20Balances`](#getfarcasterusererc20balances)
+      - [Code Sample](#code-sample-4)
+      - [Response Sample](#response-sample-4)
+    - [`getFarcasterUserNFTBalances`](#getfarcasterusernftbalances)
+      - [Code Sample](#code-sample-5)
+      - [Response Sample](#response-sample-5)
+    - [`getFarcasterUserERC20Mints`](#getfarcasterusererc20mints)
+      - [Code Sample](#code-sample-6)
+      - [Response Sample](#response-sample-6)
+    - [`getFarcasterUserNFTMints`](#getfarcasterusernftmints)
+      - [Code Sample](#code-sample-7)
+      - [Response Sample](#response-sample-7)
+    - [`getFarcasterUserTokenSentFrom`](#getfarcasterusertokensentfrom)
+      - [Code Sample](#code-sample-8)
+      - [Response Sample](#response-sample-8)
+    - [`getFarcasterUserTokenReceivedBy`](#getfarcasterusertokenreceivedby)
+      - [Code Sample](#code-sample-9)
+      - [Response Sample](#response-sample-9)
+    - [`searchFarcasterUsers`](#searchfarcasterusers)
+      - [Code Sample](#code-sample-10)
+      - [Response Sample](#response-sample-10)
+    - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
+      - [Code Sample](#code-sample-11)
+      - [Response Sample](#response-sample-11)
+    - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
+      - [Code Sample](#code-sample-12)
+    - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
+      - [Code Sample](#code-sample-13)
+      - [Response Sample](#response-sample-12)
+    - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
+      - [Code Sample](#code-sample-14)
+      - [Response Sample](#response-sample-13)
+    - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
+      - [Code Sample](#code-sample-15)
+      - [Response Sample](#response-sample-14)
+
 ## Install
 
 To install the Frames SDK, use the command below:
@@ -76,7 +132,7 @@ console.log(data);
 }
 ```
 
-# `getFarcasterFollowers`
+### `getFarcasterFollowers`
 
 #### Code Sample
 
