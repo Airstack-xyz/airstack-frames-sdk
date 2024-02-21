@@ -8,6 +8,7 @@ import {
 import { config } from "dotenv";
 
 config();
+
 (async () => {
   init(process.env.AIRSTACK_API_KEY ?? "");
   const input: CheckTokenHoldByFarcasterUserInput = {
@@ -27,7 +28,10 @@ config();
       },
     ],
   };
-  const { data }: CheckTokenHoldByFarcasterUserOutput =
+  const { data, error }: CheckTokenHoldByFarcasterUserOutput =
     await checkTokenHoldByFarcasterUser(input);
+
+  if (error) throw new Error(error);
+
   console.log(data);
 })();
