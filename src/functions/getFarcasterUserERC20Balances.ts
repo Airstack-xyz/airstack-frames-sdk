@@ -12,6 +12,18 @@ import {
   FarcasterErc20BalancesQueryVariables,
 } from "../types";
 
+/**
+ * @description Fetch Farcaster user's xERC20 balances of a gived FID
+ * @example
+ * const { data: followers, error } = await getFarcasterUserERC20Balances({
+ *  fid: 1,
+ *  limit: 100,
+ * });
+ * @param {Number} input.fid Farcaster user FID
+ * @param {Number} input.limit Number of JSON responses returned per API call
+ * @param {Array<String>} input.chains Array of chains to query
+ * @returns An array of ERC20 tokens hold by Farcaster user
+ */
 export async function getFarcasterUserERC20Balances(
   input: FarcasterUserERC20BalancesInput
 ): Promise<

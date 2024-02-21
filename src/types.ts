@@ -1128,3 +1128,69 @@ export interface FarcasterUserTokenReceivedByOutput {
     original: string | null;
   } | null;
 }
+
+export type CheckTokenHoldByFarcasterUserQueryVariables = Exact<{
+  owner: Scalars["Identity"]["input"];
+  ethereumTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  polygonTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  baseTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  zoraTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+}>;
+
+export type CheckTokenHoldByFarcasterUserQuery = {
+  ethereum?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  polygon?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  base?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  zora?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+};
+
+export interface CheckTokenHoldByFarcasterUserInput {
+  fid: number;
+  token: {
+    tokenAddress: string;
+    chain: TokenBlockchain;
+  }[];
+}
+
+export interface CheckTokenHoldByFarcasterUserOutput {
+  error: any;
+  data:
+    | {
+        chain: TokenBlockchain;
+        tokenAddress: string;
+        isHold: boolean;
+      }[]
+    | null;
+}
