@@ -23,16 +23,8 @@ config();
     ],
     limit: 10,
   };
-  const {
-    data,
-    error,
-    hasNextPage,
-    hasPrevPage,
-    getNextPage,
-    getPrevPage,
-  }: FarcasterUserNFTBalancesOutput = await getFarcasterUserNFTBalances(
-    variables
-  );
+  const { data, error }: FarcasterUserNFTBalancesOutput =
+    await getFarcasterUserNFTBalances(variables);
 
   if (error) throw new Error(error);
 

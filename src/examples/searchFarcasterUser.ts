@@ -13,14 +13,9 @@ config();
     profileName: "a",
     limit: 10,
   };
-  const {
-    data,
-    error,
-    hasNextPage,
-    hasPrevPage,
-    getNextPage,
-    getPrevPage,
-  }: SearchFarcastersOutput = await searchFarcasterUsers(input);
+  const { data, error }: SearchFarcastersOutput = await searchFarcasterUsers(
+    input
+  );
 
   if (error) throw new Error(error);
 

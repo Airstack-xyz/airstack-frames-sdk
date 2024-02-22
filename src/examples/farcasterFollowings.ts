@@ -13,14 +13,8 @@ config();
     fid: 602,
     limit: 100,
   };
-  const {
-    data,
-    error,
-    hasNextPage,
-    hasPrevPage,
-    getNextPage,
-    getPrevPage,
-  }: FarcasterFollowingsOutput = await getFarcasterFollowings(input);
+  const { data, error }: FarcasterFollowingsOutput =
+    await getFarcasterFollowings(input);
 
   if (error) throw new Error(error);
 

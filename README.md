@@ -1,4 +1,7 @@
-# Official Airstack Frames SDK
+<div align="center">
+  <h1 align="center">Official Airstack Frames SDK</h1>
+  <p>Powered By <img src="https://d391b93f5f62d9c15f67142e43841acc.ipfscdn.io/ipfs/bafybeihbaepvd2iuzsocd7rf7gaq6a5uuwhkdgsrmik2sj4o4nt7vkpnna/Airstack-logo-icon-RGB%20gitbook.png" alt="Airstack Logo" height=100/></p>
+</div>
 
 The Airstack Frames SDK empowers developers to seamlessly integrate onchain data, including token balances, token mints, Farcaster followers and followings, POAPs, and more, into their Frames using just a few lines of code.
 
@@ -8,33 +11,32 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
 
 ## Table Of Contents
 
-- [Official Airstack Frames SDK](#official-airstack-frames-sdk)
-  - [Table Of Contents](#table-of-contents)
-  - [Install](#install)
-  - [Set Environment Variables](#set-environment-variables)
-  - [Get Started](#get-started)
-  - [Functions](#functions)
-    - [`getFarcasterUserDetails`](#getfarcasteruserdetails)
-    - [`getFarcasterFollowers`](#getfarcasterfollowers)
-    - [`getFarcasterFollowings`](#getfarcasterfollowings)
-    - [`getFarcasterUserPoaps`](#getfarcasteruserpoaps)
-    - [`getFarcasterUserERC20Balances`](#getfarcasterusererc20balances)
-    - [`getFarcasterUserNFTBalances`](#getfarcasterusernftbalances)
-    - [`getFarcasterUserERC20Mints`](#getfarcasterusererc20mints)
-    - [`getFarcasterUserNFTMints`](#getfarcasterusernftmints)
-    - [`getFarcasterUserTokenSentFrom`](#getfarcasterusertokensentfrom)
-    - [`getFarcasterUserTokenReceivedBy`](#getfarcasterusertokenreceivedby)
-    - [`searchFarcasterUsers`](#searchfarcasterusers)
-    - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
-    - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
-    - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
-    - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
-    - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
-  - [Enum](#enum)
-    - [`TokenBlockchain`](#tokenblockchain)
-    - [`TokenType`](#tokentype)
-    - [`NFTType`](#nfttype)
-  - [Paginations](#paginations)
+- [Table Of Contents](#table-of-contents)
+- [Install](#install)
+- [Set Environment Variables](#set-environment-variables)
+- [Get Started](#get-started)
+- [Functions](#functions)
+  - [`getFarcasterUserDetails`](#getfarcasteruserdetails)
+  - [`getFarcasterFollowers`](#getfarcasterfollowers)
+  - [`getFarcasterFollowings`](#getfarcasterfollowings)
+  - [`getFarcasterUserPoaps`](#getfarcasteruserpoaps)
+  - [`getFarcasterUserERC20Balances`](#getfarcasterusererc20balances)
+  - [`getFarcasterUserNFTBalances`](#getfarcasterusernftbalances)
+  - [`getFarcasterUserERC20Mints`](#getfarcasterusererc20mints)
+  - [`getFarcasterUserNFTMints`](#getfarcasterusernftmints)
+  - [`getFarcasterUserTokenSentFrom`](#getfarcasterusertokensentfrom)
+  - [`getFarcasterUserTokenReceivedBy`](#getfarcasterusertokenreceivedby)
+  - [`searchFarcasterUsers`](#searchfarcasterusers)
+  - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
+  - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
+  - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
+  - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
+  - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
+- [Enum](#enum)
+  - [`TokenBlockchain`](#tokenblockchain)
+  - [`TokenType`](#tokentype)
+  - [`NFTType`](#nfttype)
+- [Paginations](#paginations)
 
 ## Install
 

@@ -1,12 +1,17 @@
 {
   "name": "@airstack/frames",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Official Airstack Frames SDK",
-  "main": "src/index.ts",
+  "main": "dist/cjs/index.js",
+  "typings": "dist/types/index.d.ts",
+  "module": "dist/esm/index.js",
   "scripts": {
     "test": "jest --coverage --passWithNoTests",
     "generate": "npx graphql-codegen",
-    "build": "tsc ./src/index.ts --outDir ./dist"
+    "build": "rm -rf dist & tsc -p tsconfig.esm.json & npm run ts-lint & tsc -p tsconfig.cjs.json",
+    "lint": "eslint src/**/*.ts",
+    "ts-lint": "tsc --noEmit --incremental",
+    "prepare": "rm -rf dist & tsc -p tsconfig.esm.json & tsc -p tsconfig.cjs.json"
   },
   "repository": {
     "type": "git",

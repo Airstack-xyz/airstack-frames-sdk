@@ -13,14 +13,9 @@ config();
     fid: 602,
     limit: 100,
   };
-  const {
-    data,
-    error,
-    hasNextPage,
-    hasPrevPage,
-    getNextPage,
-    getPrevPage,
-  }: FarcasterUserPoapsOutput = await getFarcasterUserPoaps(input);
+  const { data, error }: FarcasterUserPoapsOutput = await getFarcasterUserPoaps(
+    input
+  );
 
   if (error) throw new Error(error);
 

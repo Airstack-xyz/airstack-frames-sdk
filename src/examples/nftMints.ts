@@ -22,14 +22,8 @@ config();
     tokenType: [NFTType.ERC721, NFTType.ERC1155],
     limit: 10,
   };
-  const {
-    data,
-    error,
-    hasNextPage,
-    hasPrevPage,
-    getNextPage,
-    getPrevPage,
-  }: FarcasterUserNFTMintsOutput = await getFarcasterUserNFTMints(input);
+  const { data, error }: FarcasterUserNFTMintsOutput =
+    await getFarcasterUserNFTMints(input);
 
   if (error) throw new Error(error);
 

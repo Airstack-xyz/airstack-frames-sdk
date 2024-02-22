@@ -20,14 +20,8 @@ config();
     ],
     limit: 10,
   };
-  const {
-    data,
-    error,
-    hasNextPage,
-    hasPrevPage,
-    getNextPage,
-    getPrevPage,
-  }: FarcasterUserERC20MintsOutput = await getFarcasterUserERC20Mints(input);
+  const { data, error }: FarcasterUserERC20MintsOutput =
+    await getFarcasterUserERC20Mints(input);
 
   if (error) throw new Error(error);
 

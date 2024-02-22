@@ -22,16 +22,8 @@ config();
     tokenType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC1155],
     limit: 10,
   };
-  const {
-    data,
-    error,
-    hasNextPage,
-    hasPrevPage,
-    getNextPage,
-    getPrevPage,
-  }: FarcasterUserTokenReceivedByOutput = await getFarcasterUserTokenReceivedBy(
-    input
-  );
+  const { data, error }: FarcasterUserTokenReceivedByOutput =
+    await getFarcasterUserTokenReceivedBy(input);
 
   if (error) throw new Error(error);
 
