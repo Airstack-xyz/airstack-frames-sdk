@@ -3,7 +3,7 @@
   <img src="./assets/image.png" alt="code snippets" height=350/>
   <h3>Powered By 
   <a align="center" href="https://airstack.xyz" target="_blank">
-  <img src="./assets/logo.png" alt="Airstack Logo" height=20/>
+  <img src="./assets/logo.png" alt="Airstack Logo" height=30/>
   </a></h3>
 </div>
 
