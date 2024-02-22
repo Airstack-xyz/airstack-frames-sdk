@@ -12,6 +12,17 @@ import {
   FarcasterUserPoapsOutput,
 } from "../types";
 
+/**
+ * @description Fetch Farcaster user's POAP balances of a gived FID
+ * @example
+ * const { data, error } = await getFarcasterUserPoaps({
+ *  fid: 1,
+ *  limit: 100,
+ * });
+ * @param {Number} input.fid Farcaster user FID
+ * @param {Number} [input.limit=200] Number of JSON responses returned per API call. Maximum value is 200.
+ * @returns An array of POAPs attended by Farcaster user
+ */
 export async function getFarcasterUserPoaps(
   input: FarcasterUserPoapsInput
 ): Promise<FarcasterUserPoapsOutput> {

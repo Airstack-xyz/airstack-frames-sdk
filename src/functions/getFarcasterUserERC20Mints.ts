@@ -10,6 +10,19 @@ import {
   FarcasterUserErc20MintsQueryVariables,
 } from "../types";
 
+/**
+ * @description Fetch Farcaster user's ERC20 mints of a gived FID
+ * @example
+ * const { data, error } = await getFarcasterUserERC20Mints({
+ *  fid: 1,
+ *  chains: [TokenBlockchain.Ethereum],
+ *  limit: 100,
+ * });
+ * @param {Number} input.fid Farcaster user FID
+ * @param {Array<TokenBlockchain>} [input.chains=[TokenBlockchain.Ethereum, TokenBlockchain.Polygon, TokenBlockchain.Base, TokenBlockchain.Zora]] Array of chains to query
+ * @param {Number} [input.limit=200] Number of JSON responses returned per API call. Maximum value is 200.
+ * @returns An array of ERC20 tokens minted by Farcaster user
+ */
 export async function getFarcasterUserERC20Mints(
   input: FarcasterUserERC20MintsInput
 ): Promise<FarcasterUserERC20MintsOutput> {

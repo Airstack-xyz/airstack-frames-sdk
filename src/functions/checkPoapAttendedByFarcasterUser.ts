@@ -9,6 +9,17 @@ import {
 } from "../types";
 import { checkPoapAttendedByFarcasterUserQuery as query } from "../graphql/query/checkPoapAttendedByFarcasterUser.query";
 
+/**
+ * @description Check If a Farcaster user of a given FID has attended a list of POAP events.
+ * @example
+ * const { data, error } = await checkPoapAttendedByFarcasterUser({
+ *  fid: 1,
+ *  eventId: [2, 3, 4],
+ * });
+ * @param {Number} input.fid Farcaster user FID
+ * @param {Array<Number>} input.eventId List of POAP event IDs to check if the Farcaster user has attended.
+ * @returns List of the eventId in `eventId` with true or false associated on the status of whether the events are attended or not
+ */
 export async function checkPoapAttendedByFarcasterUser(
   input: CheckPoapAttendedByFarcasterUserInput
 ): Promise<CheckPoapAttendedByFarcasterUserOutput> {

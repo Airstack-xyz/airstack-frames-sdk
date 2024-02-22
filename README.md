@@ -755,7 +755,7 @@ console.log(data);
 
 ### `searchFarcasterUsers`
 
-Search Farcaster users that contain a given string input, e.g. all Farcaster users that contains "a" in their profile name.
+Search Farcaster users that contain a given string input, e.g. all Farcaster users that contain "a" in their profile name.
 
 **Input**
 

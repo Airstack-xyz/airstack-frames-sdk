@@ -15,12 +15,12 @@ import {
 /**
  * @description Fetch Farcaster followers of a gived FID
  * @example
- * const { data: followers, error } = await getFarcasterFollowers({
+ * const { data, error } = await getFarcasterFollowers({
  *  fid: 1,
  *  limit: 100,
  * });
  * @param {Number} input.fid Farcaster user FID
- * @param {Number} input.limit Number of JSON responses returned per API call
+ * @param {Number} [input.limit=200] Number of JSON responses returned per API call. Maximum value is 200.
  * @returns Farcaster followers array with their profile details
  */
 export async function getFarcasterFollowers(

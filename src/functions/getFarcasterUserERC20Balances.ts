@@ -11,15 +11,16 @@ import {
 } from "../types";
 
 /**
- * @description Fetch Farcaster user's xERC20 balances of a gived FID
+ * @description Fetch Farcaster user's ERC20 balances of a gived FID
  * @example
- * const { data: followers, error } = await getFarcasterUserERC20Balances({
+ * const { data, error } = await getFarcasterUserERC20Balances({
  *  fid: 1,
+ *  chains: [TokenBlockchain.Ethereum],
  *  limit: 100,
  * });
  * @param {Number} input.fid Farcaster user FID
- * @param {Number} input.limit Number of JSON responses returned per API call
- * @param {Array<String>} input.chains Array of chains to query
+ * @param {Array<TokenBlockchain>} [input.chains=[TokenBlockchain.Ethereum, TokenBlockchain.Polygon, TokenBlockchain.Base, TokenBlockchain.Zora]] Array of chains to query
+ * @param {Number} [input.limit=200] Number of JSON responses returned per API call. Maximum value is 200.
  * @returns An array of ERC20 tokens hold by Farcaster user
  */
 export async function getFarcasterUserERC20Balances(

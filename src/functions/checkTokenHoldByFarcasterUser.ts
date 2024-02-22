@@ -8,6 +8,22 @@ import {
 } from "../types";
 import { checkTokenHoldByFarcasterUserQuery as query } from "../graphql/query/checkTokenHoldByFarcasterUser.query";
 
+/**
+ * @description Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
+ * @example
+ * const { data, error } = await checkTokenHoldByFarcasterUser({
+ *  fid: 1,
+ *  token: [
+ *    {
+ *      chain: TokenBlockchain.Base,
+ *      tokenAddress: "0x4c17ff12d9a925a0dec822a8cbf06f46c6268553",
+ *    }
+ *  ]
+ * });
+ * @param {Number} input.fid Farcaster user FID
+ * @param {Object} input.token List of tokens to check if the Farcaster user hold any of them.
+ * @returns List of the tokens in `token` with true or false associated on the status of whether the token is currently hold by the user
+ */
 export async function checkTokenHoldByFarcasterUser(
   input: CheckTokenHoldByFarcasterUserInput
 ): Promise<CheckTokenHoldByFarcasterUserOutput> {

@@ -12,7 +12,7 @@ import {
 /**
  * @description Fetch Farcaster user details provided fid
  * @example
- * const { data: userDetails, error } = await getFarcasterUserDetails({
+ * const { data, error } = await getFarcasterUserDetails({
  *  fid: 1
  * });
  * @param {Number} input.fid Farcaster user FID

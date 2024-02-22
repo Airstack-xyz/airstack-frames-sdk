@@ -9,6 +9,17 @@ import {
 } from "../types";
 import { checkIsFollowingFarcasterUser as query } from "../graphql/query/checkIsFollowingFarcasterUser.query";
 
+/**
+ * @description Check If a Farcaster user of a given FID is following an array of Farcaster users with certain FIDs.
+ * @example
+ * const { data, error } = await checkIsFollowingFarcasterUser({
+ *  fid: 1,
+ *  isFollowing: [2, 3, 4],
+ * });
+ * @param {Number} input.fid Farcaster user FID
+ * @param {Array<Number>} input.isFollowedBy List of FIDs to check if the given user is following these list of Farcaster user with the provided FIDs
+ * @returns List of the FID in `isFollowing` followed by true or false on the status of following or not
+ */
 export async function checkIsFollowingFarcasterUser(
   input: CheckIsFollowingFarcasterUserInput
 ): Promise<CheckIsFollowingFarcasterUserOutput> {
