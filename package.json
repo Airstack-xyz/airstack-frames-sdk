@@ -1,6 +1,6 @@
 {
   "name": "@airstack/frames",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Official Airstack Frames SDK",
   "main": "src/index.ts",
   "scripts": {
