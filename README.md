@@ -1,6 +1,6 @@
 <div align="center">
   <h1 align="center">Official Airstack Frames SDK</h1>
-  <p>Powered By <img src="https://d391b93f5f62d9c15f67142e43841acc.ipfscdn.io/ipfs/bafybeihbaepvd2iuzsocd7rf7gaq6a5uuwhkdgsrmik2sj4o4nt7vkpnna/Airstack-logo-icon-RGB%20gitbook.png" alt="Airstack Logo" height=100/></p>
+  <p>Powered By <img src="./assets/logo.png" alt="Airstack Logo" height=100/></p>
 </div>
 
 The Airstack Frames SDK empowers developers to seamlessly integrate onchain data, including token balances, token mints, Farcaster followers and followings, POAPs, and more, into their Frames using just a few lines of code.
