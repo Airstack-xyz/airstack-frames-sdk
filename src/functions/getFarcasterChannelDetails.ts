@@ -10,13 +10,13 @@ import {
 } from "../types";
 
 /**
- * @description Fetch Farcaster user details provided fid
+ * @description Fetch Farcaster channel details provided fid
  * @example
- * const { data, error } = await getFarcasterUserDetails({
- *  fid: 1
+ * const { data, error } = await getFarcasterChannelDetails({
+ *  channel: "airstack"
  * });
- * @param {Number} input.fid Farcaster user FID
- * @returns Farcaster user details, including profile name, fname, fid, images, etc.
+ * @param {Number} input.channel Farcaster channel ID, e.g. /airstack channel ID is "airstack"
+ * @returns Farcaster channel details, including name, description, warpcast URL, image URL, etc.
  */
 export async function getFarcasterChannelDetails(
   input: FarcasterChannelDetailsInput
