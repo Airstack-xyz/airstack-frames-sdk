@@ -28,6 +28,8 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`getFarcasterUserNFTMints`](#getfarcasterusernftmints)
   - [`getFarcasterUserTokenSentFrom`](#getfarcasterusertokensentfrom)
   - [`getFarcasterUserTokenReceivedBy`](#getfarcasterusertokenreceivedby)
+  - [`getFarcasterChannelDetails`](#getfarcasterchanneldetails)
+  - [`getFarcasterChannelParticipants`](#getfarcasterchannelparticipants)
   - [`searchFarcasterUsers`](#searchfarcasterusers)
   - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
   - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
@@ -38,6 +40,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`TokenBlockchain`](#tokenblockchain)
   - [`TokenType`](#tokentype)
   - [`NFTType`](#nfttype)
+  - [`FarcasterChannelActionType`](#farcasterchannelactiontype)
 - [Paginations](#paginations)
 
 ## Install
@@ -363,11 +366,12 @@ Fetch ERC721 and ERC1155 NFT collections owned by a Farcaster user of a given FI
 
 **Input**
 
-| Field    | Type                                    | Required | Description                                                                                                                                            |
-| -------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                |
-| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT balance. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
-| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                  |
+| Field       | Type                                    | Required | Description                                                                                                                                            |
+| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT balance. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT balances that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                          |
+| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                  |
 
 **Code Sample**
 
@@ -511,11 +515,12 @@ Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given F
 
 **Input**
 
-| Field    | Type                                    | Required | Description                                                                                                                                          |
-| -------- | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                              |
-| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT mints. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
-| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                |
+| Field       | Type                                    | Required | Description                                                                                                                                          |
+| ----------- | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                              |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT mints. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT mints that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                           |
+| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                |
 
 **Code Sample**
 
@@ -753,6 +758,140 @@ console.log(data);
       "original": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/original_image.png"
     },
     "tokenId": "110"
+  }
+]
+```
+
+### `getFarcasterChannelDetails`
+
+Fetch all details of a given Farcaster channel, including name, description, warpcast URL, image URL, creation time, hosts, etc.
+
+**Input**
+
+| Field     | Type     | Required | Description                                                   |
+| --------- | -------- | -------- | ------------------------------------------------------------- |
+| `channel` | `string` | true     | Farcaster channel ID, e.g. /airstack channel ID is "airstack" |
+
+**Code Sample**
+
+```ts
+import {
+  getFarcasterChannelDetails,
+  FarcasterChannelDetailsInput,
+  FarcasterChannelDetailsOutput,
+} from "@airstack/frames";
+
+const input: FarcasterChannelDetailsInput = {
+  channel: "farcaster",
+};
+const { data, error }: FarcasterChannelDetailsOutput =
+  await getFarcasterChannelDetails(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+{
+  "name": "Farcaster",
+  "description": "Discussions about Farcaster on Farcaster (meta!)",
+  "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafkreialf5usxssf2eu3e5ct37zzdd553d7lg7oywvdszmrg5p2zpkta7u",
+  "createdAtTimestamp": "2023-08-02T22:33:26Z",
+  "hosts": [
+    {
+      "profileName": "v",
+      "fnames": ["v", "varunsrin.eth"],
+      "fid": "2",
+      "profileImage": {
+        "extraSmall": "https://assets.airstack.xyz/image/social/XCPJH5EP49qftYc7+wAFfv5jzo3ddBWc9FMEERWezG8=/extra_small.png",
+        "small": "https://assets.airstack.xyz/image/social/XCPJH5EP49qftYc7+wAFfv5jzo3ddBWc9FMEERWezG8=/small.png",
+        "medium": "https://assets.airstack.xyz/image/social/XCPJH5EP49qftYc7+wAFfv5jzo3ddBWc9FMEERWezG8=/medium.png",
+        "large": "https://assets.airstack.xyz/image/social/XCPJH5EP49qftYc7+wAFfv5jzo3ddBWc9FMEERWezG8=/large.png",
+        "original": "https://assets.airstack.xyz/image/social/XCPJH5EP49qftYc7+wAFfv5jzo3ddBWc9FMEERWezG8=/original_image.png"
+      },
+      "userAssociatedAddresses": [
+        "0x4114e33eb831858649ea3702e1c9a2db3f626446",
+        "0x91031dcfdea024b4d51e775486111d2b2a715871",
+        "0x182327170fc284caaa5b1bc3e3878233f529d741",
+        "0xf86a7a5b7c703b1fd8d93c500ac4cc75b67477f0"
+      ],
+      "followerCount": 142424,
+      "followingCount": 1127
+    }
+  ],
+  "warpcastUrl": "https://warpcast.com/~/channel/farcaster"
+}
+```
+
+### `getFarcasterChannelParticipants`
+
+Fetch the list of all participants of a Farcaster channel that has either casted or replied to a cast in the specified channel. You can also use the `lastActionTimestamp` to only fetch users that have last participated during the specified time range.
+
+**Input**
+
+| Field        | Type                         | Required | Description                                                                         |
+| ------------ | ---------------------------- | -------- | ----------------------------------------------------------------------------------- |
+| `channel`    | `string`                     | true     | Farcaster channel ID, e.g. /airstack channel ID is "airstack"                       |
+| `actionType` | `FarcasterChannelActionType` | false    | Farcaster channel action type, either cast or reply. Defaults to include both type. |
+
+| `lastActionTimestamp.before` | `string` | true | get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z". |
+| `lastActionTimestamp.after` | `string` | false | get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z". |
+| `limit` | `number` | false | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  getFarcasterChannelParticipants,
+  FarcasterChannelParticipantsInput,
+  FarcasterChannelParticipantsOutput,
+  FarcasterChannelActionType,
+} from "@airstack/frames";
+
+const input: FarcasterChannelParticipantsInput = {
+  channel: "farcaster",
+  actionType: [
+    FarcasterChannelActionType.Cast,
+    FarcasterChannelActionType.Reply,
+  ],
+  lastActionTimestamp: {
+    after: "2024-02-01T00:00:00Z",
+    before: "2024-02-28T00:00:00Z",
+  },
+  limit: 100,
+};
+const { data, error }: FarcasterChannelParticipantsOutput =
+  await getFarcasterChannelParticipants(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "profileName": "dawufi",
+    "fnames": ["dawufi"],
+    "fid": "6806",
+    "profileImage": {
+      "extraSmall": "https://assets.airstack.xyz/image/social/94uonfbLlRHZf6qh2LpPC6Fg4DNg3uCUrXkwlo+jA/I=/extra_small.gif",
+      "small": "https://assets.airstack.xyz/image/social/94uonfbLlRHZf6qh2LpPC6Fg4DNg3uCUrXkwlo+jA/I=/small.gif",
+      "medium": "https://assets.airstack.xyz/image/social/94uonfbLlRHZf6qh2LpPC6Fg4DNg3uCUrXkwlo+jA/I=/medium.gif",
+      "large": "https://assets.airstack.xyz/image/social/94uonfbLlRHZf6qh2LpPC6Fg4DNg3uCUrXkwlo+jA/I=/large.gif",
+      "original": "https://assets.airstack.xyz/image/social/94uonfbLlRHZf6qh2LpPC6Fg4DNg3uCUrXkwlo+jA/I=/original_image.gif"
+    },
+    "userAssociatedAddresses": [
+      "0xe1b1e3bbf4f29bd7253d6fc1e2ddc9cacb0a546a",
+      "0x0964256674e42d61f0ff84097e28f65311786ccb"
+    ],
+    "followerCount": 14813,
+    "followingCount": 1551
   }
 ]
 ```
@@ -1105,6 +1244,15 @@ export enum TokenType {
 export enum NFTType {
   ERC721 = "ERC721",
   ERC1155 = "ERC1155",
+}
+```
+
+### `FarcasterChannelActionType`
+
+```ts
+export enum FarcasterChannelActionType {
+  Cast = "cast",
+  Reply = "reply",
 }
 ```
 
