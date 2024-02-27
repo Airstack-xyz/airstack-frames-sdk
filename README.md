@@ -832,14 +832,13 @@ Fetch the list of all participants of a Farcaster channel that has either casted
 
 **Input**
 
-| Field        | Type                         | Required | Description                                                                         |
-| ------------ | ---------------------------- | -------- | ----------------------------------------------------------------------------------- |
-| `channel`    | `string`                     | true     | Farcaster channel ID, e.g. /airstack channel ID is "airstack"                       |
-| `actionType` | `FarcasterChannelActionType` | false    | Farcaster channel action type, either cast or reply. Defaults to include both type. |
-
-| `lastActionTimestamp.before` | `string` | true | get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z". |
-| `lastActionTimestamp.after` | `string` | false | get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z". |
-| `limit` | `number` | false | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations). |
+| Field                        | Type                         | Required | Description                                                                                                            |
+| ---------------------------- | ---------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `channel`                    | `string`                     | true     | Farcaster channel ID, e.g. /airstack channel ID is "airstack"                                                          |
+| `actionType`                 | `FarcasterChannelActionType` | false    | Farcaster channel action type, either cast or reply. Defaults to include both type.                                    |
+| `lastActionTimestamp.before` | `string`                     | true     | get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".       |
+| `lastActionTimestamp.after`  | `string`                     | false    | get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".        |
+| `limit`                      | `number`                     | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations). |
 
 **Code Sample**
 
