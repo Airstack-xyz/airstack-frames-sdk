@@ -1,4 +1,10 @@
-import { Exact, InputMaybe, Scalars, TokenBlockchain } from "./graphql/types";
+import {
+  Exact,
+  FarcasterChannelActionType,
+  InputMaybe,
+  Scalars,
+  TokenBlockchain,
+} from "./graphql/types";
 
 export interface FarcasterFollowersInput {
   fid: number;
@@ -1376,3 +1382,38 @@ export interface FarcasterChannelDetailsOutput {
     | null
     | undefined;
 }
+
+export interface FarcasterChannelParticipantsInput {
+  channel: string;
+  limit?: number;
+  actionType?: FarcasterChannelActionType[];
+  lastActionTimestamp?: {
+    before?: any;
+    after?: any;
+  };
+}
+
+export interface FarcasterChannelParticipantsOutputData {
+  profileName: string | null | undefined;
+  fnames: (string | null)[] | null | undefined;
+  fid: string | null | undefined;
+  userAssociatedAddresses: string[] | null | undefined;
+  followerCount: number | null | undefined;
+  followingCount: number | null | undefined;
+  profileImage:
+    | {
+        extraSmall: string | null;
+        small: string | null;
+        medium: string | null;
+        large: string | null;
+        original: string | null | undefined;
+      }
+    | null
+    | undefined;
+}
+
+export type FarcasterChannelParticipantsOutput = IteratePaginationResponse<
+  FarcasterFollowersOutputData[] | null | undefined
+>;
+
+export { FarcasterChannelActionType } from "./graphql/types";

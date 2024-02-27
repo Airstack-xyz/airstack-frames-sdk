@@ -1,8 +1,8 @@
 import { fetchQuery } from "@airstack/node";
 import { farcasterChannelDetailsQuery as query } from "../graphql/query/farcasterChannelDetails.query";
 import type {
-  FarcasterChannelDetailsQueryQuery,
-  FarcasterChannelDetailsQueryQueryVariables,
+  FarcasterChannelDetailsQuery,
+  FarcasterChannelDetailsQueryVariables,
 } from "../graphql/types";
 import {
   FarcasterChannelDetailsInput,
@@ -22,11 +22,11 @@ export async function getFarcasterChannelDetails(
   input: FarcasterChannelDetailsInput
 ): Promise<FarcasterChannelDetailsOutput> {
   const { channel } = input ?? {};
-  const variable: FarcasterChannelDetailsQueryQueryVariables = {
+  const variable: FarcasterChannelDetailsQueryVariables = {
     channel,
   };
   const { data, error } = await fetchQuery(query, variable);
-  const channelDetailsRes = (data as FarcasterChannelDetailsQueryQuery)
+  const channelDetailsRes = (data as FarcasterChannelDetailsQuery)
     ?.FarcasterChannels?.FarcasterChannel;
   return {
     data: error

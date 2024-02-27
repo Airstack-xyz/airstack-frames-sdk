@@ -1,25 +1,27 @@
 export const farcasterChannelParticipantsQuery = /* GraphQL */ `
-  query MyQuery(
+  query FarcasterChannelParticipants(
     $actionType: [FarcasterChannelActionType!] = [cast, reply]
     $before: Time
-    $after: Time
+    $after: Time = "1970-01-01T00:00:00Z"
     $channel: String
+    $limit: Int = 200
   ) {
     FarcasterChannelParticipants(
       input: {
         filter: {
-          lastActionTimestamp: { _gte: $before, _lte: $after }
+          lastActionTimestamp: { _gte: $after, _lte: $before }
           channelActions: { _in: $actionType }
           channelId: { _eq: $channel }
         }
         blockchain: ALL
+        limit: $limit
       }
     ) {
       FarcasterChannelParticipant {
         participant {
           profileName
           fnames
-          userId
+          fid: userId
           profileImage: profileImageContentValue {
             image {
               extraSmall

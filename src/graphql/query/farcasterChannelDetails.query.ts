@@ -1,5 +1,5 @@
 export const farcasterChannelDetailsQuery = /* GraphQL */ `
-  query FarcasterChannelDetailsQuery($channel: String!) {
+  query FarcasterChannelDetails($channel: String!) {
     FarcasterChannels(
       input: { blockchain: ALL, filter: { channelId: { _eq: $channel } } }
     ) {
