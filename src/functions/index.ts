@@ -15,3 +15,4 @@ export * from "./getFarcasterUserTokenSentFrom";
 export * from "./getFarcasterUserTokenReceivedBy";
 export * from "./checkTokenHoldByFarcasterUser";
 export * from "./checkTokenMintedByFarcasterUser";
+export * from "./getFarcasterChannelDetails";

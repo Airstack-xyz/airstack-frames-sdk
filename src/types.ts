@@ -1340,3 +1340,39 @@ export interface IteratePaginationResponse<Data> {
   getPrevPage: () => Promise<IteratePaginationResponse<Data>>;
   getNextPage: () => Promise<IteratePaginationResponse<Data>>;
 }
+
+export interface FarcasterChannelDetailsInput {
+  channel: string;
+}
+
+export interface FarcasterChannelDetailsOutput {
+  error: any;
+  data:
+    | {
+        name?: string;
+        description?: string;
+        warpcastUrl?: string;
+        imageUrl?: string | null;
+        createdAtTimestamp?: any;
+        hosts?: Array<{
+          profileName: string | null;
+          fnames: Array<string | null> | null;
+          fid: string | null;
+          userAssociatedAddresses: Array<any> | null;
+          followerCount: number | null;
+          followingCount: number | null;
+          profileImage:
+            | {
+                extraSmall: string | null;
+                small: string | null;
+                medium: string | null;
+                large: string | null;
+                original: string | null;
+              }
+            | null
+            | undefined;
+        }> | null;
+      }
+    | null
+    | undefined;
+}
