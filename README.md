@@ -30,6 +30,9 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`getFarcasterUserTokenReceivedBy`](#getfarcasterusertokenreceivedby)
   - [`getFarcasterChannelDetails`](#getfarcasterchanneldetails)
   - [`getFarcasterChannelParticipants`](#getfarcasterchannelparticipants)
+  - [`getFarcasterChannelsByParticipant`](#getfarcasterchannelsbyparticipant)
+  - [`getFarcasterChannelsByHost`](#getfarcasterchannelsbyhost)
+  - [`searchFarcasterChannels`](#searchfarcasterchannels)
   - [`searchFarcasterUsers`](#searchfarcasterusers)
   - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
   - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
@@ -836,7 +839,7 @@ Fetch the list of all participants of a Farcaster channel that has either casted
 | ---------------------------- | ---------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `channel`                    | `string`                     | true     | Farcaster channel ID, e.g. /airstack channel ID is "airstack"                                                          |
 | `actionType`                 | `FarcasterChannelActionType` | false    | Farcaster channel action type, either cast or reply. Defaults to include both type.                                    |
-| `lastActionTimestamp.before` | `string`                     | true     | get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".       |
+| `lastActionTimestamp.before` | `string`                     | false    | get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".       |
 | `lastActionTimestamp.after`  | `string`                     | false    | get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".        |
 | `limit`                      | `number`                     | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations). |
 
@@ -891,6 +894,208 @@ console.log(data);
     ],
     "followerCount": 14813,
     "followingCount": 1551
+  }
+]
+```
+
+### `getFarcasterChannelsByParticipant`
+
+Fetch all the channels where a Farcaster user has participated in, either by casting or replying to a cast. You can also use the `lastActionTimestamp` to only fetch channels where users have last participated during the specified time range.
+
+**Input**
+
+| Field                        | Type                         | Required | Description                                                                                                            |
+| ---------------------------- | ---------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `fid`                        | `number`                     | true     | Farcaster channel participant's FID                                                                                    |
+| `actionType`                 | `FarcasterChannelActionType` | false    | Farcaster channel action type, either cast or reply. Defaults to include both type.                                    |
+| `lastActionTimestamp.before` | `string`                     | false    | get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".       |
+| `lastActionTimestamp.after`  | `string`                     | false    | get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".        |
+| `limit`                      | `number`                     | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  getFarcasterChannelsByParticipant,
+  FarcasterChannelActionType,
+  FarcasterChannelsByParticipantInput,
+  FarcasterChannelsByParticipantOutput,
+} from "@airstack/frames";
+
+const input: FarcasterChannelsByParticipantInput = {
+  fid: 602,
+  actionType: [
+    FarcasterChannelActionType.Cast,
+    FarcasterChannelActionType.Reply,
+  ],
+  lastActionTimestamp: {
+    after: "2024-02-01T00:00:00Z",
+    before: "2024-02-28T00:00:00Z",
+  },
+  limit: 100,
+};
+const { data, error }: FarcasterChannelsByParticipantOutput =
+  await getFarcasterChannelsByParticipant(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "name": "Based Management",
+    "description": "Things worth doing onchain.",
+    "imageUrl": "https://i.imgur.com/f0BFBfH.png",
+    "createdAtTimestamp": "2023-11-06T19:23:10Z",
+    "hosts": [
+      {
+        "profileName": "lght.eth",
+        "fnames": ["0xlght", "lght.eth"],
+        "fid": "13121",
+        "profileImage": {
+          "extraSmall": "https://assets.airstack.xyz/image/social/sxSmw/OjqyuT+uMDpHiSTmqOH5F76hwnx6Q35elGlUkt5nWRe8xrgnJemShOmjeN/extra_small.jpg",
+          "small": "https://assets.airstack.xyz/image/social/sxSmw/OjqyuT+uMDpHiSTmqOH5F76hwnx6Q35elGlUkt5nWRe8xrgnJemShOmjeN/small.jpg",
+          "medium": "https://assets.airstack.xyz/image/social/sxSmw/OjqyuT+uMDpHiSTmqOH5F76hwnx6Q35elGlUkt5nWRe8xrgnJemShOmjeN/medium.jpg",
+          "large": "https://assets.airstack.xyz/image/social/sxSmw/OjqyuT+uMDpHiSTmqOH5F76hwnx6Q35elGlUkt5nWRe8xrgnJemShOmjeN/large.jpg",
+          "original": "https://assets.airstack.xyz/image/social/sxSmw/OjqyuT+uMDpHiSTmqOH5F76hwnx6Q35elGlUkt5nWRe8xrgnJemShOmjeN/original_image.jpg"
+        },
+        "userAssociatedAddresses": [
+          "0x53667ed77b56d5a94d6df994ab4fd142b7585e68",
+          "0x547a2e8d97dc99be21e509fa93c4fa5dd76b8ed0"
+        ],
+        "followerCount": 16127,
+        "followingCount": 345
+      }
+    ],
+    "warpcastUrl": "https://warpcast.com/~/channel/based-management"
+  }
+]
+```
+
+### `getFarcasterChannelsByHost`
+
+Fetch all the channels where a Farcaster user is the host. You can also use the `createdAtTimestamp` to only fetch channels that are created in the specified timestamp.
+
+**Input**
+
+| Field                       | Type     | Required | Description                                                                                                            |
+| --------------------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `fid`                       | `number` | true     | Farcaster channel host's FID                                                                                           |
+| `createdAtTimestamp.before` | `string` | false    | get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".       |
+| `createdAtTimestamp.after`  | `string` | false    | get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".        |
+| `limit`                     | `number` | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  getFarcasterChannelsByHost,
+  FarcasterChannelsByHostInput,
+  FarcasterChannelsByHostOutput,
+} from "@airstack/frames";
+
+const input: FarcasterChannelsByHostInput = {
+  fid: 602,
+  createdAtTimestamp: {
+    after: "2024-02-01T00:00:00Z",
+    before: "2024-02-28T00:00:00Z",
+  },
+  limit: 1,
+};
+const { data, error }: FarcasterChannelsByHostOutput =
+  await getFarcasterChannelsByHost(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "name": "airstack",
+    "description": "a place for updates about new airstack functionality, user requests, questions, and more!",
+    "imageUrl": "https://i.imgur.com/13jY9D4.png",
+    "createdAtTimestamp": "2023-12-21T17:30:38Z",
+    "warpcastUrl": "https://warpcast.com/~/channel/airstack"
+  }
+]
+```
+
+### `searchFarcasterChannels`
+
+Fetch all the Farcaster channels that contain the specified input words in their names. You can also use the `createdAtTimestamp` to only fetch channels that are created in the specified timestamp.
+
+**Input**
+
+| Field                       | Type     | Required | Description                                                                                                            |
+| --------------------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `channel`                   | `string` | true     | Farcaster channel's name                                                                                               |
+| `createdAtTimestamp.before` | `string` | false    | get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".       |
+| `createdAtTimestamp.after`  | `string` | false    | get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z".        |
+| `limit`                     | `number` | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  searchFarcasterChannels,
+  SearchFarcasterChannelsInput,
+  SearchFarcasterChannelsOutput,
+} from "@airstack/frames";
+
+const input: SearchFarcasterChannelsInput = {
+  channel: "airstack",
+  createdAtTimestamp: {
+    after: "2024-02-01T00:00:00Z",
+    before: "2024-02-28T00:00:00Z",
+  },
+  limit: 2,
+};
+const { data, error }: SearchFarcasterChannelsOutput =
+  await searchFarcasterChannels(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "name": "airstack",
+    "description": "a place for updates about new airstack functionality, user requests, questions, and more!",
+    "imageUrl": "https://i.imgur.com/13jY9D4.png",
+    "createdAtTimestamp": "2023-12-21T17:30:38Z",
+    "hosts": [
+      {
+        "profileName": "betashop.eth",
+        "fnames": ["betashop", "betashop.eth", "jasongoldberg.eth"],
+        "fid": "602",
+        "profileImage": {
+          "extraSmall": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/extra_small.png",
+          "small": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/small.png",
+          "medium": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/medium.png",
+          "large": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/large.png",
+          "original": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/original_image.png"
+        },
+        "userAssociatedAddresses": [
+          "0x66bd69c7064d35d146ca78e6b186e57679fba249",
+          "0xeaf55242a90bb3289db8184772b0b98562053559"
+        ],
+        "followerCount": 59421,
+        "followingCount": 2290
+      }
+    ],
+    "warpcastUrl": "https://warpcast.com/~/channel/airstack"
   }
 ]
 ```

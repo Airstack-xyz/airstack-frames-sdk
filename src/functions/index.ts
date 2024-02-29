@@ -17,3 +17,6 @@ export * from "./checkTokenHoldByFarcasterUser";
 export * from "./checkTokenMintedByFarcasterUser";
 export * from "./getFarcasterChannelDetails";
 export * from "./getFarcasterChannelParticipants";
+export * from "./getFarcasterChannelsByParticipant";
+export * from "./searchFarcasterChannels";
+export * from "./getFarcasterChannelsByHost";

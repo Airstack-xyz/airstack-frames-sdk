@@ -383,7 +383,7 @@ export type FarcasterChannelParticipant = {
   lastActionTimestamp: Scalars['Time']['output'];
   lastCastedTimestamp: Maybe<Scalars['Time']['output']>;
   lastRepliedTimestamp: Maybe<Scalars['Time']['output']>;
-  participant: Social;
+  participant: Maybe<Social>;
   participantId: Scalars['String']['output'];
 };
 
@@ -1739,14 +1739,35 @@ export type FarcasterChannelDetailsQuery = { FarcasterChannels: { FarcasterChann
 
 export type FarcasterChannelParticipantsQueryVariables = Exact<{
   actionType?: InputMaybe<Array<FarcasterChannelActionType> | FarcasterChannelActionType>;
-  before?: InputMaybe<Scalars['Time']['input']>;
-  after: InputMaybe<Scalars['Time']['input']>;
+  before: InputMaybe<Scalars['Time']['input']>;
+  after?: InputMaybe<Scalars['Time']['input']>;
   channel: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type FarcasterChannelParticipantsQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ participant: { profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null } }> | null } | null };
+export type FarcasterChannelParticipantsQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ participant: { profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null } | null }> | null } | null };
+
+export type FarcasterChannelsByHostQueryVariables = Exact<{
+  host: Scalars['String']['input'];
+  before: InputMaybe<Scalars['Time']['input']>;
+  after?: InputMaybe<Scalars['Time']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type FarcasterChannelsByHostQuery = { FarcasterChannels: { FarcasterChannel: Array<{ name: string, description: string, imageUrl: string, createdAtTimestamp: any, warpcastUrl: string }> | null } | null };
+
+export type FarcasterChannelsByParticipantQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+  before: InputMaybe<Scalars['Time']['input']>;
+  after?: InputMaybe<Scalars['Time']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  actionType?: InputMaybe<Array<FarcasterChannelActionType> | FarcasterChannelActionType>;
+}>;
+
+
+export type FarcasterChannelsByParticipantQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ channelId: string, channel: { name: string, description: string, imageUrl: string, createdAtTimestamp: any, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } }> | null } | null };
 
 export type FarcasterFollowersQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
@@ -1778,6 +1799,16 @@ export type FarcasterUserPoaPsQueryVariables = Exact<{
 
 
 export type FarcasterUserPoaPsQuery = { Poaps: { Poap: Array<{ poapEvent: { eventName: string | null, eventId: string | null, eventURL: string | null, isVirtualEvent: boolean | null, startDate: any | null, endDate: any | null, city: string | null } | null }> | null } | null };
+
+export type SearchFarcasterChannelsQueryVariables = Exact<{
+  channel: Scalars['String']['input'];
+  before: InputMaybe<Scalars['Time']['input']>;
+  after?: InputMaybe<Scalars['Time']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SearchFarcasterChannelsQuery = { FarcasterChannels: { FarcasterChannel: Array<{ name: string, description: string, imageUrl: string, createdAtTimestamp: any, channelId: string, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null }> | null } | null };
 
 export type SearchFarcasterUsersQueryVariables = Exact<{
   profileName: Scalars['String']['input'];

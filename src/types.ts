@@ -1394,12 +1394,12 @@ export interface FarcasterChannelParticipantsInput {
 }
 
 export interface FarcasterChannelParticipantsOutputData {
-  profileName: string | null | undefined;
-  fnames: (string | null)[] | null | undefined;
-  fid: string | null | undefined;
-  userAssociatedAddresses: string[] | null | undefined;
-  followerCount: number | null | undefined;
-  followingCount: number | null | undefined;
+  profileName?: string | null | undefined;
+  fnames?: (string | null)[] | null | undefined;
+  fid?: string | null | undefined;
+  userAssociatedAddresses?: string[] | null | undefined;
+  followerCount?: number | null | undefined;
+  followingCount?: number | null | undefined;
   profileImage:
     | {
         extraSmall: string | null;
@@ -1413,7 +1413,125 @@ export interface FarcasterChannelParticipantsOutputData {
 }
 
 export type FarcasterChannelParticipantsOutput = IteratePaginationResponse<
-  FarcasterFollowersOutputData[] | null | undefined
+  FarcasterChannelParticipantsOutputData[] | null | undefined
 >;
 
 export { FarcasterChannelActionType } from "./graphql/types";
+
+export interface FarcasterChannelsByParticipantInput {
+  fid: number;
+  limit?: number;
+  actionType?: FarcasterChannelActionType[];
+  lastActionTimestamp?: {
+    before?: any;
+    after?: any;
+  };
+}
+
+export interface FarcasterChannelsByParticipantOutputData {
+  name?: string;
+  description?: string;
+  warpcastUrl?: string;
+  imageUrl?: string | null;
+  createdAtTimestamp?: any;
+  hosts?: Array<{
+    profileName: string | null;
+    fnames: Array<string | null> | null;
+    fid: string | null;
+    userAssociatedAddresses: Array<any> | null;
+    followerCount: number | null;
+    followingCount: number | null;
+    profileImage:
+      | {
+          extraSmall: string | null;
+          small: string | null;
+          medium: string | null;
+          large: string | null;
+          original: string | null;
+        }
+      | null
+      | undefined;
+  }> | null;
+}
+
+export type FarcasterChannelsByParticipantOutput = IteratePaginationResponse<
+  FarcasterChannelsByParticipantOutputData[] | null | undefined
+>;
+
+export interface SearchFarcasterChannelsInput {
+  channel: string;
+  limit?: number;
+  createdAtTimestamp?: {
+    before?: any;
+    after?: any;
+  };
+}
+
+export interface SearchFarcasterChannelsOutputData {
+  name?: string;
+  description?: string;
+  warpcastUrl?: string;
+  imageUrl?: string | null;
+  createdAtTimestamp?: any;
+  hosts?: Array<{
+    profileName: string | null;
+    fnames: Array<string | null> | null;
+    fid: string | null;
+    userAssociatedAddresses: Array<any> | null;
+    followerCount: number | null;
+    followingCount: number | null;
+    profileImage:
+      | {
+          extraSmall: string | null;
+          small: string | null;
+          medium: string | null;
+          large: string | null;
+          original: string | null;
+        }
+      | null
+      | undefined;
+  }> | null;
+}
+
+export type SearchFarcasterChannelsOutput = IteratePaginationResponse<
+  SearchFarcasterChannelsOutputData[] | null | undefined
+>;
+
+export interface FarcasterChannelsByHostInput {
+  fid: number;
+  limit?: number;
+  createdAtTimestamp?: {
+    before?: any;
+    after?: any;
+  };
+}
+
+export interface FarcasterChannelsByHostOutputData {
+  name?: string;
+  description?: string;
+  warpcastUrl?: string;
+  imageUrl?: string | null;
+  createdAtTimestamp?: any;
+  hosts?: Array<{
+    profileName: string | null;
+    fnames: Array<string | null> | null;
+    fid: string | null;
+    userAssociatedAddresses: Array<any> | null;
+    followerCount: number | null;
+    followingCount: number | null;
+    profileImage:
+      | {
+          extraSmall: string | null;
+          small: string | null;
+          medium: string | null;
+          large: string | null;
+          original: string | null;
+        }
+      | null
+      | undefined;
+  }> | null;
+}
+
+export type FarcasterChannelsByHostOutput = IteratePaginationResponse<
+  FarcasterChannelsByParticipantOutputData[] | null | undefined
+>;
