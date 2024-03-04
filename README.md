@@ -39,6 +39,10 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
   - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
   - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
+  - [`validateFramesMessage`](#validateframesmessage)
+    - [Input](#input)
+    - [Code Sample](#code-sample)
+  - [Response Sample](#response-sample)
 - [Enum](#enum)
   - [`TokenBlockchain`](#tokenblockchain)
   - [`TokenType`](#tokentype)
@@ -1415,6 +1419,78 @@ console.log(data);
   { "fid": 15971, "isFollowedBy": true },
   { "fid": 13242, "isFollowedBy": false }
 ]
+```
+
+### `validateFramesMessage`
+
+Validate frames signature packet with Farcaster Hub for your Farcaster Frames
+
+#### Input
+
+| Field  | Type                         | Required | Description              |
+| ------ | ---------------------------- | -------- | ------------------------ |
+| `body` | `ValidateFramesMessageInput` | true     | FID of a Farcaster user. |
+
+#### Code Sample
+
+```ts
+import {
+  validateFramesMessage,
+  ValidateFramesMessageInput,
+  ValidateFramesMessageOutput,
+} from "@airstack/frames";
+
+const body: ValidateFramesMessageInput = {
+  untrustedData: {
+    fid: 289309,
+    url: "https://sample.frames",
+    messageHash: "0xabc",
+    timestamp: 1709198011100,
+    network: 1,
+    buttonIndex: 1,
+    castId: {
+      fid: 289309,
+      hash: "0x0000000000000000000000000000000000000001",
+    },
+  },
+  trustedData: {
+    messageBytes:
+      "0a61080d109dd41118d0c9c72f20018201510a3168747470733a2f2f70656c6963616e2d666f6e642d64697374696e63746c792e6e67726f6b2d667265652e6170702f6f6710011a1a089dd4111214000000000000000000000000000000000000000112146357261fa893e4be85f78178babaca876f9a1fac18012240d1ed649964018377641a78638f0c19d3c346c1eb1a47e856c0fcd87d3fc72ff98172f939fc18ffdd16af746144279e6debb3f4913f491c69d22f6703e554510a280132200295183aaa021cad737db7ddbc075964496ece1c0bcc1009bdae6d1799c83cd4",
+  },
+};
+const res: ValidateFramesMessageOutput = await validateFramesMessage(body);
+```
+
+### Response Sample
+
+```json
+{
+  "isValid": true,
+  "message": {
+    "data": {
+      "type": "MESSAGE_TYPE_FRAME_ACTION",
+      "fid": 289309,
+      "timestamp": 99738832,
+      "network": "FARCASTER_NETWORK_MAINNET",
+      "frameActionBody": {
+        "url": "aHR0cHM6Ly9wZWxpY2FuLWZvbmQtZGlzdGluY3RseS5uZ3Jvay1mcmVlLmFwcC9vZw==",
+        "buttonIndex": 1,
+        "castId": {
+          "fid": 289309,
+          "hash": "0x0000000000000000000000000000000000000001"
+        },
+        "inputText": "",
+        "state": "",
+        "transactionId": ""
+      }
+    },
+    "hash": "0xabc",
+    "hashScheme": "HASH_SCHEME_BLAKE3",
+    "signature": "0e1kmWQBg3dkGnhjjwwZ08NGwesaR+hWwPzYfT/HL/mBcvk5/Bj/3RavdGFEJ55t67P0kT9JHGnSL2cD5VRRCg==",
+    "signatureScheme": "SIGNATURE_SCHEME_ED25519",
+    "signer": "0x0295183aaa021cad737db7ddbc075964496ece1c0bcc1009bdae6d1799c83cd4"
+  }
+}
 ```
 
 ## Enum

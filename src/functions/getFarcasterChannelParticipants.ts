@@ -16,7 +16,7 @@ import { formatFarcasterChannelParticipants } from "../utils/formatFarcasterChan
  * @description Fetch Farcaster followers of a gived FID
  * @example
  * const { data, error } = await getFarcasterChannelParticipants({
- *  channel: 1,
+ *  channel: "airstack",
  *  actionType: [FarcasterChannelActionType.Cast],
  *  lastActionTimestamp: {
  *    after: "2024-02-01T00:00:00Z",
@@ -29,7 +29,7 @@ import { formatFarcasterChannelParticipants } from "../utils/formatFarcasterChan
  * @param {Time} [input.lastActionTimestamp.before] get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z"
  * @param {Time} [input.lastActionTimestamp.after] get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z"
  * @param {Number} [input.limit=200] Number of JSON responses returned per API call. Maximum value is 200.
- * @returns Farcaster followers array with their profile details
+ * @returns Farcaster channels that the Farcaster user have participated in, either casted or replied to a cast.
  */
 export async function getFarcasterChannelParticipants(
   input: FarcasterChannelParticipantsInput

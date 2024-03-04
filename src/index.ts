@@ -1,3 +1,3 @@
-export { init } from "@airstack/node";
+export * from "./init";
 export * from "./functions";
 export * from "./types";

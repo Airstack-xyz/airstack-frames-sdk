@@ -6,6 +6,10 @@ import {
   TokenBlockchain,
 } from "./graphql/types";
 
+export type ConfigType = {
+  authKey: string;
+};
+
 export interface FarcasterFollowersInput {
   fid: number;
   limit?: number;
@@ -1535,3 +1539,55 @@ export interface FarcasterChannelsByHostOutputData {
 export type FarcasterChannelsByHostOutput = IteratePaginationResponse<
   FarcasterChannelsByParticipantOutputData[] | null | undefined
 >;
+
+export interface ValidateFramesMessageInput {
+  trustedData: {
+    messageBytes: string;
+  };
+  untrustedData: {
+    fid: number;
+    url: string;
+    messageHash: string;
+    timestamp: number;
+    network: number;
+    buttonIndex: number;
+    castId: {
+      fid: number;
+      hash: string;
+    };
+  };
+}
+
+export interface ValidateFramesMessage {
+  data: {
+    type: string;
+    fid: number;
+    timestamp: number;
+    network: string;
+    frameActionBody: {
+      url: string;
+      buttonIndex: number;
+      castId: {
+        fid: number;
+        hash: string;
+      };
+      inputText: string;
+      state: string;
+    };
+  };
+  hash: string;
+  hashScheme: string;
+  signature: string;
+  signatureScheme: string;
+  signer: string;
+}
+
+export interface ValidateFramesMessageJSONResponse {
+  valid: boolean;
+  message: ValidateFramesMessage;
+}
+
+export interface ValidateFramesMessageOutput {
+  isValid: boolean;
+  message?: ValidateFramesMessage | any | null;
+}

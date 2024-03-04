@@ -16,20 +16,18 @@ import { formatFarcasterChannelsByHost } from "../utils/formatFarcasterChannelsB
  * @description Fetch Farcaster followers of a gived FID
  * @example
  * const { data, error } = await getFarcasterChannelParticipants({
- *  channel: 1,
- *  actionType: [FarcasterChannelActionType.Cast],
- *  lastActionTimestamp: {
+ *  fid: 1,
+ *  createdAtTimestamp: {
  *    after: "2024-02-01T00:00:00Z",
  *    before: "2024-02-28T00:00:00Z",
  *  },
  *  limit: 100,
  * });
- * @param {Number} input.channel Farcaster channel ID, e.g. /airstack channel ID is "airstack"
- * @param {FarcasterChannelActionType[]} [input.actionType] Farcaster channel action type, either cast or reply
- * @param {Time} [input.lastActionTimestamp.before] get participants that participate before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z"
- * @param {Time} [input.lastActionTimestamp.after] get participants that participate after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z"
+ * @param {Number} input.fid Farcaster user FID
+ * @param {Time} [input.createdAtTimestamp.before] get channels created before the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z"
+ * @param {Time} [input.createdAtTimestamp.after] get channels created after the specified input. ISO 8601 date string, e.g. "2024-02-28T00:00:00Z"
  * @param {Number} [input.limit=200] Number of JSON responses returned per API call. Maximum value is 200.
- * @returns Farcaster followers array with their profile details
+ * @returns Farcaster channels that the Farcaster user is the host
  */
 export async function getFarcasterChannelsByHost(
   input: FarcasterChannelsByHostInput

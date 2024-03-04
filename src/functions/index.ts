@@ -20,3 +20,4 @@ export * from "./getFarcasterChannelParticipants";
 export * from "./getFarcasterChannelsByParticipant";
 export * from "./searchFarcasterChannels";
 export * from "./getFarcasterChannelsByHost";
+export * from "./validateFramesMessage";
