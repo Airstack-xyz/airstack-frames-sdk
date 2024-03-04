@@ -40,9 +40,6 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
   - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
   - [`validateFramesMessage`](#validateframesmessage)
-    - [Input](#input)
-    - [Code Sample](#code-sample)
-  - [Response Sample](#response-sample)
 - [Enum](#enum)
   - [`TokenBlockchain`](#tokenblockchain)
   - [`TokenType`](#tokentype)
@@ -1425,13 +1422,13 @@ console.log(data);
 
 Validate frames signature packet with Farcaster Hub for your Farcaster Frames
 
-#### Input
+**Input**
 
 | Field  | Type                         | Required | Description              |
 | ------ | ---------------------------- | -------- | ------------------------ |
 | `body` | `ValidateFramesMessageInput` | true     | FID of a Farcaster user. |
 
-#### Code Sample
+**Code Sample**
 
 ```ts
 import {
@@ -1461,7 +1458,7 @@ const body: ValidateFramesMessageInput = {
 const res: ValidateFramesMessageOutput = await validateFramesMessage(body);
 ```
 
-### Response Sample
+**Response Sample**
 
 ```json
 {
