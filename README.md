@@ -1465,27 +1465,58 @@ const res: ValidateFramesMessageOutput = await validateFramesMessage(body);
   "isValid": true,
   "message": {
     "data": {
-      "type": "MESSAGE_TYPE_FRAME_ACTION",
+      "type": 13,
       "fid": 289309,
       "timestamp": 99738832,
-      "network": "FARCASTER_NETWORK_MAINNET",
+      "network": 1,
+      "castAddBody": undefined,
+      "castRemoveBody": undefined,
+      "reactionBody": undefined,
+      "verificationAddAddressBody": undefined,
+      "verificationRemoveBody": undefined,
+      "userDataBody": undefined,
+      "linkBody": undefined,
+      "usernameProofBody": undefined,
       "frameActionBody": {
-        "url": "aHR0cHM6Ly9wZWxpY2FuLWZvbmQtZGlzdGluY3RseS5uZ3Jvay1mcmVlLmFwcC9vZw==",
+        "url": [
+          104, 116, 116, 112, 115, 58, 47, 47, 112, 101, 108, 105, 99, 97, 110,
+          45, 102, 111, 110, 100, 45, 100, 105, 115, 116, 105, 110, 99, 116,
+          108, 121, 46, 110, 103, 114, 111, 107, 45, 102, 114, 101, 101, 46, 97,
+          112, 112, 47, 111, 103
+        ],
         "buttonIndex": 1,
         "castId": {
           "fid": 289309,
-          "hash": "0x0000000000000000000000000000000000000001"
+          "hash": [
+            211, 29, 52, 211, 77, 52, 211, 77, 52, 211, 77, 52, 211, 77, 52,
+            211, 77, 52, 211, 77, 52, 211, 77, 52, 211, 77, 52, 211, 77, 52, 211
+          ]
         },
-        "inputText": "",
-        "state": "",
-        "transactionId": ""
+        "inputText": [],
+        "state": [],
+        "transactionId": []
       }
     },
-    "hash": "0xabc",
-    "hashScheme": "HASH_SCHEME_BLAKE3",
-    "signature": "0e1kmWQBg3dkGnhjjwwZ08NGwesaR+hWwPzYfT/HL/mBcvk5/Bj/3RavdGFEJ55t67P0kT9JHGnSL2cD5VRRCg==",
-    "signatureScheme": "SIGNATURE_SCHEME_ED25519",
-    "signer": "0x0295183aaa021cad737db7ddbc075964496ece1c0bcc1009bdae6d1799c83cd4"
+    "hash": [
+      211, 30, 183, 231, 189, 186, 213, 246, 188, 247, 119, 184, 109, 239, 57,
+      127, 191, 53, 239, 198, 218, 109, 167, 26, 243, 190, 159, 245, 173, 95,
+      105
+    ],
+    "hashScheme": 1,
+    "signature": [
+      209, 237, 100, 153, 100, 1, 131, 119, 100, 26, 120, 99, 143, 12, 25, 211,
+      195, 70, 193, 235, 26, 71, 232, 86, 192, 252, 216, 125, 63, 199, 47, 249,
+      129, 114, 249, 57, 252, 24, 255, 221, 22, 175, 116, 97, 68, 39, 158, 109,
+      235, 179, 244, 145, 63, 73, 28, 105, 210, 47, 103, 3, 229, 84, 81, 10
+    ],
+    "signatureScheme": 1,
+    "signer": [
+      211, 29, 54, 247, 157, 124, 221, 166, 154, 211, 109, 92, 105, 222, 247,
+      237, 214, 251, 117, 214, 220, 211, 190, 125, 235, 142, 61, 233, 231, 30,
+      213, 205, 27, 113, 205, 116, 211, 214, 221, 105, 238, 157, 215, 191, 125,
+      115, 205, 220, 119
+    ],
+    "dataBytes": undefined
   }
 }
 ```

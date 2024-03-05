@@ -6,6 +6,7 @@ import {
   ValidateFramesMessageOutput,
 } from "../types";
 import { hexStringToUint8Array } from "../utils/hexStringToUint8Array";
+import { FrameActionMessage, Message } from "@farcaster/core";
 
 /**
  * @description validate frames signature packet with Farcaster Hub
@@ -42,7 +43,7 @@ export async function validateFramesMessage(
   if (valid) {
     return {
       isValid: true,
-      message,
+      message: Message.fromJSON(message) as FrameActionMessage,
     };
   } else {
     return {

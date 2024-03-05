@@ -15,7 +15,8 @@
     "moduleResolution": "node",
     "target": "ES2017",
     "jsx": "react",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "exclude": ["src/**/*.test.ts", "node_modules"]
 }

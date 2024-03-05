@@ -1,3 +1,4 @@
+import { FrameActionMessage } from "@farcaster/core";
 import {
   Exact,
   FarcasterChannelActionType,
@@ -1558,36 +1559,12 @@ export interface ValidateFramesMessageInput {
   };
 }
 
-export interface ValidateFramesMessage {
-  data: {
-    type: string;
-    fid: number;
-    timestamp: number;
-    network: string;
-    frameActionBody: {
-      url: string;
-      buttonIndex: number;
-      castId: {
-        fid: number;
-        hash: string;
-      };
-      inputText: string;
-      state: string;
-    };
-  };
-  hash: string;
-  hashScheme: string;
-  signature: string;
-  signatureScheme: string;
-  signer: string;
-}
-
 export interface ValidateFramesMessageJSONResponse {
   valid: boolean;
-  message: ValidateFramesMessage;
+  message: FrameActionMessage | null;
 }
 
 export interface ValidateFramesMessageOutput {
   isValid: boolean;
-  message?: ValidateFramesMessage | any | null;
+  message?: FrameActionMessage | null;
 }
