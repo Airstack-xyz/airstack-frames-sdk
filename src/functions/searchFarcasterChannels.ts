@@ -13,7 +13,7 @@ import {
 import { formatSearchFarcasterChannels } from "../utils/formatSearchFarcasterChannels";
 
 /**
- * @description Fetch Farcaster followers of a gived FID
+ * @description Search Farcaster channels by name
  * @example
  * const { data, error } = await searchFarcasterChannels({
  *  channel: "air",

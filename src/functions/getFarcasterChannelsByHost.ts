@@ -13,7 +13,7 @@ import {
 import { formatFarcasterChannelsByHost } from "../utils/formatFarcasterChannelsByHost";
 
 /**
- * @description Fetch Farcaster followers of a gived FID
+ * @description Fetch Farcaster channels by host
  * @example
  * const { data, error } = await getFarcasterChannelParticipants({
  *  fid: 1,
