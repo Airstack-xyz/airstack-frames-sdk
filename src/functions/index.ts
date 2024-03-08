@@ -22,3 +22,4 @@ export * from "./searchFarcasterChannels";
 export * from "./getFarcasterChannelsByHost";
 export * from "./validateFramesMessage";
 // export * from "./generateCaptchaChallenge";
+export * from "./getTrendingMints";

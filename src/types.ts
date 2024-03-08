@@ -1,10 +1,14 @@
 import { FrameActionMessage } from "@farcaster/core";
 import {
+  Audience,
   Exact,
   FarcasterChannelActionType,
   InputMaybe,
   Scalars,
+  TimeFrame,
   TokenBlockchain,
+  TrendingMintsCriteria,
+  TokenType as AirstackTokenType,
 } from "./graphql/types";
 
 export type ConfigType = {
@@ -1567,4 +1571,39 @@ export interface ValidateFramesMessageJSONResponse {
 export interface ValidateFramesMessageOutput {
   isValid: boolean;
   message?: FrameActionMessage | null;
+  isAllowed?: boolean;
 }
+
+export interface AllowListCriteria {
+  eventIds?: number[];
+  isFollowingOnFarcaster?: number[];
+  numberOfFollowersOnFarcaster?: number;
+}
+
+export {
+  Audience,
+  TimeFrame,
+  TrendingMintsCriteria as Criteria,
+} from "./graphql/types";
+
+export interface GetTrendingMintsInput {
+  timeFrame: TimeFrame;
+  audience: Audience;
+  criteria: TrendingMintsCriteria;
+  limit?: number;
+}
+
+export interface GetTrendingMintsOutputData {
+  address: string | null;
+  erc1155TokenID: string | null;
+  criteriaCount: number | null;
+  timeFrom: any;
+  timeTo: any;
+  name: string | null | undefined;
+  symbol: string | null | undefined;
+  type: AirstackTokenType | null | undefined;
+}
+
+export type GetTrendingMintsOutput = IteratePaginationResponse<
+  GetTrendingMintsOutputData[] | null | undefined
+>;

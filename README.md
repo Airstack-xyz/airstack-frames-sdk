@@ -18,6 +18,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
 - [Set Environment Variables](#set-environment-variables)
 - [Get Started](#get-started)
 - [Functions](#functions)
+  - [`getTrendingMints`](#gettrendingmints)
   - [`getFarcasterUserDetails`](#getfarcasteruserdetails)
   - [`getFarcasterFollowers`](#getfarcasterfollowers)
   - [`getFarcasterFollowings`](#getfarcasterfollowings)
@@ -74,6 +75,61 @@ init(process.AIRSTACK_API_KEY);
 ```
 
 ## Functions
+
+### `getTrendingMints`
+
+Get trending mints in a given time frame by simply specifying the audience, criteria, and time frame that you prefer. All analysis and sorting will be done for you and you simply just need to receive the response from this function.
+
+**Input**
+
+| Field       | Type        | Required | Description                                                                                           |
+| ----------- | ----------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `audience`  | `Audience`  | true     | The audience to get trending mints for                                                                |
+| `criteria`  | `Criteria`  | true     | The criteria to analyze and sort trending mints                                                       |
+| `timeFrame` | `TimeFrame` | true     | The time frame to analyze the trending mints, e.g. the last 1 hour                                    |
+| `limit`     | `number`    | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Samples**
+
+```ts
+import {
+  getTrendingMints,
+  GetTrendingMintsInput,
+  GetTrendingMintsOutput,
+  Audience,
+  Criteria,
+  TimeFrame,
+} from "@airstack/frames";
+
+const input: GetTrendingMintsInput = {
+  audience: Audience.All,
+  criteria: Criteria.UniqueWallets,
+  timeFrame: TimeFrame.OneDay,
+  limit: 100,
+};
+const { data, error }: GetTrendingMintsOutput = await getTrendingMints(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Samples**
+
+```json
+[
+  {
+    "address": "0x9d70ccd59b3124e5227a9148413892f947697afd",
+    "erc1155TokenID": "",
+    "criteriaCount": 1880,
+    "timeFrom": "2024-03-07T15:17:00Z",
+    "timeTo": "2024-03-08T14:52:00Z",
+    "name": "Base's 2024 Mission, Strategy and Roadmap",
+    "symbol": "BASES2024MISSIONSTRATEGYANDROADMAP",
+    "type": "ERC721"
+  }
+]
+```
 
 ### `getFarcasterUserDetails`
 

@@ -117,6 +117,11 @@ export type AnimationUrlVariants = {
   original: Maybe<Scalars['String']['output']>;
 };
 
+export enum Audience {
+  All = 'all',
+  Farcaster = 'farcaster'
+}
+
 export type AudioVariants = {
   original: Maybe<Scalars['String']['output']>;
 };
@@ -127,6 +132,13 @@ export enum Blockchain {
 
 export type Boolean_Comparator_Exp = {
   _eq: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ConnectedAddress = {
+  address: Maybe<Scalars['Address']['output']>;
+  blockchain: Maybe<Scalars['String']['output']>;
+  chainId: Maybe<Scalars['String']['output']>;
+  timestamp: Maybe<Scalars['Time']['output']>;
 };
 
 export type ContractMetadata = {
@@ -261,12 +273,6 @@ export type DomainFilter = {
   name: InputMaybe<String_Comparator_Exp>;
   owner: InputMaybe<Identity_Comparator_Exp>;
   resolvedAddress: InputMaybe<Address_Comparator_Exp>;
-};
-
-export type DomainInput = {
-  blockchain: Blockchain;
-  name: InputMaybe<Scalars['String']['input']>;
-  resolvedAddress: InputMaybe<Scalars['Address']['input']>;
 };
 
 export type DomainMultiChainAddress = {
@@ -755,6 +761,44 @@ export type PoapsOutput = {
   pageInfo: Maybe<PageInfo>;
 };
 
+export type PopularDapp = {
+  address: Maybe<Scalars['String']['output']>;
+  blockchain: Maybe<Scalars['String']['output']>;
+  chainId: Maybe<Scalars['String']['output']>;
+  criteria: Maybe<Scalars['String']['output']>;
+  criteriaCount: Maybe<Scalars['Int']['output']>;
+  description: Maybe<Scalars['String']['output']>;
+  lastTransactionBlockNumber: Maybe<Scalars['Int']['output']>;
+  lastTransactionHash: Maybe<Scalars['String']['output']>;
+  lastTransactionTimestamp: Maybe<Scalars['Time']['output']>;
+  name: Maybe<Scalars['String']['output']>;
+  timeFrom: Maybe<Scalars['Time']['output']>;
+  timeTo: Maybe<Scalars['Time']['output']>;
+  userbase: Maybe<Scalars['String']['output']>;
+  website: Maybe<Scalars['String']['output']>;
+};
+
+export enum PopularDappsCriteria {
+  GasSpent = 'GAS_SPENT',
+  TotalTransactions = 'TOTAL_TRANSACTIONS',
+  UniqueUsers = 'UNIQUE_USERS'
+}
+
+export type PopularDappsInput = {
+  blockchain: TrendingBlockchain;
+  criteria: PopularDappsCriteria;
+  cursor: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TrendingFilter>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  timeFrame: TimeFrame;
+  userbase: Audience;
+};
+
+export type PopularDappsOutput = {
+  PopularDapps: Maybe<Array<PopularDapp>>;
+  pageInfo: Maybe<PageInfo>;
+};
+
 export type ProjectDetails = {
   collectionName: Maybe<Scalars['String']['output']>;
   description: Maybe<Scalars['String']['output']>;
@@ -766,7 +810,6 @@ export type ProjectDetails = {
 
 export type Query = {
   Accounts: Maybe<AccountsOutput>;
-  Domain: Maybe<Domain>;
   Domains: Maybe<DomainsOutput>;
   FarcasterChannelParticipants: Maybe<FarcasterChannelParticipantsOutput>;
   FarcasterChannels: Maybe<FarcasterChannelsOutput>;
@@ -776,13 +819,11 @@ export type Query = {
   SocialFollowers: Maybe<SocialFollowerOutput>;
   SocialFollowings: Maybe<SocialFollowingOutput>;
   Socials: Maybe<SocialsOutput>;
-  Token: Maybe<Token>;
   TokenBalances: Maybe<TokenBalancesOutput>;
-  TokenNft: Maybe<TokenNft>;
   TokenNfts: Maybe<TokenNftsOutput>;
-  TokenTransfer: Maybe<TokenTransfer>;
   TokenTransfers: Maybe<TokenTransfersOutput>;
   Tokens: Maybe<TokensOutput>;
+  TrendingMints: Maybe<TrendingMintsOutput>;
   Wallet: Maybe<Wallet>;
   XMTPs: Maybe<XmtPsOutput>;
 };
@@ -790,11 +831,6 @@ export type Query = {
 
 export type QueryAccountsArgs = {
   input: AccountsInput;
-};
-
-
-export type QueryDomainArgs = {
-  input: DomainInput;
 };
 
 
@@ -843,28 +879,13 @@ export type QuerySocialsArgs = {
 };
 
 
-export type QueryTokenArgs = {
-  input: TokenInput;
-};
-
-
 export type QueryTokenBalancesArgs = {
   input: TokenBalancesInput;
 };
 
 
-export type QueryTokenNftArgs = {
-  input: TokenNftInput;
-};
-
-
 export type QueryTokenNftsArgs = {
   input: TokenNftsInput;
-};
-
-
-export type QueryTokenTransferArgs = {
-  input: TokenTransferInput;
 };
 
 
@@ -875,6 +896,11 @@ export type QueryTokenTransfersArgs = {
 
 export type QueryTokensArgs = {
   input: TokensInput;
+};
+
+
+export type QueryTrendingMintsArgs = {
+  input: TrendingMintsInput;
 };
 
 
@@ -959,6 +985,7 @@ export type Social = {
   blockchain: Maybe<Blockchain>;
   /** Unique identifier for the blockchain */
   chainId: Maybe<Scalars['String']['output']>;
+  connectedAddresses: Maybe<Array<ConnectedAddress>>;
   coverImageContentValue: Maybe<Media>;
   coverImageURI: Maybe<Scalars['String']['output']>;
   /** Social DApp name */
@@ -1212,6 +1239,15 @@ export type String_Eq_Comparator_Exp = {
   _eq: InputMaybe<Scalars['String']['input']>;
 };
 
+export enum TimeFrame {
+  EightHours = 'eight_hours',
+  OneDay = 'one_day',
+  OneHour = 'one_hour',
+  SevenDays = 'seven_days',
+  TwoDays = 'two_days',
+  TwoHours = 'two_hours'
+}
+
 export type Time_Comparator_Exp = {
   _eq: InputMaybe<Scalars['Time']['input']>;
   _gt: InputMaybe<Scalars['Time']['input']>;
@@ -1377,11 +1413,6 @@ export type TokenFilter = {
   type: InputMaybe<TokenType_Comparator_Exp>;
 };
 
-export type TokenInput = {
-  address: Scalars['Address']['input'];
-  blockchain: TokenBlockchain;
-};
-
 export type TokenNft = {
   /** Smart contract address of the token */
   address: Scalars['Address']['output'];
@@ -1445,12 +1476,6 @@ export type TokenNftFilter = {
   address: InputMaybe<Address_Comparator_Exp>;
   metaData: InputMaybe<NftMetadataFilter>;
   tokenId: InputMaybe<String_Comparator_Exp>;
-};
-
-export type TokenNftInput = {
-  address: Scalars['Address']['input'];
-  blockchain: TokenBlockchain;
-  tokenId: Scalars['String']['input'];
 };
 
 export type TokenNftOrderBy = {
@@ -1539,11 +1564,6 @@ export type TokenTransferFilter = {
   transactionHash: InputMaybe<String_Comparator_Exp>;
 };
 
-export type TokenTransferInput = {
-  blockchain: TokenBlockchain;
-  transactionHash: Scalars['String']['input'];
-};
-
 export type TokenTransferOrderBy = {
   blockTimestamp: InputMaybe<OrderBy>;
 };
@@ -1590,6 +1610,53 @@ export type TokensInput = {
 export type TokensOutput = {
   Token: Maybe<Array<Token>>;
   pageInfo: Maybe<PageInfo>;
+};
+
+export enum TrendingBlockchain {
+  Base = 'base'
+}
+
+export type TrendingFilter = {
+  address: InputMaybe<Trending_Comparator_Exp>;
+};
+
+export type TrendingMint = {
+  address: Maybe<Scalars['String']['output']>;
+  audience: Maybe<Scalars['String']['output']>;
+  blockchain: Maybe<Scalars['String']['output']>;
+  chainId: Maybe<Scalars['String']['output']>;
+  criteria: Maybe<Scalars['String']['output']>;
+  criteriaCount: Maybe<Scalars['Int']['output']>;
+  erc1155TokenID: Maybe<Scalars['String']['output']>;
+  id: Maybe<Scalars['String']['output']>;
+  timeFrom: Maybe<Scalars['Time']['output']>;
+  timeTo: Maybe<Scalars['Time']['output']>;
+  token: Maybe<Token>;
+};
+
+export enum TrendingMintsCriteria {
+  TotalMints = 'total_mints',
+  UniqueWallets = 'unique_wallets'
+}
+
+export type TrendingMintsInput = {
+  audience: Audience;
+  blockchain: TrendingBlockchain;
+  criteria: TrendingMintsCriteria;
+  cursor: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TrendingFilter>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  timeFrame: TimeFrame;
+};
+
+export type TrendingMintsOutput = {
+  TrendingMint: Maybe<Array<TrendingMint>>;
+  pageInfo: Maybe<PageInfo>;
+};
+
+export type Trending_Comparator_Exp = {
+  _eq: InputMaybe<Scalars['Address']['input']>;
+  _in: InputMaybe<Array<Scalars['Address']['input']>>;
 };
 
 export type VideoVariants = {
@@ -1730,6 +1797,17 @@ export type CheckPoapAttendedByFarcasterUserQueryVariables = Exact<{
 
 export type CheckPoapAttendedByFarcasterUserQuery = { Poaps: { Poap: Array<{ eventId: string | null }> | null } | null };
 
+export type CreateAllowListQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+  eventIds: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  isFollowingOnFarcaster: InputMaybe<Array<Scalars['Identity']['input']> | Scalars['Identity']['input']>;
+  fid: Scalars['String']['input'];
+  followerCountOnFarcaster: Scalars['Int']['input'];
+}>;
+
+
+export type CreateAllowListQuery = { poaps: { Poap: Array<{ eventId: string | null }> | null } | null, isFollowingOnFarcaster: { socialFollowers: { Follower: Array<{ followingAddress: { farcaster: Array<{ fid: string | null }> | null } | null }> | null } | null } | null, numberOfFollowersOnFarcaster: { Social: Array<{ followerCount: number | null }> | null } | null };
+
 export type FarcasterChannelDetailsQueryVariables = Exact<{
   channel: Scalars['String']['input'];
 }>;
@@ -1817,3 +1895,13 @@ export type SearchFarcasterUsersQueryVariables = Exact<{
 
 
 export type SearchFarcasterUsersQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
+
+export type TrendingMintsQueryVariables = Exact<{
+  timeFrame: TimeFrame;
+  audience: Audience;
+  criteria: TrendingMintsCriteria;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type TrendingMintsQuery = { TrendingMints: { TrendingMint: Array<{ address: string | null, erc1155TokenID: string | null, criteriaCount: number | null, timeFrom: any | null, timeTo: any | null, token: { name: string | null, symbol: string | null, type: TokenType | null } | null }> | null } | null };
