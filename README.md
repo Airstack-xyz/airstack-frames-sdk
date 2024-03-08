@@ -46,6 +46,9 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`TokenType`](#tokentype)
   - [`NFTType`](#nfttype)
   - [`FarcasterChannelActionType`](#farcasterchannelactiontype)
+  - [`Audience`](#audience)
+  - [`Criteria`](#criteria)
+  - [`TimeFrame`](#timeframe)
 - [Paginations](#paginations)
 
 ## Install
@@ -1617,6 +1620,37 @@ export enum NFTType {
 export enum FarcasterChannelActionType {
   Cast = "cast",
   Reply = "reply",
+}
+```
+
+### `Audience`
+
+```ts
+export enum Audience {
+  All = "all",
+  Farcaster = "farcaster",
+}
+```
+
+### `Criteria`
+
+```ts
+export enum Criteria {
+  TotalMints = "total_mints",
+  UniqueWallets = "unique_wallets",
+}
+```
+
+### `TimeFrame`
+
+```ts
+export enum TimeFrame {
+  EightHours = "eight_hours",
+  OneDay = "one_day",
+  OneHour = "one_hour",
+  SevenDays = "seven_days",
+  TwoDays = "two_days",
+  TwoHours = "two_hours",
 }
 ```
 
