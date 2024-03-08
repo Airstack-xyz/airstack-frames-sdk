@@ -1528,14 +1528,14 @@ const res: ValidateFramesMessageOutput = await validateFramesMessage(body);
       "fid": 289309,
       "timestamp": 99738832,
       "network": 1,
-      "castAddBody": undefined,
-      "castRemoveBody": undefined,
-      "reactionBody": undefined,
-      "verificationAddAddressBody": undefined,
-      "verificationRemoveBody": undefined,
-      "userDataBody": undefined,
-      "linkBody": undefined,
-      "usernameProofBody": undefined,
+      "castAddBody": null,
+      "castRemoveBody": null,
+      "reactionBody": null,
+      "verificationAddAddressBody": null,
+      "verificationRemoveBody": null,
+      "userDataBody": null,
+      "linkBody": null,
+      "usernameProofBody": null,
       "frameActionBody": {
         "url": [
           104, 116, 116, 112, 115, 58, 47, 47, 112, 101, 108, 105, 99, 97, 110,
@@ -1575,7 +1575,7 @@ const res: ValidateFramesMessageOutput = await validateFramesMessage(body);
       213, 205, 27, 113, 205, 116, 211, 214, 221, 105, 238, 157, 215, 191, 125,
       115, 205, 220, 119
     ],
-    "dataBytes": undefined
+    "dataBytes": null
   }
 }
 ```
