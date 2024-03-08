@@ -41,6 +41,8 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
   - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
   - [`validateFramesMessage`](#validateframesmessage)
+  - [`fetchQuery`](#fetchquery)
+  - [`fetchQueryWithPagination`](#fetchquerywithpagination)
 - [Enum](#enum)
   - [`TokenBlockchain`](#tokenblockchain)
   - [`TokenType`](#tokentype)
@@ -1576,6 +1578,148 @@ const res: ValidateFramesMessageOutput = await validateFramesMessage(body);
       115, 205, 220, 119
     ],
     "dataBytes": null
+  }
+}
+```
+
+### `fetchQuery`
+
+Call any Airstack GraphQL API queries without any paginations. If you are looking for paginated solution, check [`fetchQueryWithPagination`](#fetchquerywithpagination).
+
+**Input**
+
+| Parameters  | Type     | Required | Description                                                                                       |
+| ----------- | -------- | -------- | ------------------------------------------------------------------------------------------------- |
+| `query`     | `string` | true     | A string that represents the Airstack GraphQL query to be executed.                               |
+| `variables` | `Object` | false    | An object that contains variables used in the query. Only required if the query has any variables |
+
+**Code Samples**
+
+```ts
+import { fetchQuery } from "@airstack/frames";
+
+const { data, error } = await fetchQuery(
+  /* GraphQL */ `
+    query FetchPOAPsInCommonQuery($a: Identity!, $b: Identity!) {
+      Poaps(
+        input: { filter: { owner: { _eq: $a } }, blockchain: ALL, limit: 200 }
+      ) {
+        Poap {
+          poapEvent {
+            poaps(input: { filter: { owner: { _eq: $b } } }) {
+              poapEvent {
+                eventName
+              }
+            }
+          }
+        }
+      }
+    }
+  `,
+  {
+    a: "betashop.eth",
+    b: "ipeciura.eth",
+  }
+);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Samples**
+
+```json
+{
+  "Poaps": {
+    "Poap": [
+      {
+        "poapEvent": {
+          "poaps": [
+            {
+              "poapEvent": {
+                "poaps": [
+                  {
+                    "eventName": "You have met Patricio in September of 2023 (IRL)"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+### `fetchQueryWithPagination`
+
+Call any Airstack GraphQL API queries with paginations. If you are looking for non-paginated solution, check [`fetchQueryWithPagination`](#fetchquerywithpagination).
+
+**Input**
+
+| Parameters  | Type     | Required | Description                                                                                       |
+| ----------- | -------- | -------- | ------------------------------------------------------------------------------------------------- |
+| `query`     | `string` | true     | A string that represents the Airstack GraphQL query to be executed.                               |
+| `variables` | `Object` | false    | An object that contains variables used in the query. Only required if the query has any variables |
+
+**Code Samples**
+
+```ts
+import { fetchQueryWithPagination } from "@airstack/frames";
+
+const { data, error } = await fetchQueryWithPagination(
+  /* GraphQL */ `
+    query FetchPOAPsInCommonQuery($a: Identity!, $b: Identity!) {
+      Poaps(
+        input: { filter: { owner: { _eq: $a } }, blockchain: ALL, limit: 200 }
+      ) {
+        Poap {
+          poapEvent {
+            poaps(input: { filter: { owner: { _eq: $b } } }) {
+              poapEvent {
+                eventName
+              }
+            }
+          }
+        }
+      }
+    }
+  `,
+  {
+    a: "betashop.eth",
+    b: "ipeciura.eth",
+  }
+);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Samples**
+
+```json
+{
+  "Poaps": {
+    "Poap": [
+      {
+        "poapEvent": {
+          "poaps": [
+            {
+              "poapEvent": {
+                "poaps": [
+                  {
+                    "eventName": "You have met Patricio in September of 2023 (IRL)"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 }
 ```
