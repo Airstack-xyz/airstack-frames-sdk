@@ -40,6 +40,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
   - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
   - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
+  - [`createAllowList`](#createallowlist)
   - [`validateFramesMessage`](#validateframesmessage)
   - [`fetchQuery`](#fetchquery)
   - [`fetchQueryWithPagination`](#fetchquerywithpagination)
@@ -1479,15 +1480,86 @@ console.log(data);
 ]
 ```
 
+### `createAllowList`
+
+Check If a Farcaster user is allowed to access a Frame or not.
+
+**Input**
+
+| Field               | Type       | Required | Description                                                                            |
+| ------------------- | ---------- | -------- | -------------------------------------------------------------------------------------- |
+| `fid`               | `string`   | true     | FID of a Farcaster user to check.                                                      |
+| `allowListCriteria` | `object`   | true     | Criteria to check if the user is allowed                                               |
+| `isAllowedFunction` | `function` | false    | Custom function to determine if the user is allowed. It will use AND logic by default. |
+
+**Code Sample**
+
+```ts
+import {
+  createAllowList,
+  CreateAllowListInput,
+  CreateAllowListOutput,
+  TokenBlockchain,
+} from "@airstack/frames";
+
+const allowListCriteria = {
+  eventIds: [166577],
+  numberOfFollowersOnFarcaster: 100,
+  isFollowingOnFarcaster: [2602],
+  tokens: [
+    {
+      tokenAddress: "0x95cb845b525f3a2126546e39d84169f1eca8c77f",
+      chain: TokenBlockchain.Ethereum,
+    },
+    {
+      tokenAddress: "0xd57867f2fdb89eadc8e859a89e3d5039c913d1d9",
+      chain: TokenBlockchain.Polygon,
+    },
+    {
+      tokenAddress: "0x2d45c399d7ca25341992038f12610c41a00a66ed",
+      chain: TokenBlockchain.Base,
+    },
+    {
+      tokenAddress: "0x743658ace931ea241dd0cb4ed38ec72cc8162ce1",
+      chain: TokenBlockchain.Zora,
+    },
+  ],
+};
+const input: CreateAllowListInput = {
+  fid: 602,
+  allowListCriteria,
+  isAllowedFunction: function (data) {
+    console.log(data);
+    return true;
+  },
+};
+const { isAllowed, error }: CreateAllowListOutput = await createAllowList(
+  input
+);
+
+if (error) throw new Error(error);
+
+console.log(isAllowed);
+```
+
+**Response Sample**
+
+```json
+{
+  "isAllowed": true,
+  "error": null
+}
+```
+
 ### `validateFramesMessage`
 
 Validate frames signature packet with Farcaster Hub for your Farcaster Frames
 
 **Input**
 
-| Field  | Type                         | Required | Description              |
-| ------ | ---------------------------- | -------- | ------------------------ |
-| `body` | `ValidateFramesMessageInput` | true     | FID of a Farcaster user. |
+| Field  | Type                         | Required | Description             |
+| ------ | ---------------------------- | -------- | ----------------------- |
+| `body` | `ValidateFramesMessageInput` | true     | Frame Signature Packet. |
 
 **Code Sample**
 

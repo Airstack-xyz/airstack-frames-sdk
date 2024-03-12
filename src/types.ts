@@ -1578,6 +1578,10 @@ export interface AllowListCriteria {
   eventIds?: number[];
   isFollowingOnFarcaster?: number[];
   numberOfFollowersOnFarcaster?: number;
+  tokens?: {
+    tokenAddress: string;
+    chain: TokenBlockchain;
+  }[];
 }
 
 export {
@@ -1607,3 +1611,96 @@ export interface GetTrendingMintsOutputData {
 export type GetTrendingMintsOutput = IteratePaginationResponse<
   GetTrendingMintsOutputData[] | null | undefined
 >;
+
+export type CreateAllowListQueryVariables = Exact<{
+  identity?: Scalars["Identity"]["input"];
+  eventIds?: InputMaybe<
+    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
+  >;
+  isFollowingOnFarcaster?: InputMaybe<
+    Array<Scalars["Identity"]["input"]> | Scalars["Identity"]["input"]
+  >;
+  fid?: Scalars["String"]["input"];
+  followerCountOnFarcaster?: Scalars["Int"]["input"];
+  ethereumTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  polygonTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  baseTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  zoraTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+}>;
+
+export type CreateAllowListQuery = {
+  poaps?: { Poap: Array<{ eventId: string | null }> | null } | null;
+  isFollowingOnFarcaster?: {
+    socialFollowers: {
+      Follower: Array<{
+        followingAddress: {
+          farcaster: Array<{ fid: string | null }> | null;
+        } | null;
+      }> | null;
+    } | null;
+  } | null;
+  numberOfFollowersOnFC?: {
+    Social: Array<{ followerCount: number | null }> | null;
+  } | null;
+  ethereum?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  polygon?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  base?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  zora: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+};
+
+export interface CreateAllowListInput {
+  fid: number | undefined;
+  allowListCriteria: AllowListCriteria;
+  isAllowedFunction?: ({
+    isPoapsAttended,
+    isFollowingUsersOnFarcaster,
+    isFarcasterFollowerCountAbove,
+    isTokensHold,
+  }: {
+    isPoapsAttended?: { eventId: number; isAttended: boolean }[];
+    isFollowingUsersOnFarcaster?: { fid: number; isFollowing: boolean }[];
+    isFarcasterFollowerCountAbove?: boolean;
+    isTokensHold?: {
+      chain: TokenBlockchain;
+      tokenAddress: string;
+      isHold: boolean;
+    }[];
+  }) => Promise<boolean> | boolean;
+}
+
+export interface CreateAllowListOutput {
+  isAllowed?: boolean | null;
+  error?: any;
+}

@@ -1803,10 +1803,14 @@ export type CreateAllowListQueryVariables = Exact<{
   isFollowingOnFarcaster: InputMaybe<Array<Scalars['Identity']['input']> | Scalars['Identity']['input']>;
   fid: Scalars['String']['input'];
   followerCountOnFarcaster: Scalars['Int']['input'];
+  ethereumTokens: InputMaybe<Array<Scalars['Address']['input']> | Scalars['Address']['input']>;
+  polygonTokens: InputMaybe<Array<Scalars['Address']['input']> | Scalars['Address']['input']>;
+  baseTokens: InputMaybe<Array<Scalars['Address']['input']> | Scalars['Address']['input']>;
+  zoraTokens: InputMaybe<Array<Scalars['Address']['input']> | Scalars['Address']['input']>;
 }>;
 
 
-export type CreateAllowListQuery = { poaps: { Poap: Array<{ eventId: string | null }> | null } | null, isFollowingOnFarcaster: { socialFollowers: { Follower: Array<{ followingAddress: { farcaster: Array<{ fid: string | null }> | null } | null }> | null } | null } | null, numberOfFollowersOnFarcaster: { Social: Array<{ followerCount: number | null }> | null } | null };
+export type CreateAllowListQuery = { poaps: { Poap: Array<{ eventId: string | null }> | null } | null, isFollowingOnFarcaster: { socialFollowers: { Follower: Array<{ followingAddress: { farcaster: Array<{ fid: string | null }> | null } | null }> | null } | null } | null, numberOfFollowersOnFarcaster: { Social: Array<{ followerCount: number | null }> | null } | null, ethereum: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, amount: string }> | null } | null, polygon: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, amount: string }> | null } | null, base: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, amount: string }> | null } | null, zora: { TokenBalance: Array<{ blockchain: TokenBlockchain | null, tokenAddress: any, amount: string }> | null } | null };
 
 export type FarcasterChannelDetailsQueryVariables = Exact<{
   channel: Scalars['String']['input'];

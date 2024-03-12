@@ -54,7 +54,6 @@ export async function checkTokenMintedByFarcasterUser(
     ...(zoraTokens?.length > 0 ? [TokenBlockchain.Zora] : []),
   ];
   const { data, error } = await fetchQuery(query(chains), variable);
-  console.log(data);
   const { ethereum, polygon, base, zora } =
     (data as CheckTokenMintedByFarcasterUserQuery) ?? {};
   return {
