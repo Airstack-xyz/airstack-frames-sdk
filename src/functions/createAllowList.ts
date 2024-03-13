@@ -182,11 +182,14 @@ export async function createAllowList(
       : // If no custom isAllowedFunction is provided,
         // use the default AND logic to determine if the user is allowed
         true &&
-        (isPoapsAttended?.every(({ isAttended }) => isAttended) ?? true) &&
-        (isFollowingUsersOnFarcaster?.every(({ isFollowing }) => isFollowing) ??
-          true) &&
-        isFarcasterFollowerCountAbove &&
-        isTokensHold?.every(({ isHold }) => isHold),
+        (eventIds
+          ? isPoapsAttended?.every(({ isAttended }) => isAttended)
+          : true) &&
+        (isFollowingOnFarcaster
+          ? isFollowingUsersOnFarcaster?.every(({ isFollowing }) => isFollowing)
+          : true) &&
+        (numberOfFollowersOnFarcaster ? isFarcasterFollowerCountAbove : true) &&
+        (tokens ? isTokensHold?.every(({ isHold }) => isHold) : true),
     error,
   };
 }
