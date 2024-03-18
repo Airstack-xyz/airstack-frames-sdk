@@ -24,6 +24,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
 - [Get Started](#get-started)
 - [Functions](#functions)
   - [`getTrendingMints`](#gettrendingmints)
+  - [`getTrendingTokens`](#gettrendingtokens)
   - [`validateFramesMessage`](#validateframesmessage)
   - [`getFarcasterUserDetails`](#getfarcasteruserdetails)
   - [`getFarcasterFollowers`](#getfarcasterfollowers)
@@ -49,6 +50,9 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`createAllowList`](#createallowlist)
   - [`fetchQuery`](#fetchquery)
   - [`fetchQueryWithPagination`](#fetchquerywithpagination)
+- [Frog Middlewares](#frog-middlewares)
+  - [Onchain Data Middleware](#onchain-data-middleware)
+  - [Allow List Middleware](#allow-list-middleware)
 - [Enum](#enum)
   - [`TokenBlockchain`](#tokenblockchain)
   - [`TokenType`](#tokentype)
@@ -57,6 +61,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`Audience`](#audience)
   - [`Criteria`](#criteria)
   - [`TimeFrame`](#timeframe)
+  - [`TransferType`](#transfertype)
 - [Paginations](#paginations)
 
 ## Install
@@ -140,6 +145,52 @@ console.log(data);
     "type": "ERC721"
   }
 ]
+```
+
+### `getTrendingTokens`
+
+Get trending tokens in a given time frame by simply specifying the audience, criteria, time frame, and transfer type that you prefer. All analysis and sorting will be done for you and you simply just need to receive the response from this function.
+
+**Input**
+
+| Field          | Type           | Required | Description                                                                                           |
+| -------------- | -------------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `audience`     | `Audience`     | true     | The audience to get trending mints for                                                                |
+| `criteria`     | `Criteria`     | true     | The criteria to analyze and sort trending mints                                                       |
+| `timeFrame`    | `TimeFrame`    | true     | The time frame to analyze the trending mints, e.g. the last 1 hour                                    |
+| `transferType` | `TransferType` | true     | The type of transfer to get trending tokens for, either `all` or `self_initiated`                     |
+| `limit`        | `number`       | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Samples**
+
+```ts
+import {
+  getTrendingTokens,
+  GetTrendingTokensInput,
+  GetTrendingTokensOutput,
+  Audience,
+  Criteria,
+  TimeFrame,
+} from "@airstack/frames";
+
+const { data, error } = await getTrendingTokens({
+  audience: Audience.All,
+  criteria: Criteria.UniqueWallets,
+  timeFrame: TimeFrame.OneDay,
+  transferType: TransferType.ALL,
+  limit: 100,
+});
+const { data, error }: GetTrendingTokensOutput = await getTrendingTokens(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Samples**
+
+```json
+
 ```
 
 ### `validateFramesMessage`
@@ -1801,6 +1852,188 @@ console.log(data);
 }
 ```
 
+## Frog Middlewares
+
+### Onchain Data Middleware
+
+The Onchain Data middleware injects onchain data of the user, including Farcaster user details, token balances, token mints, POAPs, Farcaster channels, etc.
+
+**Input**
+
+| Parameters | Type     | Required | Description                                                                   |
+| ---------- | -------- | -------- | ----------------------------------------------------------------------------- |
+| `apiKey`   | `string` | false    | Configure API key, if no API key has been provided with `init` function.      |
+| `features` | `Object` | false    | An object that contains variables used for fetching onchain data of the user. |
+
+**Code Samples**
+
+```ts
+import { onchainData } from "@airstack/frames";
+
+const onchainDataMiddleware = onchainData({
+  apiKey: process.env.AIRSTACK_API_KEY as string,
+  features: {
+    userDetails: {},
+    erc20Mints: {
+      chains: [TokenBlockchain.Polygon],
+      limit: 1,
+    },
+    nftMints: {
+      limit: 1,
+      chains: [TokenBlockchain.Base],
+    },
+    erc20Balances: {
+      chains: [TokenBlockchain.Polygon],
+      limit: 1,
+    },
+    nftBalances: {
+      limit: 1,
+      chains: [TokenBlockchain.Base],
+    },
+    poaps: {
+      limit: 1,
+    },
+  },
+});
+
+app.frame("/", onchainDataMiddleware, async function (c) {
+  const { status } = c;
+  if (status === "response") console.log(c.var);
+  c.res({});
+});
+```
+
+**Response Samples**
+
+```json
+{
+  "userDetails": {
+    "profileName": "betashop.eth",
+    "fnames": ["betashop", "betashop.eth", "jasongoldberg.eth"],
+    "profileImage": {
+      "extraSmall": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/extra_small.jpg",
+      "small": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/small.jpg",
+      "medium": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/medium.jpg",
+      "large": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/large.jpg",
+      "original": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/original_image.jpg"
+    },
+    "userAssociatedAddresses": [
+      "0x66bd69c7064d35d146ca78e6b186e57679fba249",
+      "0xeaf55242a90bb3289db8184772b0b98562053559"
+    ],
+    "followerCount": 65820,
+    "followingCount": 2303
+  },
+  "erc20Balances": [
+    {
+      "blockchain": "polygon",
+      "tokenAddress": "0x10503dbed34e291655100a3c204528425abe3235",
+      "amount": 740,
+      "amountInWei": "740000000000000000000",
+      "name": "am00r",
+      "symbol": "AM00R"
+    }
+  ],
+  "nftBalances": [
+    {
+      "blockchain": "base",
+      "tokenAddress": "0xbd2019982628d26786d75e4477daf15489260d66",
+      "tokenId": "1",
+      "amount": 1,
+      "amountInWei": "1",
+      "name": "Doom scrolling",
+      "symbol": "",
+      "image": {},
+      "metaData": {},
+      "tokenType": "ERC1155"
+    }
+  ],
+  "erc20Mints": [
+    {
+      "blockchain": "polygon",
+      "tokenAddress": "0x058d96baa6f9d16853970b333ed993acc0c35add",
+      "amount": 50,
+      "amountInWei": "50000000000000000000",
+      "name": "Staked SPORK",
+      "symbol": "sSPORK",
+      "blockTimestamp": "2024-01-03T18:43:02Z",
+      "blockNumber": 51901326
+    }
+  ],
+  "nftMints": [
+    {
+      "blockchain": "base",
+      "tokenAddress": "0xb3da098a7251a647892203e0c256b4398d131a54",
+      "tokenId": "4442",
+      "tokenType": "ERC721",
+      "amount": 1,
+      "amountInWei": "1",
+      "name": "Mint A Penny",
+      "symbol": "PENNY",
+      "blockTimestamp": "2024-02-12T22:43:35Z",
+      "blockNumber": 10494234,
+      "image": {},
+      "metaData": {}
+    }
+  ],
+  "poaps": [
+    {
+      "eventName": "You have met Patricio in February of 2024 (IRL)",
+      "eventId": "167539",
+      "eventURL": "https://POAP.xyz",
+      "isVirtualEvent": false,
+      "startDate": "2024-02-01T00:00:00Z",
+      "endDate": "2024-03-01T00:00:00Z",
+      "city": ""
+    }
+  ]
+}
+```
+
+### Allow List Middleware
+
+The Allow List middleware injects allow list logic to check if a user is allowed to access a frame or not, based on various criterias, such as token holdings, Farcaster follower counts, following certain Farcaster users, or attended certain POAPs.
+
+**Input**
+
+| Parameters          | Type       | Required | Description                                                                            |
+| ------------------- | ---------- | -------- | -------------------------------------------------------------------------------------- |
+| `apiKey`            | `string`   | false    | Configure API key, if no API key has been provided with `init` function.               |
+| `allowListCriteria` | `object`   | true     | Criteria to check if the user is allowed                                               |
+| `isAllowedFunction` | `function` | false    | Custom function to determine if the user is allowed. It will use AND logic by default. |
+
+**Code Samples**
+
+```ts
+import { allowList } from "@airstack/frames";
+
+const allowListMiddleware = allowList({
+  allowListCriteria: {
+    eventIds: [166577],
+    tokens: [
+      {
+        tokenAddress: "0xe03ef4b9db1a47464de84fb476f9baf493b3e886",
+        chain: TokenBlockchain.Zora,
+      },
+    ],
+  },
+});
+
+app.frame("/", allowListMiddleware, async function (c) {
+  const { status } = c;
+  if (status === "response") console.log(c.var);
+  c.res({});
+});
+```
+
+**Response Samples**
+
+```json
+{
+  "isAllowed": true
+}
+```
+
 ## Enum
 
 The SDK offered several enums for some defined input values, such as blockchains and token types.
@@ -1872,6 +2105,15 @@ export enum TimeFrame {
   SevenDays = "seven_days",
   TwoDays = "two_days",
   TwoHours = "two_hours",
+}
+```
+
+### `TransferType`
+
+```ts
+export enum TransferType {
+  All = "all",
+  SelfInitiated = "self_initiated",
 }
 ```
 

@@ -1,4 +1,4 @@
-import { TrendingTokensQuery } from "../graphql/types";
+import { TrendingTokensQuery } from "../types";
 
 export function formatTrendingTokens(data: TrendingTokensQuery) {
   return (

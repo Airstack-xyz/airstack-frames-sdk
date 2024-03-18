@@ -10,7 +10,6 @@ import {
   TrendingMintsCriteria,
   TokenType as AirstackTokenType,
   TrendingTokensCriteria,
-  TrendingTokensTransferType,
 } from "./graphql/types";
 
 export type ConfigType = {
@@ -1710,7 +1709,7 @@ export interface CreateAllowListOutput {
 export type Pretty<type> = { [key in keyof type]: type[key] } & unknown;
 
 export interface OnchainDataMiddlewareParameters {
-  apiKey: string;
+  apiKey?: string;
   features: {
     userDetails?: any;
     erc20Balances?: any;
@@ -1766,11 +1765,16 @@ export type OnchainDataVariables = {
     | undefined;
 };
 
+export enum TransferType {
+  All = "all",
+  SelfInitiated = "self_initiated",
+}
+
 export interface GetTrendingTokensInput {
   timeFrame: TimeFrame;
   audience: Audience;
   criteria: TrendingTokensCriteria;
-  transferType: TrendingTokensTransferType;
+  transferType: TransferType;
   limit?: number;
 }
 
@@ -1801,3 +1805,27 @@ export type FrameData = {
   transactionId?: string | undefined;
   url: string;
 };
+
+export type TrendingTokensQuery = {
+  TrendingTokens: {
+    TrendingToken: Array<{
+      address: string | null;
+      criteriaCount: number | null;
+      timeFrom: any | null;
+      timeTo: any | null;
+      token: {
+        name: string | null;
+        symbol: string | null;
+        type: AirstackTokenType | null;
+      } | null;
+    }> | null;
+  } | null;
+};
+
+export type TrendingTokensQueryVariables = Exact<{
+  transferType: TransferType;
+  timeFrame: TimeFrame;
+  criteria: TrendingTokensCriteria;
+  audience: Audience;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;

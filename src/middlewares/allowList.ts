@@ -5,12 +5,15 @@ import {
   type TokenBlockchain,
   createAllowList,
   validateFramesMessage,
+  init,
 } from "..";
 import { hexToBytes } from "viem";
 import { Message } from "../protobufs/generated/message_pb.js";
 import { messageToFrameData } from "../utils/messageToFrameData";
+import { config } from "../config";
 
 export type AllowListMiddlewareParameters = {
+  apiKey?: string;
   allowListCriteria: AllowListCriteria;
   isAllowedFunction?: ({
     isPoapsAttended,
@@ -36,6 +39,9 @@ export type AllowListMiddlewareVariables = {
 export function allowList(
   parameters: AllowListMiddlewareParameters
 ): MiddlewareHandler<{ Variables: AllowListMiddlewareVariables }> {
+  const { apiKey } = parameters ?? {};
+  // If an apiKey is provided, initialize the SDK with custom API key
+  if (apiKey && !config?.authKey) init(apiKey);
   return async (c: any, next: any) => {
     let fid: number;
     const body = (await c.req.json().catch(() => {})) || {};

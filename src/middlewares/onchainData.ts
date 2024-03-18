@@ -17,6 +17,7 @@ import { hexToBytes } from "viem";
 import { Message } from "../protobufs/generated/message_pb.js";
 import { messageToFrameData } from "../utils/messageToFrameData";
 import type { MiddlewareHandler } from "hono";
+import { config } from "../config";
 
 export const onchainData = (
   parameters: OnchainDataMiddlewareParameters
@@ -32,7 +33,7 @@ export const onchainData = (
     channels,
   } = features ?? {};
   // If an apiKey is provided, initialize the SDK with custom API key
-  if (apiKey) init(apiKey);
+  if (apiKey && !config?.authKey) init(apiKey);
   return async (c, next) => {
     let fid = 1;
     const body = (await c.req.json().catch(() => {})) || {};

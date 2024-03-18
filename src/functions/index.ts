@@ -24,3 +24,4 @@ export * from "./validateFramesMessage";
 // export * from "./generateCaptchaChallenge";
 export * from "./getTrendingMints";
 export * from "./createAllowList";
+export * from "./getTrendingTokens";
