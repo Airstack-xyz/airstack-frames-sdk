@@ -153,13 +153,13 @@ Get trending tokens in a given time frame by simply specifying the audience, cri
 
 **Input**
 
-| Field          | Type           | Required | Description                                                                                           |
-| -------------- | -------------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| `audience`     | `Audience`     | true     | The audience to get trending mints for                                                                |
-| `criteria`     | `Criteria`     | true     | The criteria to analyze and sort trending mints                                                       |
-| `timeFrame`    | `TimeFrame`    | true     | The time frame to analyze the trending mints, e.g. the last 1 hour                                    |
-| `transferType` | `TransferType` | true     | The type of transfer to get trending tokens for, either `all` or `self_initiated`                     |
-| `limit`        | `number`       | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+| Field          | Type                     | Required | Description                                                                                           |
+| -------------- | ------------------------ | -------- | ----------------------------------------------------------------------------------------------------- |
+| `audience`     | `Audience`               | true     | The audience to get trending mints for                                                                |
+| `criteria`     | `TrendingTokensCriteria` | true     | The criteria to analyze and sort trending mints                                                       |
+| `timeFrame`    | `TimeFrame`              | true     | The time frame to analyze the trending mints, e.g. the last 1 hour                                    |
+| `transferType` | `TransferType`           | true     | The type of transfer to get trending tokens for, either `all` or `self_initiated`                     |
+| `limit`        | `number`                 | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
 
 **Code Samples**
 
@@ -169,15 +169,16 @@ import {
   GetTrendingTokensInput,
   GetTrendingTokensOutput,
   Audience,
-  Criteria,
+  TrendingTokensCriteria,
   TimeFrame,
+  TransferType,
 } from "@airstack/frames";
 
 const { data, error } = await getTrendingTokens({
   audience: Audience.All,
-  criteria: Criteria.UniqueWallets,
+  criteria: TrendingTokensCriteria.UniqueWallets,
   timeFrame: TimeFrame.OneDay,
-  transferType: TransferType.ALL,
+  transferType: TransferType.All,
   limit: 100,
 });
 const { data, error }: GetTrendingTokensOutput = await getTrendingTokens(input);
@@ -190,7 +191,17 @@ console.log(data);
 **Response Samples**
 
 ```json
-
+[
+  {
+    "address": "0xa0c05e2eed05912d9eb76d466167628e8024a708",
+    "criteriaCount": 8415,
+    "timeFrom": "2024-03-17T22:19:00Z",
+    "timeTo": "2024-03-18T13:55:00Z",
+    "name": "Ticker",
+    "symbol": "TICKER",
+    "type": "ERC20"
+  }
+]
 ```
 
 ### `validateFramesMessage`
@@ -1863,7 +1874,7 @@ The Onchain Data middleware injects onchain data of the user, including Farcaste
 | Parameters | Type     | Required | Description                                                                   |
 | ---------- | -------- | -------- | ----------------------------------------------------------------------------- |
 | `apiKey`   | `string` | false    | Configure API key, if no API key has been provided with `init` function.      |
-| `features` | `Object` | false    | An object that contains variables used for fetching onchain data of the user. |
+| `features` | `Object` | true     | An object that contains variables used for fetching onchain data of the user. |
 
 **Code Samples**
 
@@ -1871,7 +1882,6 @@ The Onchain Data middleware injects onchain data of the user, including Farcaste
 import { onchainData } from "@airstack/frames";
 
 const onchainDataMiddleware = onchainData({
-  apiKey: process.env.AIRSTACK_API_KEY as string,
   features: {
     userDetails: {},
     erc20Mints: {

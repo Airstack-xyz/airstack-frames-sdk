@@ -1829,3 +1829,5 @@ export type TrendingTokensQueryVariables = Exact<{
   audience: Audience;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
 }>;
+
+export { TrendingTokensCriteria } from "./graphql/types";
