@@ -8,6 +8,8 @@ import {
   getFarcasterUserNFTMints,
   getFarcasterUserPoaps,
   getFarcasterChannelsByParticipant,
+  getFarcasterFollowers,
+  getFarcasterFollowings,
 } from "..";
 import type {
   OnchainDataMiddlewareParameters,
@@ -28,11 +30,13 @@ export const onchainData = (
     nftMints,
     poaps,
     channels,
+    followers,
+    followings,
   } = features ?? {};
   // If an apiKey is provided, initialize the SDK with custom API key
   if (apiKey && !config?.authKey) init(apiKey);
   return async (c, next) => {
-    let fid = 1;
+    let fid: number;
     const body = (await c.req.json().catch(() => {})) || {};
     if (env === "dev") {
       const { untrustedData } = body ?? {};
@@ -53,6 +57,8 @@ export const onchainData = (
         nftMintsResponse,
         poapsResponse,
         channelsResponse,
+        followersResponse,
+        followingsResponse,
       ] = await Promise.all([
         userDetails
           ? getFarcasterUserDetails({ fid, ...(userDetails ?? {}) })
@@ -75,6 +81,12 @@ export const onchainData = (
         channels
           ? getFarcasterChannelsByParticipant({ fid, ...(channels ?? {}) })
           : Promise.resolve(undefined),
+        followers
+          ? getFarcasterFollowers({ fid, ...(followers ?? {}) })
+          : Promise.resolve(undefined),
+        followings
+          ? getFarcasterFollowings({ fid, ...(followings ?? {}) })
+          : Promise.resolve(undefined),
       ]);
 
       if (userDetailsResponse)
@@ -90,6 +102,10 @@ export const onchainData = (
       if (poapsResponse) c.set<"poaps">("poaps", poapsResponse.data);
       if (channelsResponse)
         c.set<"channels">("channels", channelsResponse.data);
+      if (followersResponse)
+        c.set<"followers">("followers", followersResponse.data);
+      if (followingsResponse)
+        c.set<"followings">("followings", followingsResponse.data);
     }
 
     await next();

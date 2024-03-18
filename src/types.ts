@@ -1718,6 +1718,8 @@ export interface OnchainDataMiddlewareParameters {
     nftMints?: any;
     poaps?: any;
     channels?: any;
+    followers?: any;
+    followings?: any;
   };
   env?: "prod" | "dev";
 }
@@ -1762,6 +1764,14 @@ export type OnchainDataVariables = {
   poaps?: Pretty<(FarcasterUserPoapsOutputData | null)[]> | null | undefined;
   channels?:
     | Pretty<(FarcasterChannelsByParticipantOutputData | null)[]>
+    | null
+    | undefined;
+  followers?:
+    | Pretty<(FarcasterFollowersOutputData | null)[]>
+    | null
+    | undefined;
+  followings?:
+    | Pretty<(FarcasterFollowingsOutputData | null)[]>
     | null
     | undefined;
 };
