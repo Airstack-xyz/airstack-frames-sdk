@@ -1,58 +1,26 @@
 import type { MiddlewareHandler } from "hono";
 import {
-  type AllowListCriteria,
-  type Pretty,
-  type TokenBlockchain,
   createAllowList,
   validateFramesMessage,
   init,
+  AllowListMiddlewareParameters,
+  AllowListMiddlewareVariables,
 } from "..";
-import { hexToBytes } from "viem";
-import { Message } from "../protobufs/generated/message_pb.js";
-import { messageToFrameData } from "../utils/messageToFrameData";
 import { config } from "../config";
-
-export type AllowListMiddlewareParameters = {
-  apiKey?: string;
-  allowListCriteria: AllowListCriteria;
-  isAllowedFunction?: ({
-    isPoapsAttended,
-    isFollowingUsersOnFarcaster,
-    isFarcasterFollowerCountAbove,
-    isTokensHold,
-  }: {
-    isPoapsAttended?: { eventId: number; isAttended: boolean }[];
-    isFollowingUsersOnFarcaster?: { fid: number; isFollowing: boolean }[];
-    isFarcasterFollowerCountAbove?: boolean;
-    isTokensHold?: {
-      chain: TokenBlockchain;
-      tokenAddress: string;
-      isHold: boolean;
-    }[];
-  }) => Promise<boolean> | boolean;
-};
-
-export type AllowListMiddlewareVariables = {
-  isAllowed: Pretty<boolean> | undefined;
-};
 
 export function allowList(
   parameters: AllowListMiddlewareParameters
 ): MiddlewareHandler<{ Variables: AllowListMiddlewareVariables }> {
-  const { apiKey } = parameters ?? {};
+  const { apiKey, env } = parameters ?? {};
   // If an apiKey is provided, initialize the SDK with custom API key
   if (apiKey && !config?.authKey) init(apiKey);
   return async (c: any, next: any) => {
     let fid: number;
     const body = (await c.req.json().catch(() => {})) || {};
-    const { trustedData } = body ?? {};
-    if (process.env.NODE_ENV === "development") {
-      if (!trustedData) return await next();
-      // In development, we verify the message internally
-      const trustedBody = hexToBytes(`0x${trustedData?.messageBytes}`);
-      const message = new Message().fromBinary(trustedBody);
-      const frameData = messageToFrameData(message);
-      fid = frameData?.fid as number;
+    if (env === "dev") {
+      // In development, we use untrusted data
+      const { untrustedData } = body ?? {};
+      fid = untrustedData?.fid as number;
     } else {
       // In production, get fid from the validated message
       const { message } = await validateFramesMessage(body);

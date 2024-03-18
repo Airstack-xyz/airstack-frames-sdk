@@ -1719,6 +1719,7 @@ export interface OnchainDataMiddlewareParameters {
     poaps?: any;
     channels?: any;
   };
+  env?: "prod" | "dev";
 }
 
 export type OnchainDataVariables = {
@@ -1831,3 +1832,28 @@ export type TrendingTokensQueryVariables = Exact<{
 }>;
 
 export { TrendingTokensCriteria } from "./graphql/types";
+
+export type AllowListMiddlewareParameters = {
+  env?: "dev" | "prod";
+  apiKey?: string;
+  allowListCriteria: AllowListCriteria;
+  isAllowedFunction?: ({
+    isPoapsAttended,
+    isFollowingUsersOnFarcaster,
+    isFarcasterFollowerCountAbove,
+    isTokensHold,
+  }: {
+    isPoapsAttended?: { eventId: number; isAttended: boolean }[];
+    isFollowingUsersOnFarcaster?: { fid: number; isFollowing: boolean }[];
+    isFarcasterFollowerCountAbove?: boolean;
+    isTokensHold?: {
+      chain: TokenBlockchain;
+      tokenAddress: string;
+      isHold: boolean;
+    }[];
+  }) => Promise<boolean> | boolean;
+};
+
+export type AllowListMiddlewareVariables = {
+  isAllowed: Pretty<boolean> | undefined;
+};

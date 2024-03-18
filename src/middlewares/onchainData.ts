@@ -13,16 +13,13 @@ import type {
   OnchainDataMiddlewareParameters,
   OnchainDataVariables,
 } from "../types";
-import { hexToBytes } from "viem";
-import { Message } from "../protobufs/generated/message_pb.js";
-import { messageToFrameData } from "../utils/messageToFrameData";
 import type { MiddlewareHandler } from "hono";
 import { config } from "../config";
 
 export const onchainData = (
   parameters: OnchainDataMiddlewareParameters
 ): MiddlewareHandler<{ Variables: OnchainDataVariables }> => {
-  const { apiKey, features } = parameters ?? {};
+  const { apiKey, features, env = "prod" } = parameters ?? {};
   const {
     userDetails,
     erc20Balances,
@@ -37,14 +34,9 @@ export const onchainData = (
   return async (c, next) => {
     let fid = 1;
     const body = (await c.req.json().catch(() => {})) || {};
-    const { trustedData } = body ?? {};
-    if (process.env.NODE_ENV === "development") {
-      if (!trustedData) return await next();
-      // In development, we verify the message internally
-      const trustedBody = hexToBytes(`0x${trustedData?.messageBytes}`);
-      const message = new Message().fromBinary(trustedBody);
-      const frameData = messageToFrameData(message);
-      fid = frameData?.fid as number;
+    if (env === "dev") {
+      const { untrustedData } = body ?? {};
+      fid = untrustedData?.fid as number;
     } else {
       // In production, get fid from the validated message
       const { message } = await validateFramesMessage(body);
