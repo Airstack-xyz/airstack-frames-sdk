@@ -44,7 +44,7 @@ export function allowList(
       if (!trustedData) return await next();
       // In development, we verify the message internally
       const trustedBody = hexToBytes(`0x${trustedData?.messageBytes}`);
-      const message = Message.fromBinary(trustedBody);
+      const message = new Message().fromBinary(trustedBody);
       const frameData = messageToFrameData(message);
       fid = frameData?.fid as number;
     } else {
