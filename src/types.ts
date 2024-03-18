@@ -9,6 +9,8 @@ import {
   TokenBlockchain,
   TrendingMintsCriteria,
   TokenType as AirstackTokenType,
+  TrendingTokensCriteria,
+  TrendingTokensTransferType,
 } from "./graphql/types";
 
 export type ConfigType = {
@@ -1704,3 +1706,98 @@ export interface CreateAllowListOutput {
   isAllowed?: boolean | null;
   error?: any;
 }
+
+export type Pretty<type> = { [key in keyof type]: type[key] } & unknown;
+
+export interface OnchainDataMiddlewareParameters {
+  apiKey: string;
+  features: {
+    userDetails?: any;
+    erc20Balances?: any;
+    nftBalances?: any;
+    erc20Mints?: any;
+    nftMints?: any;
+    poaps?: any;
+    channels?: any;
+  };
+}
+
+export type OnchainDataVariables = {
+  userDetails?:
+    | Pretty<{
+        profileName: string | null | undefined;
+        fnames: (string | null)[] | null | undefined;
+        userAssociatedAddresses: string[] | null | undefined;
+        followerCount: number | null | undefined;
+        followingCount: number | null | undefined;
+        profileImage:
+          | {
+              extraSmall: string | null;
+              small: string | null;
+              medium: string | null;
+              large: string | null;
+              original: string | null | undefined;
+            }
+          | null
+          | undefined;
+      }>
+    | null
+    | undefined;
+  erc20Balances?:
+    | Pretty<(FarcasterUserERC20BalancesOutputData | null)[]>
+    | null
+    | undefined;
+  nftBalances?:
+    | Pretty<(FarcasterUserNFTBalancesOutputData | null)[]>
+    | null
+    | undefined;
+  erc20Mints?:
+    | Pretty<(FarcasterUserERC20MintsOutputData | null)[]>
+    | null
+    | undefined;
+  nftMints?:
+    | Pretty<(FarcasterUserNFTMintsOutputData | null)[]>
+    | null
+    | undefined;
+  poaps?: Pretty<(FarcasterUserPoapsOutputData | null)[]> | null | undefined;
+  channels?:
+    | Pretty<(FarcasterChannelsByParticipantOutputData | null)[]>
+    | null
+    | undefined;
+};
+
+export interface GetTrendingTokensInput {
+  timeFrame: TimeFrame;
+  audience: Audience;
+  criteria: TrendingTokensCriteria;
+  transferType: TrendingTokensTransferType;
+  limit?: number;
+}
+
+export interface GetTrendingTokensOutputData {
+  address: string | null;
+  criteriaCount: number | null;
+  timeFrom: any;
+  timeTo: any;
+  name: string | null | undefined;
+  symbol: string | null | undefined;
+  type: AirstackTokenType | null | undefined;
+}
+
+export type GetTrendingTokensOutput = IteratePaginationResponse<
+  GetTrendingTokensOutputData[] | null | undefined
+>;
+
+export type FrameData = {
+  address?: string | undefined;
+  buttonIndex?: 1 | 2 | 3 | 4 | undefined;
+  castId: { fid: number; hash: string };
+  fid: number;
+  inputText?: string | undefined;
+  messageHash: string;
+  network: number;
+  state?: string | undefined;
+  timestamp: number;
+  transactionId?: string | undefined;
+  url: string;
+};
