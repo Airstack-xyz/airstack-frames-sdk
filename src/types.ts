@@ -1867,3 +1867,35 @@ export type AllowListMiddlewareParameters = {
 export type AllowListMiddlewareVariables = {
   isAllowed: Pretty<boolean> | undefined;
 };
+
+export enum FrameRatio {
+  _1__1 = "1:1",
+  _1_91__1 = "1.91:1",
+}
+
+export interface GenerateCaptchaChallengeInput {
+  options?: { ratio?: FrameRatio; includeImage?: boolean };
+}
+
+export interface GenerateCaptchaChallengeOutput {
+  image?: string;
+  data: {
+    numA: number;
+    numB: number;
+  };
+  state: {
+    captchaId: string;
+    valueHash: string;
+  };
+}
+
+export interface ValidateCaptchaChallengeInput {
+  inputText: string;
+  state: { captchaId: string; valueHash: string };
+  options?: { ratio?: FrameRatio; includeImage?: boolean };
+}
+
+export interface ValidateCaptchaChallengeOutput {
+  image?: string;
+  isValidated: boolean;
+}

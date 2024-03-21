@@ -270,6 +270,7 @@ export type DomainFilter = {
   _nor: InputMaybe<Array<DomainFilter>>;
   _or: InputMaybe<Array<DomainFilter>>;
   isPrimary: InputMaybe<Boolean_Comparator_Exp>;
+  lastUpdatedBlockTimestamp: InputMaybe<Time_Comparator_Exp>;
   name: InputMaybe<String_Comparator_Exp>;
   owner: InputMaybe<Identity_Comparator_Exp>;
   resolvedAddress: InputMaybe<Address_Comparator_Exp>;
@@ -1673,10 +1674,12 @@ export type TrendingToken = {
   timeFrom: Maybe<Scalars['Time']['output']>;
   timeTo: Maybe<Scalars['Time']['output']>;
   token: Maybe<Token>;
+  uniqueHolders: Maybe<Scalars['Int']['output']>;
 };
 
 export enum TrendingTokensCriteria {
   TotalTransfers = 'total_transfers',
+  UniqueHolders = 'unique_holders',
   UniqueWallets = 'unique_wallets'
 }
 

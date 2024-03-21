@@ -60,6 +60,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`FarcasterChannelActionType`](#farcasterchannelactiontype)
   - [`Audience`](#audience)
   - [`Criteria`](#criteria)
+  - [`TrendingTokensCriteria`](#trendingtokenscriteria)
   - [`TimeFrame`](#timeframe)
   - [`TransferType`](#transfertype)
 - [Paginations](#paginations)
@@ -2007,12 +2008,12 @@ The Allow List middleware injects allow list logic to check if a user is allowed
 
 **Input**
 
-| Parameters          | Type       | Required | Description                                                                            |
-| ------------------- | ---------- | -------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apiKey`            | `string`   | false    | Configure API key, if no API key has been provided with `init` function.               |
-| `allowListCriteria` | `object`   | true     | Criteria to check if the user is allowed                                               |
-| `isAllowedFunction` | `function` | false    | Custom function to determine if the user is allowed. It will use AND logic by default. |
-| `env`               | `prod`     | `dev`    | false                                                                                  | Configure whether the environment is dev (using `untrustedData`) or prod (validate `trustedData` with `validateFramesMessage` API). By default, it is prod. |
+| Parameters          | Type              | Required | Description                                                                            |
+| ------------------- | ----------------- | -------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apiKey`            | `string`          | false    | Configure API key, if no API key has been provided with `init` function.               |
+| `allowListCriteria` | `object`          | true     | Criteria to check if the user is allowed                                               |
+| `isAllowedFunction` | `function`        | false    | Custom function to determine if the user is allowed. It will use AND logic by default. |
+| `env`               | `"prod" \| "dev"` | false    |                                                                                        | Configure whether the environment is dev (using `untrustedData`) or prod (validate `trustedData` with `validateFramesMessage` API). By default, it is prod. |
 
 **Code Samples**
 
@@ -2056,6 +2057,7 @@ The SDK offered several enums for some defined input values, such as blockchains
 export enum TokenBlockchain {
   Base = "base",
   Ethereum = "ethereum",
+  Gold = "gold",
   Polygon = "polygon",
   Zora = "zora",
 }
@@ -2103,6 +2105,16 @@ export enum Audience {
 ```ts
 export enum Criteria {
   TotalMints = "total_mints",
+  UniqueWallets = "unique_wallets",
+}
+```
+
+### `TrendingTokensCriteria`
+
+```ts
+export enum TrendingTokensCriteria {
+  TotalTransfers = "total_transfers",
+  UniqueHolders = "unique_holders",
   UniqueWallets = "unique_wallets",
 }
 ```

@@ -1,10 +1,41 @@
+import sha256 from "sha256";
+import { v4 as uuidv4 } from "uuid";
+import { generateRandomNumberInRange } from "../utils/generateRandomNumberInRange";
+import { generateCaptchaImageSvg } from "../utils/generateCaptchaImageSvg";
+import {
+  FrameRatio,
+  GenerateCaptchaChallengeInput,
+  GenerateCaptchaChallengeOutput,
+} from "../types";
+
 /**
  * @description validate frames signature packet with Farcaster Hub
  * @example
  * const res = await validateFramesMessage(body);
  *
- * @param input.body The Frames Signature Packet
- * @returns Whether the signed message is valid or not and the return the message
+ * @param input.options.ratio The frames image ratio for the captcha
+ * @param input.options.includeImage Whether to include the image in the response
+ * @returns Captcha challenge generation
  */
-// export async function generateCaptchaChallenge() {
-// }
+export async function generateCaptchaChallenge(
+  input?: GenerateCaptchaChallengeInput
+): Promise<GenerateCaptchaChallengeOutput> {
+  let image;
+  const { options = { ratio: FrameRatio._1_91__1, includeImage: true } } =
+    input ?? {};
+  const numA = generateRandomNumberInRange(1, 30);
+  const numB = generateRandomNumberInRange(1, 30);
+  const { includeImage } = options ?? {};
+  if (includeImage) {
+    image = await generateCaptchaImageSvg(numA, numB, options);
+  }
+  const captchaId = uuidv4();
+  return {
+    ...(includeImage ? { image } : {}),
+    data: { numA, numB },
+    state: {
+      captchaId,
+      valueHash: sha256.x2(`${captchaId},${numA + numB}`),
+    },
+  };
+}
