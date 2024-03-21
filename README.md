@@ -2008,12 +2008,12 @@ The Allow List middleware injects allow list logic to check if a user is allowed
 
 **Input**
 
-| Parameters          | Type       | Required | Description                                                                                                                                                 |
-| ------------------- | ---------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apiKey`            | `string`   | false    | Configure API key, if no API key has been provided with `init` function.                                                                                    |
-| `allowListCriteria` | `object`   | true     | Criteria to check if the user is allowed                                                                                                                    |
-| `isAllowedFunction` | `function` | false    | Custom function to determine if the user is allowed. It will use AND logic by default.                                                                      |
-| `env`               | `prod`     | false    | Configure whether the environment is dev (using `untrustedData`) or prod (validate `trustedData` with `validateFramesMessage` API). By default, it is prod. |
+| Parameters          | Type                | Required | Description                                                                                                                                                 |
+| ------------------- | ------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apiKey`            | `string`            | false    | Configure API key, if no API key has been provided with `init` function.                                                                                    |
+| `allowListCriteria` | `object`            | true     | Criteria to check if the user is allowed                                                                                                                    |
+| `isAllowedFunction` | `function`          | false    | Custom function to determine if the user is allowed. It will use AND logic by default.                                                                      |
+| `env`               | `prod` &#124; `dev` | false    | Configure whether the environment is dev (using `untrustedData`) or prod (validate `trustedData` with `validateFramesMessage` API). By default, it is prod. |
 
 **Code Samples**
 
