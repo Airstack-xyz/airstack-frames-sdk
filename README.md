@@ -1872,11 +1872,11 @@ The Onchain Data middleware injects onchain data of the user, including Farcaste
 
 **Input**
 
-| Parameters | Type     | Required | Description                                                                   |
-| ---------- | -------- | -------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apiKey`   | `string` | false    | Configure API key, if no API key has been provided with `init` function.      |
-| `features` | `Object` | true     | An object that contains variables used for fetching onchain data of the user. |
-| `env`      | `prod`   | `dev`    | false                                                                         | Configure whether the environment is dev (using `untrustedData`) or prod (validate `trustedData` with `validateFramesMessage` API). By default, it is prod. |
+| Parameters | Type                | Required | Description                                                                                                                                                 |
+| ---------- | ------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apiKey`   | `string`            | false    | Configure API key, if no API key has been provided with `init` function.                                                                                    |
+| `features` | `Object`            | true     | An object that contains variables used for fetching onchain data of the user.                                                                               |
+| `env`      | `prod` &#124; `dev` | false    | Configure whether the environment is dev (using `untrustedData`) or prod (validate `trustedData` with `validateFramesMessage` API). By default, it is prod. |
 
 **Code Samples**
 
