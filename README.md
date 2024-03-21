@@ -26,6 +26,8 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`getTrendingMints`](#gettrendingmints)
   - [`getTrendingTokens`](#gettrendingtokens)
   - [`validateFramesMessage`](#validateframesmessage)
+  - [`generateCaptchaChallenge`](#generatecaptchachallenge)
+  - [`validateCaptchaChallenge`](#validatecaptchachallenge)
   - [`getFarcasterUserDetails`](#getfarcasteruserdetails)
   - [`getFarcasterFollowers`](#getfarcasterfollowers)
   - [`getFarcasterFollowings`](#getfarcasterfollowings)
@@ -63,6 +65,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`TrendingTokensCriteria`](#trendingtokenscriteria)
   - [`TimeFrame`](#timeframe)
   - [`TransferType`](#transfertype)
+  - [`FrameRatio`](#frameratio)
 - [Paginations](#paginations)
 
 ## Install
@@ -305,6 +308,95 @@ const res: ValidateFramesMessageOutput = await validateFramesMessage(body);
     ],
     "dataBytes": null
   }
+}
+```
+
+### `generateCaptchaChallenge`
+
+Generate Captcha challenge for Farcaster Frames.
+
+**Input**
+
+| Field                        | Type                        | Required | Description                                                     |
+| ---------------------------- | --------------------------- | -------- | --------------------------------------------------------------- |
+| `input.options.ratio`        | [`FrameRatio`](#frameratio) | false    | Ratio of the Frame. Defaults to 1.91:1.                         |
+| `input.options.includeImage` | `boolean`                   | false    | Whether to include the image in the response. Defaults to true. |
+
+**Code Samples**
+
+```ts
+import {
+  FrameRatio,
+  generateCaptchaChallenge,
+  GenerateCaptchaChallengeInput,
+  GenerateCaptchaChallengeOutput,
+} from "@airstack/frames";
+
+const input: GenerateCaptchaChallengeInput = {
+  options: { ratio: FrameRatio._1_91__1, includeImage: true },
+};
+
+const res: GenerateCaptchaChallengeOutput = await generateCaptchaChallenge(
+  input
+);
+
+console.log(res);
+```
+
+**Response Samples**
+
+```json
+{
+  "image": "data:image/jpeg;base64,...",
+  "data": { "numA": 24, "numB": 3 },
+  "state": {
+    "captchaId": "4ba21c21-ff68-4f0f-8a6f-8ee153f8b0e8",
+    "valueHash": "ea3fb4d8a0e59f0ab083d8f45257cffd8e760fc0b77194fec2938254180b67ab"
+  }
+}
+```
+
+### `validateCaptchaChallenge`
+
+Validate Captcha challenges that were generated for Farcaster Frames.
+
+**Input**
+
+| Field                        | Type                        | Required | Description                                                                                                                |
+| ---------------------------- | --------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `input.inputText`            | `string`                    | true     | User input on answer to the captcha for verification.                                                                      |
+| `input.state`                | `Object`                    | true     | State of the Frame, containing all the captcha info generated from [`generateCaptchaChallenge`](#generatecaptchachallenge) |
+| `input.options.ratio`        | [`FrameRatio`](#frameratio) | false    | Ratio of the Frame. Defaults to 1.91:1.                                                                                    |
+| `input.options.includeImage` | `boolean`                   | false    | Whether to include the image in the response. Defaults to true.                                                            |
+
+**Code Samples**
+
+```ts
+import {
+  FrameRatio,
+  validateCaptchaChallenge,
+  ValidateCaptchaChallengeInput,
+  ValidateCaptchaChallengeOutput,
+} from "@airstack/frames";
+
+const input: ValidateCaptchaChallengeInput = {
+  inputText,
+  state,
+};
+
+const res: ValidateCaptchaChallengeOutput = await validateCaptchaChallenge(
+  input
+);
+
+console.log(res);
+```
+
+**Response Samples**
+
+```json
+{
+  "image": "data:image/jpeg;base64,...",
+  "isValidated": true
 }
 ```
 
@@ -2138,6 +2230,15 @@ export enum TimeFrame {
 export enum TransferType {
   All = "all",
   SelfInitiated = "self_initiated",
+}
+```
+
+### `FrameRatio`
+
+```ts
+export enum FrameRatio {
+  _1__1 = "1:1",
+  _1_91__1 = "1.91:1",
 }
 ```
 

@@ -9,33 +9,37 @@ import {
 } from "../types";
 
 /**
- * @description validate frames signature packet with Farcaster Hub
+ * @description Generate Captcha challenge for Farcaster Frames
  * @example
- * const res = await validateFramesMessage(body);
+ * const { data, image, state } = await generateCaptchaChallenge();
  *
- * @param input.options.ratio The frames image ratio for the captcha
- * @param input.options.includeImage Whether to include the image in the response
- * @returns Captcha challenge generation
+ * @param {FrameRatio} [input.options.ratio=FrameRatio._1_91__1] The frames image ratio for the captcha
+ * @param {Boolean} [input.options.includeImage=true] Whether to include the image in the response
+ * @returns Captcha challenge generation, including the image and the state (this can be stored in Frame's state)
  */
 export async function generateCaptchaChallenge(
   input?: GenerateCaptchaChallengeInput
 ): Promise<GenerateCaptchaChallengeOutput> {
-  let image;
-  const { options = { ratio: FrameRatio._1_91__1, includeImage: true } } =
-    input ?? {};
-  const numA = generateRandomNumberInRange(1, 30);
-  const numB = generateRandomNumberInRange(1, 30);
-  const { includeImage } = options ?? {};
-  if (includeImage) {
-    image = await generateCaptchaImageSvg(numA, numB, options);
+  try {
+    let image;
+    const { options = { ratio: FrameRatio._1_91__1, includeImage: true } } =
+      input ?? {};
+    const numA = generateRandomNumberInRange(1, 30);
+    const numB = generateRandomNumberInRange(1, 30);
+    const { includeImage } = options ?? {};
+    if (includeImage) {
+      image = await generateCaptchaImageSvg(numA, numB, options);
+    }
+    const captchaId = uuidv4();
+    return {
+      ...(includeImage ? { image } : {}),
+      data: { numA, numB },
+      state: {
+        captchaId,
+        valueHash: sha256.x2(`${captchaId},${numA + numB}`),
+      },
+    };
+  } catch (e) {
+    throw new Error(JSON.stringify(e));
   }
-  const captchaId = uuidv4();
-  return {
-    ...(includeImage ? { image } : {}),
-    data: { numA, numB },
-    state: {
-      captchaId,
-      valueHash: sha256.x2(`${captchaId},${numA + numB}`),
-    },
-  };
 }
