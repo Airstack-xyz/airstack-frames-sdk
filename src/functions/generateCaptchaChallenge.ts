@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import { generateRandomNumberInRange } from "../utils/generateRandomNumberInRange";
 import { generateCaptchaImageSvg } from "../utils/generateCaptchaImageSvg";
 import {
-  FrameRatio,
   GenerateCaptchaChallengeInput,
   GenerateCaptchaChallengeOutput,
 } from "../types";
@@ -22,11 +21,10 @@ export async function generateCaptchaChallenge(
 ): Promise<GenerateCaptchaChallengeOutput> {
   try {
     let image;
-    const { options = { ratio: FrameRatio._1_91__1, includeImage: true } } =
-      input ?? {};
+    const { options } = input ?? {};
     const numA = generateRandomNumberInRange(1, 30);
     const numB = generateRandomNumberInRange(1, 30);
-    const { includeImage } = options ?? {};
+    const { includeImage = true } = options ?? {};
     if (includeImage) {
       image = await generateCaptchaImageSvg(numA, numB, options);
     }
