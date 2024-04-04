@@ -11,13 +11,14 @@ import {
 import { formatTrendingTokens } from "../utils/formatTrendingTokens";
 
 /**
- * @description Get Trending Mints in A Given Time Frame
+ * @description Get Trending Tokens in A Given Time Frame
  * @example
  * const { data, error } = await getTrendingTokens({
  *  audience: Audience.All,
  *  criteria: Criteria.UniqueWallets,
  *  timeFrame: TimeFrame.OneDay,
  *  transferType: TransferType.ALL,
+ *  swappable: true,
   });
  * @param {Audience} input.audience The audience to get trending tokens for
  * @param {Criteria} input.criteria The criteria to analyze and sort trending tokens

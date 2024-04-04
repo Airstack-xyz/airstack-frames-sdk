@@ -15,6 +15,15 @@ import {
 import { ImageResponse } from "@vercel/og";
 import type { UrlObject } from "url";
 
+export {
+  TokenBlockchain,
+  TrendingTokensCriteria,
+  FarcasterChannelActionType,
+  Audience,
+  TimeFrame,
+  TrendingMintsCriteria as Criteria,
+} from "./graphql/types";
+
 export type ConfigType = {
   authKey: string;
 };
@@ -325,8 +334,6 @@ export type FarcasterErc20BalancesQuery = {
     }> | null;
   } | null;
 };
-
-export { TokenBlockchain } from "./graphql/types";
 
 export type FarcasterUserErc20MintsQueryVariables = Exact<{
   identity: Scalars["Identity"]["input"];
@@ -1425,8 +1432,6 @@ export type FarcasterChannelParticipantsOutput = IteratePaginationResponse<
   FarcasterChannelParticipantsOutputData[] | null | undefined
 >;
 
-export { FarcasterChannelActionType } from "./graphql/types";
-
 export interface FarcasterChannelsByParticipantInput {
   fid: number;
   limit?: number;
@@ -1588,12 +1593,6 @@ export interface AllowListCriteria {
     chain: TokenBlockchain;
   }[];
 }
-
-export {
-  Audience,
-  TimeFrame,
-  TrendingMintsCriteria as Criteria,
-} from "./graphql/types";
 
 export interface GetTrendingMintsInput {
   timeFrame: TimeFrame;
@@ -1846,8 +1845,6 @@ export type TrendingTokensQueryVariables = Exact<{
   limit?: InputMaybe<Scalars["Int"]["input"]>;
   swappable: InputMaybe<Scalars["Boolean"]["input"]>;
 }>;
-
-export { TrendingTokensCriteria } from "./graphql/types";
 
 export type AllowListMiddlewareParameters = {
   env?: "dev" | "prod";
@@ -2171,11 +2168,29 @@ export interface OnchainDataOutput {
 }
 
 export enum AllowListCriteriaEnum {
+  /**
+   * Check if the user has certain number of farcaster followers
+   */
   NUMBER_OF_FARCASTER_FOLLOWERS = "number_of_farcaster_followers",
+  /**
+   * Check if the user is followed by certain users on farcaster
+   */
   FARCASTER_FOLLOWED_BY = "farcaster_followed_by",
+  /**
+   * Check if the user is following certain users on farcaster
+   */
   FARCASTER_FOLLOWING = "farcaster_following",
+  /**
+   * Check if the user is following the caster
+   */
   FARCASTER_FOLLOWING_CASTER = "farcaster_following_caster",
+  /**
+   * Check if the user is holding certain token
+   */
   TOKEN_HOLD = "token_hold",
+  /**
+   * Check if the user has minted certain token
+   */
   TOKEN_MINT = "token_mint",
 }
 
@@ -2187,4 +2202,128 @@ export interface CheckNumberOfFarcasterFollowersrOutput {
 export interface CheckNumberOfFarcasterFollowersInput {
   fid: number;
   followerCountCriteria: Int_Comparator_Exp;
+}
+
+export interface GetTrendingSwapsInput {
+  chains: TrendingSwapsBlockchain[];
+  criteria: TrendingSwapsCriteria;
+  timeFrame: TimeFrame;
+  limit?: number;
+}
+
+export interface GetTrendingSwapsOutputData {
+  address: string | null;
+  blockchain: string | null;
+  buyTransactionCount: number | null;
+  buyVolume: number | null;
+  sellTransactionCount: number | null;
+  sellVolume: number | null;
+  timeFrom: any | null;
+  timeTo: any | null;
+  totalTransactionCount: number | null;
+  totalUniqueWallets: number | null;
+  totalVolume: number | null;
+  uniqueBuyWallets: number | null;
+  uniqueSellWallets: number | null;
+  name: string | null | undefined;
+  symbol: string | null | undefined;
+}
+
+export type GetTrendingSwapsOutput = IteratePaginationResponse<
+  GetTrendingSwapsOutputData[] | null | undefined
+>;
+
+export type TrendingSwapsQueryVariables = Exact<{
+  criteria: TrendingSwapsCriteria;
+  timeFrame: TimeFrame;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type TrendingSwapsQuery = {
+  ethereum?: {
+    TrendingSwap: Array<{
+      address: string | null;
+      blockchain: string | null;
+      buyTransactionCount: number | null;
+      buyVolume: number | null;
+      sellTransactionCount: number | null;
+      sellVolume: number | null;
+      timeFrom: any | null;
+      timeTo: any | null;
+      totalTransactionCount: number | null;
+      totalUniqueWallets: number | null;
+      totalVolume: number | null;
+      uniqueBuyWallets: number | null;
+      uniqueSellWallets: number | null;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  base?: {
+    TrendingSwap: Array<{
+      address: string | null;
+      blockchain: string | null;
+      buyTransactionCount: number | null;
+      buyVolume: number | null;
+      sellTransactionCount: number | null;
+      sellVolume: number | null;
+      timeFrom: any | null;
+      timeTo: any | null;
+      totalTransactionCount: number | null;
+      totalUniqueWallets: number | null;
+      totalVolume: number | null;
+      uniqueBuyWallets: number | null;
+      uniqueSellWallets: number | null;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+};
+
+export enum TrendingSwapsBlockchain {
+  /**
+   * Base chain (L2)
+   */
+  Base = "base",
+  /**
+   * Ethereum mainnet
+   */
+  Ethereum = "ethereum",
+}
+
+export enum TrendingSwapsCriteria {
+  /**
+   * Sort the trending swaps by the number of buy transactions.
+   */
+  BuyTransactionCount = "buy_transaction_count",
+  /**
+   * Sort the trending swaps by the number of buying volume.
+   */
+  BuyVolume = "buy_volume",
+  /**
+   * Sort the trending swaps by the number of sell transactions.
+   */
+  SellTransactionCount = "sell_transaction_count",
+  /**
+   * Sort the trending swaps by the number of selling volume.
+   */
+  SellVolume = "sell_volume",
+  /**
+   * Sort the trending swaps by the number of total buy & sell transactions.
+   */
+  TotalTransactionCount = "total_transaction_count",
+  /**
+   * Sort the trending swaps by the number of total unique buyer & seller wallets swapping.
+   */
+  TotalUniqueWallets = "total_unique_wallets",
+  /**
+   * Sort the trending swaps by the number of total buying & selling volume.
+   */
+  TotalVolume = "total_volume",
+  /**
+   * Sort the trending swaps by the number of unique buyer wallets swapping.
+   */
+  UniqueBuyWallets = "unique_buy_wallets",
+  /**
+   * Sort the trending swaps by the number of unique seller wallets swapping.
+   */
+  UniqueSellWallets = "unique_sell_wallets",
 }

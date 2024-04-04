@@ -73,9 +73,6 @@ export type Account = {
 };
 
 export type AccountFilter = {
-  _and: InputMaybe<Array<AccountFilter>>;
-  _nor: InputMaybe<Array<AccountFilter>>;
-  _or: InputMaybe<Array<AccountFilter>>;
   address: InputMaybe<Identity_Comparator_Exp>;
   createdAtBlockTimestamp: InputMaybe<Time_Comparator_Exp>;
   implementation: InputMaybe<Address_Comparator_Exp>;
@@ -279,9 +276,6 @@ export type DomainDappSlug_Comparator_Exp = {
 };
 
 export type DomainFilter = {
-  _and: InputMaybe<Array<DomainFilter>>;
-  _nor: InputMaybe<Array<DomainFilter>>;
-  _or: InputMaybe<Array<DomainFilter>>;
   isPrimary: InputMaybe<Boolean_Comparator_Exp>;
   lastUpdatedBlockTimestamp: InputMaybe<Time_Comparator_Exp>;
   name: InputMaybe<String_Comparator_Exp>;
@@ -368,9 +362,6 @@ export type FarcasterChannelActionType_Comparator_Exp = {
 };
 
 export type FarcasterChannelFilter = {
-  _and: InputMaybe<Array<FarcasterChannelFilter>>;
-  _nor: InputMaybe<Array<FarcasterChannelFilter>>;
-  _or: InputMaybe<Array<FarcasterChannelFilter>>;
   channelId: InputMaybe<String_Comparator_Exp>;
   createdAtTimestamp: InputMaybe<Time_Comparator_Exp>;
   leadId: InputMaybe<String_Comparator_Exp>;
@@ -414,9 +405,6 @@ export type FarcasterChannelParticipantParticipantArgs = {
 };
 
 export type FarcasterChannelParticipantFilter = {
-  _and: InputMaybe<Array<FarcasterChannelParticipantFilter>>;
-  _nor: InputMaybe<Array<FarcasterChannelParticipantFilter>>;
-  _or: InputMaybe<Array<FarcasterChannelParticipantFilter>>;
   channelActions: InputMaybe<FarcasterChannelActionType_Comparator_Exp>;
   channelId: InputMaybe<String_Comparator_Exp>;
   channelName: InputMaybe<Regex_String_Comparator_Exp>;
@@ -588,9 +576,6 @@ export type NftAttribute = {
 };
 
 export type NftAttributeFilter = {
-  _and: InputMaybe<Array<NftAttributeFilter>>;
-  _nor: InputMaybe<Array<NftAttributeFilter>>;
-  _or: InputMaybe<Array<NftAttributeFilter>>;
   trait_type: InputMaybe<String_Comparator_Exp>;
   value: InputMaybe<String_Comparator_Exp>;
 };
@@ -622,9 +607,6 @@ export type NftMetadata = {
 };
 
 export type NftMetadataFilter = {
-  _and: InputMaybe<Array<NftMetadataFilter>>;
-  _nor: InputMaybe<Array<NftMetadataFilter>>;
-  _or: InputMaybe<Array<NftMetadataFilter>>;
   attributes: InputMaybe<NftAttributeFilter>;
   name: InputMaybe<String_Comparator_Exp>;
 };
@@ -755,9 +737,6 @@ export type PoapEventPoapsArgs = {
 };
 
 export type PoapEventFilter = {
-  _and: InputMaybe<Array<PoapEventFilter>>;
-  _nor: InputMaybe<Array<PoapEventFilter>>;
-  _or: InputMaybe<Array<PoapEventFilter>>;
   city: InputMaybe<String_Comparator_Exp>;
   country: InputMaybe<String_Comparator_Exp>;
   dappName: InputMaybe<PoapDappName_Comparator_Exp>;
@@ -790,9 +769,6 @@ export type PoapEventsOutput = {
 };
 
 export type PoapFilter = {
-  _and: InputMaybe<Array<PoapFilter>>;
-  _nor: InputMaybe<Array<PoapFilter>>;
-  _or: InputMaybe<Array<PoapFilter>>;
   createdAtBlockNumber: InputMaybe<Int_Comparator_Exp>;
   dappName: InputMaybe<PoapDappName_Comparator_Exp>;
   dappSlug: InputMaybe<PoapDappSlug_Comparator_Exp>;
@@ -1019,9 +995,6 @@ export enum SnapshotBlockchain {
 }
 
 export type SnapshotFilter = {
-  _and: InputMaybe<Array<SnapshotFilter>>;
-  _nor: InputMaybe<Array<SnapshotFilter>>;
-  _or: InputMaybe<Array<SnapshotFilter>>;
   blockNumber: InputMaybe<Range_Comparator_Exp>;
   date: InputMaybe<Date_Range_Comparator_Exp>;
   owner: InputMaybe<Identity_Comparator_Exp>;
@@ -1078,7 +1051,6 @@ export type Social = {
   profileCreatedAtBlockTimestamp: Maybe<Scalars["Time"]["output"]>;
   profileDisplayName: Maybe<Scalars["String"]["output"]>;
   profileHandle: Maybe<Scalars["String"]["output"]>;
-  profileHandleNft: Maybe<TokenNft>;
   profileImage: Maybe<Scalars["String"]["output"]>;
   profileImageContentValue: Maybe<Media>;
   profileLastUpdatedAtBlockNumber: Maybe<Scalars["Int"]["output"]>;
@@ -1090,7 +1062,6 @@ export type Social = {
   profileTokenIdHex: Maybe<Scalars["String"]["output"]>;
   profileTokenUri: Maybe<Scalars["String"]["output"]>;
   profileUrl: Maybe<Scalars["String"]["output"]>;
-  tokenNft: Maybe<TokenNft>;
   twitterUserName: Maybe<Scalars["String"]["output"]>;
   updatedAt: Maybe<Scalars["Time"]["output"]>;
   userAddress: Maybe<Scalars["Address"]["output"]>;
@@ -1140,9 +1111,6 @@ export type SocialDappSlug_Comparator_Exp = {
 };
 
 export type SocialFilter = {
-  _and: InputMaybe<Array<SocialFilter>>;
-  _nor: InputMaybe<Array<SocialFilter>>;
-  _or: InputMaybe<Array<SocialFilter>>;
   dappName: InputMaybe<SocialDappName_Comparator_Exp>;
   dappSlug: InputMaybe<SocialDappSlug_Comparator_Exp>;
   followerCount: InputMaybe<Int_Comparator_Exp>;
@@ -1171,9 +1139,6 @@ export type SocialFollower = {
 };
 
 export type SocialFollowerFilter = {
-  _and: InputMaybe<Array<SocialFollowerFilter>>;
-  _nor: InputMaybe<Array<SocialFollowerFilter>>;
-  _or: InputMaybe<Array<SocialFollowerFilter>>;
   blockNumber: InputMaybe<Int_Comparator_Exp>;
   dappName: InputMaybe<SocialDappName_Comparator_Exp>;
   dappSlug: InputMaybe<SocialDappSlug_Comparator_Exp>;
@@ -1223,9 +1188,6 @@ export type SocialFollowing = {
 };
 
 export type SocialFollowingFilter = {
-  _and: InputMaybe<Array<SocialFollowingFilter>>;
-  _nor: InputMaybe<Array<SocialFollowingFilter>>;
-  _or: InputMaybe<Array<SocialFollowingFilter>>;
   blockNumber: InputMaybe<Int_Comparator_Exp>;
   dappName: InputMaybe<SocialDappName_Comparator_Exp>;
   dappSlug: InputMaybe<SocialDappSlug_Comparator_Exp>;
@@ -1418,9 +1380,6 @@ export type TokenBalanceTokenTransfersArgs = {
 };
 
 export type TokenBalanceFilter = {
-  _and: InputMaybe<Array<TokenBalanceFilter>>;
-  _nor: InputMaybe<Array<TokenBalanceFilter>>;
-  _or: InputMaybe<Array<TokenBalanceFilter>>;
   formattedAmount: InputMaybe<Float_Comparator_Exp>;
   lastUpdatedTimestamp: InputMaybe<Time_Comparator_Exp>;
   owner: InputMaybe<Identity_Comparator_Exp>;
@@ -1461,9 +1420,6 @@ export enum TokenBlockchain {
 }
 
 export type TokenFilter = {
-  _and: InputMaybe<Array<TokenFilter>>;
-  _nor: InputMaybe<Array<TokenFilter>>;
-  _or: InputMaybe<Array<TokenFilter>>;
   address: InputMaybe<Address_Comparator_Exp>;
   isSpam: InputMaybe<Boolean_Comparator_Exp>;
   name: InputMaybe<String_Comparator_Exp>;
@@ -1526,9 +1482,6 @@ export type TokenNftTokenTransfersArgs = {
 };
 
 export type TokenNftFilter = {
-  _and: InputMaybe<Array<TokenNftFilter>>;
-  _nor: InputMaybe<Array<TokenNftFilter>>;
-  _or: InputMaybe<Array<TokenNftFilter>>;
   address: InputMaybe<Address_Comparator_Exp>;
   metaData: InputMaybe<NftMetadataFilter>;
   tokenId: InputMaybe<String_Comparator_Exp>;
@@ -1731,7 +1684,14 @@ export type TrendingSwap = {
 };
 
 export enum TrendingSwapsBlockchain {
+  /**
+   * Base chain (L2)
+   */
   Base = "base",
+  /**
+   * Ethereum mainnet
+   */
+  Ethereum = "ethereum",
 }
 
 export enum TrendingSwapsCriteria {
@@ -1896,9 +1856,6 @@ export type Xmtp = {
 };
 
 export type XmtpFilter = {
-  _and: InputMaybe<Array<XmtpFilter>>;
-  _nor: InputMaybe<Array<XmtpFilter>>;
-  _or: InputMaybe<Array<XmtpFilter>>;
   owner: InputMaybe<Identity_Comparator_Exp>;
 };
 
@@ -2296,6 +2253,34 @@ export type TrendingMintsQuery = {
         symbol: string | null;
         type: TokenType | null;
       } | null;
+    }> | null;
+  } | null;
+};
+
+export type TrendingSwapsQueryVariables = Exact<{
+  blockchain: TrendingSwapsBlockchain;
+  criteria: TrendingSwapsCriteria;
+  timeFrame: TimeFrame;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type TrendingSwapsQuery = {
+  TrendingSwaps: {
+    TrendingSwap: Array<{
+      address: string | null;
+      blockchain: string | null;
+      buyTransactionCount: number | null;
+      buyVolume: number | null;
+      sellTransactionCount: number | null;
+      sellVolume: number | null;
+      timeFrom: any | null;
+      timeTo: any | null;
+      totalTransactionCount: number | null;
+      totalUniqueWallets: number | null;
+      totalVolume: number | null;
+      uniqueBuyWallets: number | null;
+      uniqueSellWallets: number | null;
+      token: { name: string | null; symbol: string | null } | null;
     }> | null;
   } | null;
 };

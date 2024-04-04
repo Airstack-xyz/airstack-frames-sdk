@@ -24,6 +24,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
 - [Get Started](#get-started)
 - [Functions](#functions)
   - [`getTrendingMints`](#gettrendingmints)
+  - [`getTrendingSwaps`](#gettrendingswaps)
   - [`getTrendingTokens`](#gettrendingtokens)
   - [`validateFramesMessage`](#validateframesmessage)
   - [`generateCaptchaChallenge`](#generatecaptchachallenge)
@@ -70,6 +71,9 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`TransferType`](#transfertype)
   - [`FrameRatio`](#frameratio)
   - [`Features`](#features)
+  - [`AllowListCriteriaEnum`](#allowlistcriteriaenum)
+  - [`TrendingSwapsBlockchain`](#trendingswapsblockchain)
+  - [`TrendingSwapsCriteria`](#trendingswapscriteria)
 - [Paginations](#paginations)
 
 ## Install
@@ -155,6 +159,68 @@ console.log(data);
 ]
 ```
 
+### `getTrendingSwaps`
+
+Get trending tokens to swap in a given time frame by simply specifying the blockchains, criteria, and time frame that you prefer. All analysis and sorting will be done for you and you simply just need to receive the response from this function.
+
+**Input**
+
+| Field       | Type                                                    | Required | Description                                                                                           |
+| ----------- | ------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `chains`    | [`TrendingSwapsBlockchain[]`](#trendingswapsblockchain) | true     | The blockchain to fetch from to get trending swaps for                                                |
+| `criteria`  | [`TrendingSwapsCriteria`](#trendingswapscriteria)       | true     | The criteria to analyze and sort trending swaps                                                       |
+| `timeFrame` | `TimeFrame`                                             | true     | The time frame to analyze the trending swaps, e.g. the last 1 hour                                    |
+| `limit`     | `number`                                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  getTrendingSwaps,
+  GetTrendingSwapsOutput,
+  GetTrendingSwapsInput,
+  TimeFrame,
+  TrendingSwapsBlockchain,
+  TrendingSwapsCriteria,
+} from "@airstack/frames";
+
+const input: GetTrendingSwapsInput = {
+  chains: [TrendingSwapsBlockchain.Base, TrendingSwapsBlockchain.Ethereum],
+  timeFrame: TimeFrame.EightHours,
+  criteria: TrendingSwapsCriteria.BuyTransactionCount,
+  limit: 1,
+};
+const { data, error }: GetTrendingSwapsOutput = await getTrendingSwaps(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "address": "0x532f27101965dd16442e59d40670faf5ebb142e4",
+    "blockchain": "base",
+    "buyTransactionCount": 468,
+    "buyVolume": 3795264.3856984717,
+    "sellTransactionCount": 264,
+    "sellVolume": 1750743.3966612488,
+    "timeFrom": "2024-04-04T12:53:00Z",
+    "timeTo": "2024-04-04T20:53:00Z",
+    "totalTransactionCount": 732,
+    "totalUniqueWallets": 503,
+    "totalVolume": 5546007.782359725,
+    "uniqueBuyWallets": 420,
+    "uniqueSellWallets": 103,
+    "name": "Brett",
+    "symbol": "BRETT"
+  }
+]
+```
+
 ### `getTrendingTokens`
 
 Get trending tokens in a given time frame by simply specifying the audience, criteria, time frame, and transfer type that you prefer. All analysis and sorting will be done for you and you simply just need to receive the response from this function.
@@ -163,9 +229,9 @@ Get trending tokens in a given time frame by simply specifying the audience, cri
 
 | Field          | Type                     | Required | Description                                                                                           |
 | -------------- | ------------------------ | -------- | ----------------------------------------------------------------------------------------------------- |
-| `audience`     | `Audience`               | true     | The audience to get trending mints for                                                                |
-| `criteria`     | `TrendingTokensCriteria` | true     | The criteria to analyze and sort trending mints                                                       |
-| `timeFrame`    | `TimeFrame`              | true     | The time frame to analyze the trending mints, e.g. the last 1 hour                                    |
+| `audience`     | `Audience`               | true     | The audience to get trending tokens for                                                               |
+| `criteria`     | `TrendingTokensCriteria` | true     | The criteria to analyze and sort trending tokens                                                      |
+| `timeFrame`    | `TimeFrame`              | true     | The time frame to analyze the trending tokens, e.g. the last 1 hour                                   |
 | `transferType` | `TransferType`           | true     | The type of transfer to get trending tokens for, either `all` or `self_initiated`                     |
 | `swappable`    | `boolean`                | true     | Whether a token is swappable on DEX or not.                                                           |
 | `limit`        | `number`                 | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
@@ -2222,10 +2288,10 @@ For more details, check out the tutorial on Allow List Frames.js middleware [her
 
 **Input**
 
-| Parameters | Type                    | Required | Description                                                                                                 |
-| ---------- | ----------------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| `apiKey`   | `string`                | false    | Configure API key, if no API key has been provided with `init` function.                                    |
-| `criteria` | [`Features`](#features) | true     | Define the logical criteria that you would like to evaluate the user, based on their existing onchain data. |
+| Parameters | Type                                              | Required | Description                                                                                                 |
+| ---------- | ------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| `apiKey`   | `string`                                          | false    | Configure API key, if no API key has been provided with `init` function.                                    |
+| `criteria` | [`AllowListCriteriaEnum`](#allowlistcriteriaenum) | true     | Define the logical criteria that you would like to evaluate the user, based on their existing onchain data. |
 
 **Code Sample**
 
@@ -2446,6 +2512,95 @@ export enum Features {
    * Fetches Farcaster channels of a Farcaster user.
    */
   FARCASTER_CHANNELS = "farcaster_channels",
+}
+```
+
+### `AllowListCriteriaEnum`
+
+```ts
+export enum AllowListCriteriaEnum {
+  /**
+   * Check if the user has certain number of farcaster followers
+   */
+  NUMBER_OF_FARCASTER_FOLLOWERS = "number_of_farcaster_followers",
+  /**
+   * Check if the user is followed by certain users on farcaster
+   */
+  FARCASTER_FOLLOWED_BY = "farcaster_followed_by",
+  /**
+   * Check if the user is following certain users on farcaster
+   */
+  FARCASTER_FOLLOWING = "farcaster_following",
+  /**
+   * Check if the user is following the caster
+   */
+  FARCASTER_FOLLOWING_CASTER = "farcaster_following_caster",
+  /**
+   * Check if the user is holding certain token
+   */
+  TOKEN_HOLD = "token_hold",
+  /**
+   * Check if the user has minted certain token
+   */
+  TOKEN_MINT = "token_mint",
+}
+```
+
+### `TrendingSwapsBlockchain`
+
+```ts
+export enum TrendingSwapsBlockchain {
+  /**
+   * Base chain (L2)
+   */
+  Base = "base",
+  /**
+   * Ethereum mainnet
+   */
+  Ethereum = "ethereum",
+}
+```
+
+### `TrendingSwapsCriteria`
+
+```ts
+export enum TrendingSwapsCriteria {
+  /**
+   * Sort the trending swaps by the number of buy transactions.
+   */
+  BuyTransactionCount = "buy_transaction_count",
+  /**
+   * Sort the trending swaps by the number of buying volume.
+   */
+  BuyVolume = "buy_volume",
+  /**
+   * Sort the trending swaps by the number of sell transactions.
+   */
+  SellTransactionCount = "sell_transaction_count",
+  /**
+   * Sort the trending swaps by the number of selling volume.
+   */
+  SellVolume = "sell_volume",
+  /**
+   * Sort the trending swaps by the number of total buy & sell transactions.
+   */
+  TotalTransactionCount = "total_transaction_count",
+  /**
+   * Sort the trending swaps by the number of total unique buyer & seller wallets swapping.
+   */
+  TotalUniqueWallets = "total_unique_wallets",
+  /**
+   * Sort the trending swaps by the number of total buying & selling volume.
+   */
+  TotalVolume = "total_volume",
+  /**
+   * Sort the trending swaps by the number of unique buyer wallets swapping.
+   */
+  UniqueBuyWallets = "unique_buy_wallets",
+  /**
+   * Sort the trending swaps by the number of unique seller wallets swapping.
+   */
+  UniqueSellWallets = "unique_sell_wallets",
 }
 ```
 
