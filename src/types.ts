@@ -10,7 +10,10 @@ import {
   TrendingMintsCriteria,
   TokenType as AirstackTokenType,
   TrendingTokensCriteria,
+  Int_Comparator_Exp,
 } from "./graphql/types";
+import { ImageResponse } from "@vercel/og";
+import type { UrlObject } from "url";
 
 export type ConfigType = {
   authKey: string;
@@ -76,28 +79,30 @@ export interface FarcasterUserDetailsInput {
   fid: number;
 }
 
+export type FarcasterUserDetailsData =
+  | {
+      profileName: string | null | undefined;
+      fnames: (string | null)[] | null | undefined;
+      userAssociatedAddresses: string[] | null | undefined;
+      followerCount: number | null | undefined;
+      followingCount: number | null | undefined;
+      profileImage:
+        | {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null | undefined;
+          }
+        | null
+        | undefined;
+    }
+  | null
+  | undefined;
+
 export interface FarcasterUserDetailsOutput {
   error: any;
-  data:
-    | {
-        profileName: string | null | undefined;
-        fnames: (string | null)[] | null | undefined;
-        userAssociatedAddresses: string[] | null | undefined;
-        followerCount: number | null | undefined;
-        followingCount: number | null | undefined;
-        profileImage:
-          | {
-              extraSmall: string | null;
-              small: string | null;
-              medium: string | null;
-              large: string | null;
-              original: string | null | undefined;
-            }
-          | null
-          | undefined;
-      }
-    | null
-    | undefined;
+  data: FarcasterUserDetailsData;
 }
 
 export interface FarcasterUserERC20BalancesInput {
@@ -292,15 +297,6 @@ export type FarcasterErc20BalancesQuery = {
       token: { name: string | null; symbol: string | null } | null;
     }> | null;
   } | null;
-  polygon?: {
-    TokenBalance: Array<{
-      blockchain: TokenBlockchain | null;
-      tokenAddress: any;
-      formattedAmount: number | null;
-      amount: string;
-      token: { name: string | null; symbol: string | null } | null;
-    }> | null;
-  } | null;
   base?: {
     TokenBalance: Array<{
       blockchain: TokenBlockchain | null;
@@ -311,6 +307,15 @@ export type FarcasterErc20BalancesQuery = {
     }> | null;
   } | null;
   zora?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  gold?: {
     TokenBalance: Array<{
       blockchain: TokenBlockchain | null;
       tokenAddress: any;
@@ -341,18 +346,6 @@ export type FarcasterUserErc20MintsQuery = {
       token: { name: string | null; symbol: string | null } | null;
     }> | null;
   } | null;
-  polygon?: {
-    TokenTransfer: Array<{
-      blockchain: TokenBlockchain | null;
-      formattedAmount: number | null;
-      amount: string | null;
-      tokenAddress: any | null;
-      blockNumber: number | null;
-      blockTimestamp: any | null;
-      transactionHash: string;
-      token: { name: string | null; symbol: string | null } | null;
-    }> | null;
-  } | null;
   base?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
@@ -366,6 +359,18 @@ export type FarcasterUserErc20MintsQuery = {
     }> | null;
   } | null;
   zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      formattedAmount: number | null;
+      amount: string | null;
+      tokenAddress: any | null;
+      blockNumber: number | null;
+      blockTimestamp: any | null;
+      transactionHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  gold?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       formattedAmount: number | null;
@@ -429,44 +434,6 @@ export type FarcasterNftBalancesQuery = {
       } | null;
     }> | null;
   } | null;
-  polygon?: {
-    TokenBalance: Array<{
-      tokenType: TokenType | null;
-      blockchain: TokenBlockchain | null;
-      tokenAddress: any;
-      tokenId: string;
-      formattedAmount: number | null;
-      amount: string;
-      token: { name: string | null; symbol: string | null } | null;
-      tokenNfts: {
-        contentValue: {
-          image: {
-            extraSmall: string | null;
-            small: string | null;
-            medium: string | null;
-            large: string | null;
-            original: string | null;
-          } | null;
-        } | null;
-        metaData: {
-          name: string | null;
-          description: string | null;
-          image: string | null;
-          imageData: string | null;
-          externalUrl: string | null;
-          animationUrl: string | null;
-          youtubeUrl: string | null;
-          backgroundColor: string | null;
-          attributes: Array<{
-            displayType: string | null;
-            maxValue: string | null;
-            trait_type: string | null;
-            value: string | null;
-          }> | null;
-        } | null;
-      } | null;
-    }> | null;
-  } | null;
   base?: {
     TokenBalance: Array<{
       tokenType: TokenType | null;
@@ -506,6 +473,44 @@ export type FarcasterNftBalancesQuery = {
     }> | null;
   } | null;
   zora?: {
+    TokenBalance: Array<{
+      tokenType: TokenType | null;
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      tokenId: string;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+      tokenNfts: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  gold?: {
     TokenBalance: Array<{
       tokenType: TokenType | null;
       blockchain: TokenBlockchain | null;
@@ -593,47 +598,6 @@ export type FarcasterUserNftMintsQuery = {
       } | null;
     }> | null;
   } | null;
-  polygon?: {
-    TokenTransfer: Array<{
-      blockchain: TokenBlockchain | null;
-      tokenType: NFTType | null;
-      formattedAmount: number | null;
-      amount: string | null;
-      tokenAddress: any | null;
-      tokenId: string;
-      blockNumber: number | null;
-      blockTimestamp: any | null;
-      transactionHash: string;
-      token: { name: string | null; symbol: string | null } | null;
-      tokenNft: {
-        contentValue: {
-          image: {
-            extraSmall: string | null;
-            small: string | null;
-            medium: string | null;
-            large: string | null;
-            original: string | null;
-          } | null;
-        } | null;
-        metaData: {
-          name: string | null;
-          description: string | null;
-          image: string | null;
-          imageData: string | null;
-          externalUrl: string | null;
-          animationUrl: string | null;
-          youtubeUrl: string | null;
-          backgroundColor: string | null;
-          attributes: Array<{
-            displayType: string | null;
-            maxValue: string | null;
-            trait_type: string | null;
-            value: string | null;
-          }> | null;
-        } | null;
-      } | null;
-    }> | null;
-  } | null;
   base?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
@@ -676,6 +640,47 @@ export type FarcasterUserNftMintsQuery = {
     }> | null;
   } | null;
   zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: NFTType | null;
+      formattedAmount: number | null;
+      amount: string | null;
+      tokenAddress: any | null;
+      tokenId: string;
+      blockNumber: number | null;
+      blockTimestamp: any | null;
+      transactionHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  gold?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       tokenType: NFTType | null;
@@ -825,51 +830,6 @@ export type FarcasterUserTokenSentFromQuery = {
       } | null;
     }> | null;
   } | null;
-  polygon?: {
-    TokenTransfer: Array<{
-      blockchain: TokenBlockchain | null;
-      blockTimestamp: any | null;
-      blockNumber: number | null;
-      tokenAddress: any | null;
-      tokenId: string | null;
-      tokenType: TokenType | null;
-      amountInWei: string | null;
-      amount: number | null;
-      txHash: string;
-      token: { name: string | null; symbol: string | null } | null;
-      receiver: {
-        addresses: Array<any> | null;
-        socials: Array<{ fid: string | null }> | null;
-      } | null;
-      tokenNft: {
-        contentValue: {
-          image: {
-            extraSmall: string | null;
-            small: string | null;
-            medium: string | null;
-            large: string | null;
-            original: string | null;
-          } | null;
-        } | null;
-        metaData: {
-          name: string | null;
-          description: string | null;
-          image: string | null;
-          imageData: string | null;
-          externalUrl: string | null;
-          animationUrl: string | null;
-          youtubeUrl: string | null;
-          backgroundColor: string | null;
-          attributes: Array<{
-            displayType: string | null;
-            maxValue: string | null;
-            trait_type: string | null;
-            value: string | null;
-          }> | null;
-        } | null;
-      } | null;
-    }> | null;
-  } | null;
   base?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
@@ -916,6 +876,51 @@ export type FarcasterUserTokenSentFromQuery = {
     }> | null;
   } | null;
   zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      receiver: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  gold?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       blockTimestamp: any | null;
@@ -1020,51 +1025,6 @@ export type FarcasterUserTokenReceivedByQuery = {
       } | null;
     }> | null;
   } | null;
-  polygon?: {
-    TokenTransfer: Array<{
-      blockchain: TokenBlockchain | null;
-      blockTimestamp: any | null;
-      blockNumber: number | null;
-      tokenAddress: any | null;
-      tokenId: string | null;
-      tokenType: TokenType | null;
-      amountInWei: string | null;
-      amount: number | null;
-      txHash: string;
-      token: { name: string | null; symbol: string | null } | null;
-      sender: {
-        addresses: Array<any> | null;
-        socials: Array<{ fid: string | null }> | null;
-      } | null;
-      tokenNft: {
-        contentValue: {
-          image: {
-            extraSmall: string | null;
-            small: string | null;
-            medium: string | null;
-            large: string | null;
-            original: string | null;
-          } | null;
-        } | null;
-        metaData: {
-          name: string | null;
-          description: string | null;
-          image: string | null;
-          imageData: string | null;
-          externalUrl: string | null;
-          animationUrl: string | null;
-          youtubeUrl: string | null;
-          backgroundColor: string | null;
-          attributes: Array<{
-            displayType: string | null;
-            maxValue: string | null;
-            trait_type: string | null;
-            value: string | null;
-          }> | null;
-        } | null;
-      } | null;
-    }> | null;
-  } | null;
   base?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
@@ -1111,6 +1071,51 @@ export type FarcasterUserTokenReceivedByQuery = {
     }> | null;
   } | null;
   zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      sender: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  gold?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       blockTimestamp: any | null;
@@ -1217,9 +1222,6 @@ export type CheckTokenHoldByFarcasterUserQueryVariables = Exact<{
   ethereumTokens?: InputMaybe<
     Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
   >;
-  polygonTokens?: InputMaybe<
-    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
-  >;
   baseTokens?: InputMaybe<
     Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
   >;
@@ -1236,13 +1238,6 @@ export type CheckTokenHoldByFarcasterUserQuery = {
       amount: string;
     }> | null;
   } | null;
-  polygon?: {
-    TokenBalance: Array<{
-      blockchain: TokenBlockchain | null;
-      tokenAddress: any;
-      amount: string;
-    }> | null;
-  } | null;
   base?: {
     TokenBalance: Array<{
       blockchain: TokenBlockchain | null;
@@ -1251,6 +1246,13 @@ export type CheckTokenHoldByFarcasterUserQuery = {
     }> | null;
   } | null;
   zora?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  gold?: {
     TokenBalance: Array<{
       blockchain: TokenBlockchain | null;
       tokenAddress: any;
@@ -1283,9 +1285,6 @@ export type CheckTokenMintedByFarcasterUserQueryVariables = Exact<{
   ethereumTokens?: InputMaybe<
     Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
   >;
-  polygonTokens?: InputMaybe<
-    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
-  >;
   baseTokens?: InputMaybe<
     Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
   >;
@@ -1303,14 +1302,6 @@ export type CheckTokenMintedByFarcasterUserQuery = {
       tokenAddress: any | null;
     }> | null;
   } | null;
-  polygon?: {
-    TokenTransfer: Array<{
-      blockchain: TokenBlockchain | null;
-      tokenType: TokenType | null;
-      formattedAmount: number | null;
-      tokenAddress: any | null;
-    }> | null;
-  } | null;
   base?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
@@ -1320,6 +1311,14 @@ export type CheckTokenMintedByFarcasterUserQuery = {
     }> | null;
   } | null;
   zora?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: TokenType | null;
+      formattedAmount: number | null;
+      tokenAddress: any | null;
+    }> | null;
+  } | null;
+  gold?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       tokenType: TokenType | null;
@@ -1561,7 +1560,12 @@ export interface ValidateFramesMessageInput {
       fid: number;
       hash: string;
     };
+    inputText?: string;
+    state?: string;
+    address?: string;
+    transactionId?: string;
   };
+  clientProtocol?: string | undefined;
 }
 
 export interface ValidateFramesMessageJSONResponse {
@@ -1626,13 +1630,13 @@ export type CreateAllowListQueryVariables = Exact<{
   ethereumTokens?: InputMaybe<
     Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
   >;
-  polygonTokens?: InputMaybe<
-    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
-  >;
   baseTokens?: InputMaybe<
     Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
   >;
   zoraTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
+  goldTokens?: InputMaybe<
     Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
   >;
 }>;
@@ -1658,13 +1662,6 @@ export type CreateAllowListQuery = {
       amount: string;
     }> | null;
   } | null;
-  polygon?: {
-    TokenBalance: Array<{
-      blockchain: TokenBlockchain | null;
-      tokenAddress: any;
-      amount: string;
-    }> | null;
-  } | null;
   base?: {
     TokenBalance: Array<{
       blockchain: TokenBlockchain | null;
@@ -1673,6 +1670,13 @@ export type CreateAllowListQuery = {
     }> | null;
   } | null;
   zora: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  gold: {
     TokenBalance: Array<{
       blockchain: TokenBlockchain | null;
       tokenAddress: any;
@@ -1787,6 +1791,7 @@ export interface GetTrendingTokensInput {
   criteria: TrendingTokensCriteria;
   transferType: TransferType;
   limit?: number;
+  swappable: boolean;
 }
 
 export interface GetTrendingTokensOutputData {
@@ -1839,6 +1844,7 @@ export type TrendingTokensQueryVariables = Exact<{
   criteria: TrendingTokensCriteria;
   audience: Audience;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
+  swappable: InputMaybe<Scalars["Boolean"]["input"]>;
 }>;
 
 export { TrendingTokensCriteria } from "./graphql/types";
@@ -1898,4 +1904,287 @@ export interface ValidateCaptchaChallengeInput {
 export interface ValidateCaptchaChallengeOutput {
   image?: string;
   isValidated: boolean;
+}
+
+export type ClientProtocolId = { id: string; version: string };
+
+export const Button: React.FunctionComponent<ButtonProps> = () => {
+  return null;
+};
+
+type PostButtonProps = {
+  /** A 256-byte string which is label of the button */
+  children: string;
+  action: "post";
+  /**
+   * Either full URL or relative path that will be resolved against current url and basePath
+   * if omitted it will send use current url and path. Optionally pass in an object with properties `pathname`, `query`, ... instead.
+   */
+  target?: string | UrlObject;
+};
+
+type PostRedirectButton = {
+  /** A 256-byte string which is label of the button */
+  children: string;
+  action: "post_redirect";
+  /**
+   * Either full URL or relative path that will be resolved against current url and basePath
+   * if omitted it will send use current url and path. Optionally pass in an object with properties `pathname`, `query`, ... instead.
+   */
+  target?: string | UrlObject;
+};
+
+type MintButtonProps = {
+  /** A 256-byte string which is label of the button */
+  children: string;
+  action: "mint";
+  /** The target  property MUST be a valid [CAIP-10](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md) address, plus an optional token_id. */
+  target: string;
+};
+
+type LinkButtonProps = {
+  /** A 256-byte string which is label of the button */
+  children: string;
+  action: "link";
+  /** A Url to link to. Optionally pass in an object with properties `pathname`, `query`, ... instead. */
+  target: string | UrlObject;
+};
+
+type TxButtonProps = {
+  /** A 256-byte string which is label of the button */
+  children: string;
+  action: "tx";
+  /**
+   * URL which points to a valid Frame Transaction URL, which returns tx calldata.
+   *
+   * Either full URL or relative path that will be resolved against current url and basePath
+   * if omitted it will send use current url and path
+   */
+  target: string | UrlObject;
+  /**
+   * URL where a frame message containing the transaction ID will be posted if the transaction succeeds.
+   * Overrides the top level frame post_url.
+   */
+  post_url?: string | UrlObject;
+};
+
+export type ButtonProps =
+  | PostButtonProps
+  | PostRedirectButton
+  | MintButtonProps
+  | LinkButtonProps
+  | TxButtonProps;
+
+export type JsonObject = { [Key in string]: JsonValue } & {
+  [Key in string]?: JsonValue | undefined;
+};
+
+export type JsonArray = JsonValue[] | readonly JsonValue[];
+
+export type JsonPrimitive = string | number | boolean | null;
+
+export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+export type FrameButtonElement = React.ReactComponentElement<typeof Button>;
+type AllowedFrameButtonItems = FrameButtonElement | null | undefined | boolean;
+
+/**
+ * Frame definition, this is rendered by the frames
+ */
+export type FrameDefinition<TState extends JsonValue | undefined> = {
+  /**
+   * If string then it must be a valid URL
+   */
+  image: React.ReactElement | string;
+  imageOptions?: {
+    /**
+     * @default '1.91:1'
+     */
+    aspectRatio?: "1.91:1" | "1:1";
+  } & ConstructorParameters<typeof ImageResponse>[1];
+  buttons?:
+    | []
+    | [AllowedFrameButtonItems]
+    | [AllowedFrameButtonItems, AllowedFrameButtonItems]
+    | [
+        AllowedFrameButtonItems,
+        AllowedFrameButtonItems,
+        AllowedFrameButtonItems
+      ]
+    | [
+        AllowedFrameButtonItems,
+        AllowedFrameButtonItems,
+        AllowedFrameButtonItems,
+        AllowedFrameButtonItems
+      ];
+  /**
+   * Label for text input, if no value is provided the input is not rendered
+   */
+  textInput?: string;
+  /**
+   * Global app state that will be available on next frame
+   */
+  state?: TState;
+  /**
+   * Open Frames spec: The minimum client protocol version accepted for the given protocol identifier. For example VNext, or 1.5 . At least one $protocol_identifier must be specified.
+   */
+  accepts?: ClientProtocolId[];
+} & ResponseInit;
+
+/**
+ * Frame redirect, this should happen only in response to post_redirect button
+ */
+export type FrameRedirect = {
+  kind: "redirect";
+  location: string | URL;
+} & ResponseInit;
+
+export type FramesHandlerFunctionReturnType<
+  TState extends JsonValue | undefined
+> = FrameDefinition<TState> | FrameRedirect;
+
+type AllowedFramesContextShape = Record<string, any>;
+
+/**
+ * Default frames context
+ *
+ * This is just internal object, if we have some values that are provided by frames by default
+ * we should define them in here.
+ */
+export type FramesContext<TState extends JsonValue | undefined = JsonValue> = {
+  /**
+   * All frame relative targets will be resolved relative to this
+   */
+  basePath: string;
+  /**
+   * Values passed to createFrames()
+   */
+  readonly initialState: TState;
+  request: Request;
+  /**
+   * Current request URL
+   */
+  url: URL;
+};
+
+type FramesMiddlewareNextFunction<
+  TState extends JsonValue | undefined,
+  TReturnedContext extends AllowedFramesContextShape
+> = (context?: TReturnedContext) => FramesMiddlewareReturnType<TState>;
+
+export type FramesMiddlewareReturnType<TState extends JsonValue | undefined> =
+  Promise<FramesHandlerFunctionReturnType<TState> | Response>;
+
+export type FramesMiddleware<
+  TState extends JsonValue | undefined,
+  TReturnedContext extends AllowedFramesContextShape
+> = (
+  context: FramesContext<TState>,
+  next: FramesMiddlewareNextFunction<TState, TReturnedContext>
+) => FramesMiddlewareReturnType<TState>;
+
+export enum Features {
+  /**
+   * Fetches Farcaster user details, e.g. profile name, fid, number of followers/followings, etc.
+   */
+  USER_DETAILS = "user_details",
+  /**
+   * Fetches ERC20 mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  ERC20_MINTS = "erc20_mints",
+  /**
+   * Fetches NFT mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  NFT_MINTS = "nft_mints",
+  /**
+   * Fetches ERC20 balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  ERC20_BALANCES = "erc20_balances",
+  /**
+   * Fetches NFT balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  NFT_BALANCES = "nft_balances",
+  /**
+   * Fetches POAP events attended by a Farcaster user.
+   */
+  POAPS = "poaps",
+  /**
+   * Fetches token transfers sent by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  TOKEN_TRANSFERS_SENT = "token_transfers_sent",
+  /**
+   * Fetches token transfers received by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  TOKEN_TRANSFERS_RECEIVED = "token_transfers_received",
+  /**
+   * Fetches Farcaster followings of a Farcaster user.
+   */
+  FARCASTER_FOLLOWINGS = "farcaster_followings",
+  /**
+   * Fetches Farcaster followers of a Farcaster user.
+   */
+  FARCASTER_FOLLOWERS = "farcaster_followers",
+  /**
+   * Fetches Farcaster channels of a Farcaster user.
+   */
+  FARCASTER_CHANNELS = "farcaster_channels",
+}
+
+export interface OnchainDataInput {
+  /**
+   * Airstack API Key. Get your key from https://app.airstack.xyz/profile-settings/api-keys.
+   */
+  apiKey: string;
+  /**
+   * List of features to fetch from the onchain data and injected into the Frame's context.
+   */
+  features: Features[];
+}
+
+export interface OnchainDataOutput {
+  userDetails?: FarcasterUserDetailsData;
+  erc20Mints?: (FarcasterUserERC20MintsOutputData | null)[] | null | undefined;
+  nftMints?: (FarcasterUserNFTMintsOutputData | null)[] | null | undefined;
+  erc20Balances?:
+    | (FarcasterUserERC20BalancesOutputData | null)[]
+    | null
+    | undefined;
+  nftBalances?:
+    | (FarcasterUserNFTBalancesOutputData | null)[]
+    | null
+    | undefined;
+  poaps?: (FarcasterUserPoapsOutputData | null)[] | null | undefined;
+  tokenTransfersSent?:
+    | (FarcasterUserTokenSentFromOutputData | null)[]
+    | null
+    | undefined;
+  tokenTransfersReceived?:
+    | (FarcasterUserTokenReceivedByOutputData | null)[]
+    | null
+    | undefined;
+  farcasterFollowings?:
+    | (FarcasterFollowingsOutputData | null)[]
+    | null
+    | undefined;
+  farcasterFollowers?: any;
+  farcasterChannels?: any;
+}
+
+export enum AllowListCriteriaEnum {
+  NUMBER_OF_FARCASTER_FOLLOWERS = "number_of_farcaster_followers",
+  FARCASTER_FOLLOWED_BY = "farcaster_followed_by",
+  FARCASTER_FOLLOWING = "farcaster_following",
+  FARCASTER_FOLLOWING_CASTER = "farcaster_following_caster",
+  TOKEN_HOLD = "token_hold",
+  TOKEN_MINT = "token_mint",
+}
+
+export interface CheckNumberOfFarcasterFollowersrOutput {
+  error?: any;
+  data?: boolean;
+}
+
+export interface CheckNumberOfFarcasterFollowersInput {
+  fid: number;
+  followerCountCriteria: Int_Comparator_Exp;
 }

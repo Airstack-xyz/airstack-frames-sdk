@@ -9,7 +9,7 @@ import {
 import { checkTokenHoldByFarcasterUserQuery as query } from "../graphql/query/checkTokenHoldByFarcasterUser.query";
 
 /**
- * @description Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
+ * @description Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Base, Zora, and Gold.
  * @example
  * const { data, error } = await checkTokenHoldByFarcasterUser({
  *  fid: 1,
@@ -31,30 +31,30 @@ export async function checkTokenHoldByFarcasterUser(
   const ethereumTokens = token
     ?.filter((t) => t?.chain === TokenBlockchain.Ethereum)
     ?.map((t) => t?.tokenAddress);
-  const polygonTokens = token
-    ?.filter((t) => t?.chain === TokenBlockchain.Polygon)
-    ?.map((t) => t?.tokenAddress);
   const baseTokens = token
     ?.filter((t) => t?.chain === TokenBlockchain.Base)
     ?.map((t) => t?.tokenAddress);
   const zoraTokens = token
     ?.filter((t) => t?.chain === TokenBlockchain.Zora)
     ?.map((t) => t?.tokenAddress);
+  const goldTokens = token
+    ?.filter((t) => t?.chain === TokenBlockchain.Gold)
+    ?.map((t) => t?.tokenAddress);
   const variable: CheckTokenHoldByFarcasterUserQueryVariables = {
     owner: `fc_fid:${fid}`,
     ...(ethereumTokens?.length > 0 ? { ethereumTokens } : {}),
-    ...(polygonTokens?.length > 0 ? { polygonTokens } : {}),
     ...(baseTokens?.length > 0 ? { baseTokens } : {}),
     ...(zoraTokens?.length > 0 ? { zoraTokens } : {}),
+    ...(goldTokens?.length > 0 ? { goldTokens } : {}),
   };
   const chains = [
     ...(ethereumTokens?.length > 0 ? [TokenBlockchain.Ethereum] : []),
-    ...(polygonTokens?.length > 0 ? [TokenBlockchain.Polygon] : []),
     ...(baseTokens?.length > 0 ? [TokenBlockchain.Base] : []),
     ...(zoraTokens?.length > 0 ? [TokenBlockchain.Zora] : []),
+    ...(goldTokens?.length > 0 ? [TokenBlockchain.Gold] : []),
   ];
   const { data, error } = await fetchQuery(query(chains), variable);
-  const { ethereum, polygon, base, zora } =
+  const { ethereum, base, zora, gold } =
     (data as CheckTokenHoldByFarcasterUserQuery) ?? {};
   return {
     data: error
@@ -66,14 +66,6 @@ export async function checkTokenHoldByFarcasterUser(
                 chain,
                 tokenAddress,
                 isHold: (ethereum?.TokenBalance ?? [])?.some(
-                  (t) => t?.tokenAddress === tokenAddress
-                ),
-              };
-            case TokenBlockchain.Polygon:
-              return {
-                chain,
-                tokenAddress,
-                isHold: (polygon?.TokenBalance ?? [])?.some(
                   (t) => t?.tokenAddress === tokenAddress
                 ),
               };
@@ -90,6 +82,14 @@ export async function checkTokenHoldByFarcasterUser(
                 chain,
                 tokenAddress,
                 isHold: (zora?.TokenBalance ?? [])?.some(
+                  (t) => t?.tokenAddress === tokenAddress
+                ),
+              };
+            case TokenBlockchain.Gold:
+              return {
+                chain,
+                tokenAddress,
+                isHold: (gold?.TokenBalance ?? [])?.some(
                   (t) => t?.tokenAddress === tokenAddress
                 ),
               };

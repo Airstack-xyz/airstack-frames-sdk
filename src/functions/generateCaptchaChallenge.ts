@@ -1,11 +1,13 @@
 import sha256 from "sha256";
 import { v4 as uuidv4 } from "uuid";
 import { generateRandomNumberInRange } from "../utils/generateRandomNumberInRange";
-import { generateCaptchaImageSvg } from "../utils/generateCaptchaImageSvg";
 import {
+  FrameRatio,
   GenerateCaptchaChallengeInput,
   GenerateCaptchaChallengeOutput,
 } from "../types";
+import fetch from "node-fetch";
+import { FRAMES_SDK_API } from "../constants";
 
 /**
  * @description Generate Captcha challenge for Farcaster Frames
@@ -26,7 +28,12 @@ export async function generateCaptchaChallenge(
     const numB = generateRandomNumberInRange(1, 30);
     const { includeImage = true } = options ?? {};
     if (includeImage) {
-      image = await generateCaptchaImageSvg(numA, numB, options);
+      const res = await fetch(
+        `${FRAMES_SDK_API}/api/images/generate-captcha?numA=${numA}&numB=${numB}&ratio=${
+          options?.ratio ?? FrameRatio._1_91__1
+        }`
+      );
+      image = (await res.json())?.image;
     }
     const captchaId = uuidv4();
     return {

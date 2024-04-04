@@ -3,32 +3,9 @@ import { FarcasterUserErc20MintsQuery } from "../types";
 export function formatFarcasterUserERC20Mints(
   data: FarcasterUserErc20MintsQuery
 ) {
-  const { ethereum, polygon, base, zora } = data ?? {};
+  const { ethereum, base, zora, gold } = data ?? {};
   return [
     ...(ethereum?.TokenTransfer?.map(
-      ({
-        blockchain,
-        tokenAddress,
-        formattedAmount: amount,
-        amount: amountInWei,
-        token,
-        blockTimestamp,
-        blockNumber,
-      }) => {
-        const { name, symbol } = token ?? {};
-        return {
-          blockchain,
-          tokenAddress,
-          amount,
-          amountInWei,
-          name,
-          symbol,
-          blockTimestamp,
-          blockNumber,
-        };
-      }
-    ) ?? []),
-    ...(polygon?.TokenTransfer?.map(
       ({
         blockchain,
         tokenAddress,
@@ -75,6 +52,29 @@ export function formatFarcasterUserERC20Mints(
       }
     ) ?? []),
     ...(zora?.TokenTransfer?.map(
+      ({
+        blockchain,
+        tokenAddress,
+        formattedAmount: amount,
+        amount: amountInWei,
+        token,
+        blockTimestamp,
+        blockNumber,
+      }) => {
+        const { name, symbol } = token ?? {};
+        return {
+          blockchain,
+          tokenAddress,
+          amount,
+          amountInWei,
+          name,
+          symbol,
+          blockTimestamp,
+          blockNumber,
+        };
+      }
+    ) ?? []),
+    ...(gold?.TokenTransfer?.map(
       ({
         blockchain,
         tokenAddress,

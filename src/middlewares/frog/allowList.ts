@@ -5,10 +5,10 @@ import {
   init,
   AllowListMiddlewareParameters,
   AllowListMiddlewareVariables,
-} from "..";
-import { config } from "../config";
+} from "../..";
+import { config } from "../../config";
 
-export function allowList(
+export function allowListFrogMiddleware(
   parameters: AllowListMiddlewareParameters
 ): MiddlewareHandler<{ Variables: AllowListMiddlewareVariables }> {
   const { apiKey, env } = parameters ?? {};

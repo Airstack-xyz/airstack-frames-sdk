@@ -17,9 +17,9 @@ config();
     tokenType: [NFTType.ERC721, NFTType.ERC1155],
     chains: [
       TokenBlockchain.Ethereum,
-      TokenBlockchain.Polygon,
       TokenBlockchain.Base,
       TokenBlockchain.Zora,
+      TokenBlockchain.Gold,
     ],
     limit: 10,
   };

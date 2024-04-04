@@ -23,19 +23,22 @@ import { formatTrendingTokens } from "../utils/formatTrendingTokens";
  * @param {Criteria} input.criteria The criteria to analyze and sort trending tokens
  * @param {TimeFrame} input.timeFrame The time frame to get trending tokens for
  * @param {TransferType} input.transferType The type of transfer to get trending tokens for
+ * @param {Boolean} input.swappable Whether the token is swappable or not
  * @param {Number} [input.limit=200] Number of JSON responses returned per API call. Maximum value is 200.
  * @returns All the trending ERC20 tokens that is the most transferred in a given time frame
  */
 export async function getTrendingTokens(
   input: GetTrendingTokensInput
 ): Promise<GetTrendingTokensOutput> {
-  const { timeFrame, audience, criteria, transferType, limit } = input ?? {};
+  const { timeFrame, audience, criteria, transferType, swappable, limit } =
+    input ?? {};
   const variable: TrendingTokensQueryVariables = {
     timeFrame,
     audience,
     criteria,
     transferType,
     limit,
+    swappable,
   };
   const { data, error, hasPrevPage, hasNextPage, getPrevPage, getNextPage } =
     await fetchQueryWithPagination(query, variable);

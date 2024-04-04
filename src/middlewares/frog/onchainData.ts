@@ -10,15 +10,15 @@ import {
   getFarcasterChannelsByParticipant,
   getFarcasterFollowers,
   getFarcasterFollowings,
-} from "..";
+} from "../..";
 import type {
   OnchainDataMiddlewareParameters,
   OnchainDataVariables,
-} from "../types";
+} from "../../types";
 import type { MiddlewareHandler } from "hono";
-import { config } from "../config";
+import { config } from "../../config";
 
-export const onchainData = (
+export const onchainDataFrogMiddleware = (
   parameters: OnchainDataMiddlewareParameters
 ): MiddlewareHandler<{ Variables: OnchainDataVariables }> => {
   const { apiKey, features, env = "prod" } = parameters ?? {};

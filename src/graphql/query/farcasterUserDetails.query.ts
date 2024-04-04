@@ -18,6 +18,7 @@ export const farcasterUserDetailsQuery = /* GraphQL */ `
             original
           }
         }
+        custodyAddress: userAddress
         userAssociatedAddresses
         followerCount
         followingCount

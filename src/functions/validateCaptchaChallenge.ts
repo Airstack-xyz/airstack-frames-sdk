@@ -1,9 +1,10 @@
+import { FRAMES_SDK_API } from "../constants";
 import {
+  FrameRatio,
   ValidateCaptchaChallengeInput,
   ValidateCaptchaChallengeOutput,
 } from "../types";
 import sha256 from "sha256";
-import { validatedCaptchaImageSvg } from "../utils/validatedCaptchaImageSvg";
 
 /**
  * @description Validate Captcha challenges that was generated for Farcaster Frames
@@ -28,7 +29,12 @@ export async function validateCaptchaChallenge(
     const { includeImage = true } = options ?? {};
     const isValidated = sha256.x2(`${captchaId},${inputText}`) === valueHash;
     if (includeImage) {
-      image = await validatedCaptchaImageSvg(isValidated, options);
+      const res = await fetch(
+        `${FRAMES_SDK_API}/api/images/validate-captcha?isValidated=${isValidated}&ratio=${
+          options?.ratio ?? FrameRatio._1_91__1
+        }`
+      );
+      image = (await res.json())?.image;
     }
     return {
       ...(includeImage ? { image } : {}),

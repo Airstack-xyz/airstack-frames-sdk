@@ -15,7 +15,7 @@ config();
     fid: 602,
     chains: [
       TokenBlockchain.Ethereum,
-      TokenBlockchain.Polygon,
+      TokenBlockchain.Gold,
       TokenBlockchain.Base,
       TokenBlockchain.Zora,
     ],

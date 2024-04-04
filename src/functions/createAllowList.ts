@@ -20,18 +20,6 @@ import { createAllowListQuery as query } from "../graphql/query/createAllowList.
  *      tokenAddress: "0x95cb845b525f3a2126546e39d84169f1eca8c77f",
  *      chain: TokenBlockchain.Ethereum,
  *    },
- *    {
- *      tokenAddress: "0xd57867f2fdb89eadc8e859a89e3d5039c913d1d9",
- *      chain: TokenBlockchain.Polygon,
- *    },
- *    {
- *      tokenAddress: "0x2d45c399d7ca25341992038f12610c41a00a66ed",
- *      chain: TokenBlockchain.Base,
- *    },
- *    {
- *      tokenAddress: "0x743658ace931ea241dd0cb4ed38ec72cc8162ce1",
- *      chain: TokenBlockchain.Zora,
- *    },
  *  ]
  * });
  *
@@ -54,10 +42,6 @@ export async function createAllowList(
     tokens
       ?.filter((t) => t?.chain === TokenBlockchain.Ethereum)
       ?.map((t) => t?.tokenAddress) ?? [];
-  const polygonTokens =
-    tokens
-      ?.filter((t) => t?.chain === TokenBlockchain.Polygon)
-      ?.map((t) => t?.tokenAddress) ?? [];
   const baseTokens =
     tokens
       ?.filter((t) => t?.chain === TokenBlockchain.Base)
@@ -66,6 +50,10 @@ export async function createAllowList(
     tokens
       ?.filter((t) => t?.chain === TokenBlockchain.Zora)
       ?.map((t) => t?.tokenAddress) ?? [];
+  const goldTokens =
+    tokens
+      ?.filter((t) => t?.chain === TokenBlockchain.Gold)
+      ?.map((t) => t?.tokenAddress) ?? [];
   const variables: CreateAllowListQueryVariables = {
     fid: fid?.toString() ?? "1",
     identity: `fc_fid:${fid}`,
@@ -73,15 +61,15 @@ export async function createAllowList(
     isFollowingOnFarcaster: isFollowingOnFarcaster?.map((id) => `fc_fid:${id}`),
     followerCountOnFarcaster: numberOfFollowersOnFarcaster ?? 0,
     ethereumTokens,
-    polygonTokens,
     baseTokens,
     zoraTokens,
+    goldTokens,
   };
   const chains = [
     ...(ethereumTokens?.length > 0 ? [TokenBlockchain.Ethereum] : []),
-    ...(polygonTokens?.length > 0 ? [TokenBlockchain.Polygon] : []),
     ...(baseTokens?.length > 0 ? [TokenBlockchain.Base] : []),
     ...(zoraTokens?.length > 0 ? [TokenBlockchain.Zora] : []),
+    ...(goldTokens?.length > 0 ? [TokenBlockchain.Gold] : []),
   ];
   const { data, error } = await fetchQuery(
     query(allowListCriteria, chains),
@@ -93,9 +81,9 @@ export async function createAllowList(
     isFollowingOnFarcaster: Follower,
     numberOfFollowersOnFC,
     ethereum,
-    polygon,
     base,
     zora,
+    gold,
   } = (data as CreateAllowListQuery) ?? {};
   // Check if user attended the listed POAPs
   const isPoapsAttended =
@@ -130,14 +118,6 @@ export async function createAllowList(
               (t) => t?.tokenAddress === tokenAddress
             ),
           };
-        case TokenBlockchain.Polygon:
-          return {
-            chain,
-            tokenAddress,
-            isHold: (polygon?.TokenBalance ?? [])?.some(
-              (t) => t?.tokenAddress === tokenAddress
-            ),
-          };
         case TokenBlockchain.Base:
           return {
             chain,
@@ -151,6 +131,14 @@ export async function createAllowList(
             chain,
             tokenAddress,
             isHold: (zora?.TokenBalance ?? [])?.some(
+              (t) => t?.tokenAddress === tokenAddress
+            ),
+          };
+        case TokenBlockchain.Gold:
+          return {
+            chain,
+            tokenAddress,
+            isHold: (gold?.TokenBalance ?? [])?.some(
               (t) => t?.tokenAddress === tokenAddress
             ),
           };

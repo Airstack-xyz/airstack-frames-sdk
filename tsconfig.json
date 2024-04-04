@@ -1,5 +1,12 @@
 {
-  "include": ["src"],
+  "include": [
+    "src",
+    "src/utils/validatedCaptchaImageSvg.ts",
+    "src/utils/generateFrameImageBuffer.ts",
+    "src/utils/generateCaptchaImageSvg.ts",
+    "src/constants.ts",
+    "src/utils/getBase64FrameImage.ts"
+  ],
   "compilerOptions": {
     "module": "esnext",
     "lib": ["esnext"],
@@ -14,9 +21,19 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "target": "ES2017",
-    "jsx": "react",
+    "jsx": "preserve",
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": ["src/**/*.test.ts", "node_modules"]
 }

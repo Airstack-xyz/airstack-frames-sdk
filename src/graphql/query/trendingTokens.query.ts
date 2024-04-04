@@ -5,9 +5,11 @@ export const TrendingsTokensQuery = /* GraphQL */ `
     $criteria: TrendingTokensCriteria!
     $audience: Audience!
     $limit: Int = 200
+    $swappable: Boolean
   ) {
     TrendingTokens(
       input: {
+        swappable: { _eq: $swappable }
         transferType: $transferType
         timeFrame: $timeFrame
         audience: $audience

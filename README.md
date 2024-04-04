@@ -55,6 +55,9 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
 - [Frog Middlewares](#frog-middlewares)
   - [Onchain Data Middleware](#onchain-data-middleware)
   - [Allow List Middleware](#allow-list-middleware)
+- [Frames.js Middlewares](#framesjs-middlewares)
+  - [Onchain Data Middleware](#onchain-data-middleware-1)
+  - [Allow List Middleware](#allow-list-middleware-1)
 - [Enum](#enum)
   - [`TokenBlockchain`](#tokenblockchain)
   - [`TokenType`](#tokentype)
@@ -66,6 +69,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`TimeFrame`](#timeframe)
   - [`TransferType`](#transfertype)
   - [`FrameRatio`](#frameratio)
+  - [`Features`](#features)
 - [Paginations](#paginations)
 
 ## Install
@@ -163,6 +167,7 @@ Get trending tokens in a given time frame by simply specifying the audience, cri
 | `criteria`     | `TrendingTokensCriteria` | true     | The criteria to analyze and sort trending mints                                                       |
 | `timeFrame`    | `TimeFrame`              | true     | The time frame to analyze the trending mints, e.g. the last 1 hour                                    |
 | `transferType` | `TransferType`           | true     | The type of transfer to get trending tokens for, either `all` or `self_initiated`                     |
+| `swappable`    | `boolean`                | true     | Whether a token is swappable on DEX or not.                                                           |
 | `limit`        | `number`                 | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
 
 **Code Samples**
@@ -183,6 +188,7 @@ const { data, error } = await getTrendingTokens({
   criteria: TrendingTokensCriteria.UniqueWallets,
   timeFrame: TimeFrame.OneDay,
   transferType: TransferType.All,
+  swappable: true,
   limit: 100,
 });
 const { data, error }: GetTrendingTokensOutput = await getTrendingTokens(input);
@@ -628,15 +634,15 @@ console.log(data);
 
 ### `getFarcasterUserERC20Balances`
 
-Fetch ERC20 tokens owned by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+Fetch ERC20 tokens owned by a Farcaster user of a given FID across Ethereum, Base, and Zora.
 
 **Input**
 
-| Field    | Type                                    | Required | Description                                                                                                                                              |
-| -------- | --------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                  |
-| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 balance. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
-| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                    |
+| Field    | Type                                    | Required | Description                                                                                                                                     |
+| -------- | --------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                         |
+| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 balance. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
+| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                           |
 
 **Code Sample**
 
@@ -652,7 +658,6 @@ const input: FarcasterUserERC20BalancesInput = {
   fid: 602,
   chains: [
     TokenBlockchain.Ethereum,
-    TokenBlockchain.Polygon,
     TokenBlockchain.Base,
     TokenBlockchain.Zora,
   ],
@@ -691,16 +696,16 @@ console.log(data);
 
 ### `getFarcasterUserNFTBalances`
 
-Fetch ERC721 and ERC1155 NFT collections owned by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+Fetch ERC721 and ERC1155 NFT collections owned by a Farcaster user of a given FID across Ethereum, Base, and Zora.
 
 **Input**
 
-| Field       | Type                                    | Required | Description                                                                                                                                            |
-| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT balance. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT balances that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                          |
-| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                  |
+| Field       | Type                                    | Required | Description                                                                                                                                   |
+| ----------- | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                       |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT balance. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT balances that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                 |
+| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                         |
 
 **Code Sample**
 
@@ -718,7 +723,6 @@ const variables: FarcasterUserNFTBalancesInput = {
   tokenType: [NFTType.ERC721, NFTType.ERC1155],
   chains: [
     TokenBlockchain.Ethereum,
-    TokenBlockchain.Polygon,
     TokenBlockchain.Base,
     TokenBlockchain.Zora,
   ],
@@ -777,15 +781,15 @@ console.log(data);
 
 ### `getFarcasterUserERC20Mints`
 
-Fetch ERC20 tokens minted by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+Fetch ERC20 tokens minted by a Farcaster user of a given FID across Ethereum, Base, and Zora.
 
 **Input**
 
-| Field    | Type                                    | Required | Description                                                                                                                                            |
-| -------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                |
-| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 mints. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
-| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                  |
+| Field    | Type                                    | Required | Description                                                                                                                                   |
+| -------- | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                       |
+| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 mints. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
+| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                         |
 
 **Code Sample**
 
@@ -801,7 +805,6 @@ const input: FarcasterUserERC20MintsInput = {
   fid: 602,
   chains: [
     TokenBlockchain.Ethereum,
-    TokenBlockchain.Polygon,
     TokenBlockchain.Base,
     TokenBlockchain.Zora,
   ],
@@ -826,7 +829,7 @@ console.log(data);
 ```json
 [
   {
-    "blockchain": "polygon",
+    "blockchain": "base",
     "tokenAddress": "0x058d96baa6f9d16853970b333ed993acc0c35add",
     "amount": 50,
     "amountInWei": "50000000000000000000",
@@ -840,16 +843,16 @@ console.log(data);
 
 ### `getFarcasterUserNFTMints`
 
-Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given FID across Ethereum, Base, and Zora.
 
 **Input**
 
-| Field       | Type                                    | Required | Description                                                                                                                                          |
-| ----------- | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                              |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT mints. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT mints that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                           |
-| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                |
+| Field       | Type                                    | Required | Description                                                                                                                                 |
+| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                     |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT mints. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT mints that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                  |
+| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                       |
 
 **Code Sample**
 
@@ -866,7 +869,6 @@ const input: FarcasterUserNFTMintsInput = {
   fid: 602,
   chains: [
     TokenBlockchain.Ethereum,
-    TokenBlockchain.Polygon,
     TokenBlockchain.Base,
     TokenBlockchain.Zora,
   ],
@@ -926,16 +928,16 @@ console.log(data);
 
 ### `getFarcasterUserTokenSentFrom`
 
-Fetch all token transfers sent from a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+Fetch all token transfers sent from a Farcaster user of a given FID across Ethereum, Base, and Zora.
 
 **Input**
 
-| Field       | Type                                    | Required | Description                                                                                                                                                |
-| ----------- | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                    |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                                        |
-| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                                     |
+| Field       | Type                                    | Required | Description                                                                                                                                       |
+| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                           |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                               |
+| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                            |
 
 **Code Sample**
 
@@ -952,7 +954,6 @@ const input: FarcasterUserTokenSentFromInput = {
   fid: 602,
   chains: [
     TokenBlockchain.Ethereum,
-    TokenBlockchain.Polygon,
     TokenBlockchain.Base,
     TokenBlockchain.Zora,
   ],
@@ -1000,16 +1001,16 @@ console.log(data);
 
 ### `getFarcasterUserTokenReceivedBy`
 
-Fetch all token transfers received by a Farcaster user of a given FID across Ethereum, Polygon, Base, and Zora.
+Fetch all token transfers received by a Farcaster user of a given FID across Ethereum, Base, and Zora.
 
 **Input**
 
-| Field       | Type                                    | Required | Description                                                                                                                                                |
-| ----------- | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                    |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Polygon, Base, and Zora. Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                                        |
-| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                                     |
+| Field       | Type                                    | Required | Description                                                                                                                                       |
+| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                           |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                               |
+| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                            |
 
 **Code Sample**
 
@@ -1026,7 +1027,6 @@ const input: FarcasterUserTokenReceivedByInput = {
   fid: 602,
   chains: [
     TokenBlockchain.Ethereum,
-    TokenBlockchain.Polygon,
     TokenBlockchain.Base,
     TokenBlockchain.Zora,
   ],
@@ -1533,7 +1533,7 @@ console.log(data);
 
 ### `checkTokenHoldByFarcasterUser`
 
-Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
+Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Base, and Zora.
 
 | Field   | Type                                                 | Required | Description                                                     |
 | ------- | ---------------------------------------------------- | -------- | --------------------------------------------------------------- |
@@ -1599,7 +1599,7 @@ console.log(data);
 
 ### `checkTokenMintedByFarcasterUser`
 
-Check If a Farcaster user of a given FID minted a list of ERC20/721/1155 tokens across Ethereum, Polygon, Base, and Zora.
+Check If a Farcaster user of a given FID minted a list of ERC20/721/1155 tokens across Ethereum, Base, and Zora.
 
 | Field   | Type                                                 | Required | Description                                                       |
 | ------- | ---------------------------------------------------- | -------- | ----------------------------------------------------------------- |
@@ -1773,10 +1773,6 @@ const allowListCriteria = {
     {
       tokenAddress: "0x95cb845b525f3a2126546e39d84169f1eca8c77f",
       chain: TokenBlockchain.Ethereum,
-    },
-    {
-      tokenAddress: "0xd57867f2fdb89eadc8e859a89e3d5039c913d1d9",
-      chain: TokenBlockchain.Polygon,
     },
     {
       tokenAddress: "0x2d45c399d7ca25341992038f12610c41a00a66ed",
@@ -1960,7 +1956,9 @@ console.log(data);
 
 ### Onchain Data Middleware
 
-The Onchain Data middleware injects onchain data of the user, including Farcaster user details, token balances, token mints, POAPs, Farcaster channels, etc.
+The Onchain Data middleware injects onchain data of the user that interacted with the Frames, including Farcaster user details, token balances, token mints, POAPs, Farcaster channels, etc.
+
+For more details, check out the tutorial on Onchain Data Frog middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-frog-recipes-and-middleware/airstack-frog-middleware#onchain-data-middleware).
 
 **Input**
 
@@ -1973,13 +1971,13 @@ The Onchain Data middleware injects onchain data of the user, including Farcaste
 **Code Samples**
 
 ```ts
-import { onchainData } from "@airstack/frames";
+import { onchainDataFrogMiddleware as onchain Data } from "@airstack/frames";
 
 const onchainDataMiddleware = onchainData({
   features: {
     userDetails: {},
     erc20Mints: {
-      chains: [TokenBlockchain.Polygon],
+      chains: [TokenBlockchain.Base],
       limit: 1,
     },
     nftMints: {
@@ -1987,7 +1985,7 @@ const onchainDataMiddleware = onchainData({
       chains: [TokenBlockchain.Base],
     },
     erc20Balances: {
-      chains: [TokenBlockchain.Polygon],
+      chains: [TokenBlockchain.Base],
       limit: 1,
     },
     nftBalances: {
@@ -2030,7 +2028,7 @@ app.frame("/", onchainDataMiddleware, async function (c) {
   },
   "erc20Balances": [
     {
-      "blockchain": "polygon",
+      "blockchain": "base",
       "tokenAddress": "0x10503dbed34e291655100a3c204528425abe3235",
       "amount": 740,
       "amountInWei": "740000000000000000000",
@@ -2054,7 +2052,7 @@ app.frame("/", onchainDataMiddleware, async function (c) {
   ],
   "erc20Mints": [
     {
-      "blockchain": "polygon",
+      "blockchain": "base",
       "tokenAddress": "0x058d96baa6f9d16853970b333ed993acc0c35add",
       "amount": 50,
       "amountInWei": "50000000000000000000",
@@ -2098,6 +2096,8 @@ app.frame("/", onchainDataMiddleware, async function (c) {
 
 The Allow List middleware injects allow list logic to check if a user is allowed to access a frame or not, based on various criterias, such as token holdings, Farcaster follower counts, following certain Farcaster users, or attended certain POAPs.
 
+For more details, check out the tutorial on Allow List Frog middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-frog-recipes-and-middleware/airstack-frog-middleware#allow-list-middleware).
+
 **Input**
 
 | Parameters          | Type                | Required | Description                                                                                                                                                 |
@@ -2110,7 +2110,7 @@ The Allow List middleware injects allow list logic to check if a user is allowed
 **Code Samples**
 
 ```ts
-import { allowList } from "@airstack/frames";
+import { allowListFrogMiddleware as allowList } from "@airstack/frames";
 
 const allowListMiddleware = allowList({
   allowListCriteria: {
@@ -2139,6 +2139,151 @@ app.frame("/", allowListMiddleware, async function (c) {
 }
 ```
 
+## Frames.js Middlewares
+
+### Onchain Data Middleware
+
+The Onchain Data middleware injects onchain data of the user that interacts with the Frame, including Farcaster user details, token balances, token mints, POAPs, Farcaster channels, etc.
+
+For more details, check out the tutorial on Onchain Data Frames.js middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-framesjs-middleware/onchain-data).
+
+**Input**
+
+| Parameters | Type                    | Required | Description                                                                                                                            |
+| ---------- | ----------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `apiKey`   | `string`                | false    | Configure API key, if no API key has been provided with `init` function.                                                               |
+| `features` | [`Features`](#features) | true     | Select Features to be included in the Frames.js context. For more details, what features are available, check out the `Features` enum. |
+
+**Code Sample**
+
+```ts
+import { createFrames, Button } from "frames.js/next";
+import {
+  onchainDataFramesjsMiddleware as onchainData,
+  Features,
+} from "@airstack/frames";
+
+const frames = createFrames();
+
+const handleRequest = frames(
+  async (ctx) => {
+    console.log(ctx.userDetails);
+    return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          Say GM
+        </div>
+      ),
+      buttons: [],
+    };
+  },
+  {
+    middleware: [
+      onchainData({
+        apiKey: process.env.AIRSTACK_API_KEY as string,
+        features: [Features.USER_DETAILS],
+      }),
+    ],
+  }
+);
+```
+
+**Response Sample**
+
+```json
+{
+  "profileName": "betashop.eth",
+  "fnames": ["betashop", "betashop.eth", "jasongoldberg.eth"],
+  "profileImage": {
+    "extraSmall": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/extra_small.jpg",
+    "small": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/small.jpg",
+    "medium": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/medium.jpg",
+    "large": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/large.jpg",
+    "original": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/original_image.jpg"
+  },
+  "userAssociatedAddresses": [
+    "0x66bd69c7064d35d146ca78e6b186e57679fba249",
+    "0xeaf55242a90bb3289db8184772b0b98562053559"
+  ],
+  "followerCount": 65820,
+  "followingCount": 2303
+}
+```
+
+### Allow List Middleware
+
+The Allow List middleware injects allow list logic to check if a user is allowed to access a frame or not, based on various criterias, such as token holdings, Farcaster follower counts, following certain Farcaster users, or attended certain POAPs.
+
+For more details, check out the tutorial on Allow List Frames.js middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-framesjs-middleware/allow-list).
+
+**Input**
+
+| Parameters | Type                    | Required | Description                                                                                                 |
+| ---------- | ----------------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| `apiKey`   | `string`                | false    | Configure API key, if no API key has been provided with `init` function.                                    |
+| `criteria` | [`Features`](#features) | true     | Define the logical criteria that you would like to evaluate the user, based on their existing onchain data. |
+
+**Code Sample**
+
+```ts
+import { createFrames, Button } from "frames.js/next";
+import {
+  AllowListCriteriaEnum as AllowListCriteria,
+  allowListFramesjsMiddleware as allowList,
+  TokenBlockchain,
+} from "@airstack/frames";
+
+const frames = createFrames();
+
+const handleRequest = frames(
+  async (ctx) => {
+    console.log(ctx.isAllowed);
+    return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          Say GM
+        </div>
+      ),
+      buttons: [],
+    };
+  },
+  {
+    middleware: [
+      allowList({
+        apiKey: process.env.AIRSTACK_API_KEY as string,
+        criteria: {
+          and: [
+            [AllowListCriteria.NUMBER_OF_FARCASTER_FOLLOWERS, { _gte: 30000 }],
+            {
+              or: [
+                [AllowListCriteria.FARCASTER_FOLLOWED_BY, { fid: 1 }],
+                [AllowListCriteria.FARCASTER_FOLLOWING, { fid: 2602 }],
+              ],
+            },
+          ],
+        },
+      }),
+    ],
+  }
+);
+```
+
+**Response Sample**
+
+```json
+{
+  "isAllowed": true
+}
+```
+
 ## Enum
 
 The SDK offered several enums for some defined input values, such as blockchains and token types.
@@ -2150,7 +2295,6 @@ export enum TokenBlockchain {
   Base = "base",
   Ethereum = "ethereum",
   Gold = "gold",
-  Polygon = "polygon",
   Zora = "zora",
 }
 ```
@@ -2228,7 +2372,13 @@ export enum TimeFrame {
 
 ```ts
 export enum TransferType {
+  /**
+   * Include all transfer types
+   */
   All = "all",
+  /**
+   * Only self initiated transfers, self-transfer or airdrops will be excluded
+   */
   SelfInitiated = "self_initiated",
 }
 ```
@@ -2237,8 +2387,65 @@ export enum TransferType {
 
 ```ts
 export enum FrameRatio {
+  /**
+   * Set Frame Ratio to 1:1
+   */
   _1__1 = "1:1",
+  /**
+   * Set Frame Ratio to 1.91:1
+   */
   _1_91__1 = "1.91:1",
+}
+```
+
+### `Features`
+
+```ts
+export enum Features {
+  /**
+   * Fetches Farcaster user details, e.g. profile name, fid, number of followers/followings, etc.
+   */
+  USER_DETAILS = "user_details",
+  /**
+   * Fetches ERC20 mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  ERC20_MINTS = "erc20_mints",
+  /**
+   * Fetches NFT mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  NFT_MINTS = "nft_mints",
+  /**
+   * Fetches ERC20 balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  ERC20_BALANCES = "erc20_balances",
+  /**
+   * Fetches NFT balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  NFT_BALANCES = "nft_balances",
+  /**
+   * Fetches POAP events attended by a Farcaster user.
+   */
+  POAPS = "poaps",
+  /**
+   * Fetches token transfers sent by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  TOKEN_TRANSFERS_SENT = "token_transfers_sent",
+  /**
+   * Fetches token transfers received by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   */
+  TOKEN_TRANSFERS_RECEIVED = "token_transfers_received",
+  /**
+   * Fetches Farcaster followings of a Farcaster user.
+   */
+  FARCASTER_FOLLOWINGS = "farcaster_followings",
+  /**
+   * Fetches Farcaster followers of a Farcaster user.
+   */
+  FARCASTER_FOLLOWERS = "farcaster_followers",
+  /**
+   * Fetches Farcaster channels of a Farcaster user.
+   */
+  FARCASTER_CHANNELS = "farcaster_channels",
 }
 ```
 

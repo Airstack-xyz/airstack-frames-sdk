@@ -26,3 +26,4 @@ export * from "./getTrendingMints";
 export * from "./createAllowList";
 export * from "./getTrendingTokens";
 export * from "./validateCaptchaChallenge";
+export * from "./checkNumberOfFarcasterFollowers";

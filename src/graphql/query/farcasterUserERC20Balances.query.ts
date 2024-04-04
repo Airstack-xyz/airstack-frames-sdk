@@ -3,9 +3,9 @@ import { TokenBlockchain } from "../types";
 export const farcasterUserERC20Balances = (
   chains: TokenBlockchain[] | null | undefined = [
     TokenBlockchain.Ethereum,
-    TokenBlockchain.Polygon,
     TokenBlockchain.Base,
     TokenBlockchain.Zora,
+    TokenBlockchain.Gold,
   ]
 ) => {
   return (
