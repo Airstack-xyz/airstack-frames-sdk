@@ -32,6 +32,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`getFarcasterUserDetails`](#getfarcasteruserdetails)
   - [`getFarcasterFollowers`](#getfarcasterfollowers)
   - [`getFarcasterFollowings`](#getfarcasterfollowings)
+  - [`getFarcasterUserCasts`](#getfarcasterusercasts)
   - [`getFarcasterUserPoaps`](#getfarcasteruserpoaps)
   - [`getFarcasterUserERC20Balances`](#getfarcasterusererc20balances)
   - [`getFarcasterUserNFTBalances`](#getfarcasterusernftbalances)
@@ -640,6 +641,73 @@ console.log(data);
     "userAssociatedAddresses": ["0xda52abca28fadeab9771ba45a2ff346c4db97d7f"],
     "followerCount": 58,
     "followingCount": 0
+  }
+]
+```
+
+### `getFarcasterUserCasts`
+
+Fetch all casts of a Farcaster user. You can also filter it further by fetching only the casts that have embeds, frames, or mentions in the casts.
+
+**Input**
+
+| Field         | Type      | Required | Description                                                                                           |
+| ------------- | --------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `fid`         | `number`  | true     | FID of a Farcaster user                                                                               |
+| `hasEmbeds`   | `boolean` | false    | Fetch casts with or without embeds. By default, it will fetch all.                                    |
+| `hasFrames`   | `boolean` | false    | Fetch casts with or without frames. By default, it will fetch all.                                    |
+| `hasMentions` | `boolean` | false    | Fetch casts with or without mentions. By default, it will fetch all.                                  |
+| `limit`       | `number`  | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  init,
+  getFarcasterUserCasts,
+  FarcasterUserCastsInput,
+  FarcasterUserCastsOutput,
+} from "@airstack/frames";
+
+const input: FarcasterUserCastsInput = {
+  fid: 602,
+  hasEmbeds: true,
+  hasFrames: true,
+  hasMentions: true,
+  limit: 100,
+};
+const { data, error }: FarcasterUserCastsOutput = await getFarcasterUserCasts(
+  input
+);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "castHash": "0xcee805b0b5a762892512d38d30b72dd692772480",
+    "castedAtTimestamp": "2024-04-06T06:24:32Z",
+    "castUrl": "https://warpcast.com/betashop.eth/0xcee805b0",
+    "embeds": [{ "url": "https://share.airstack.xyz/s/gf" }],
+    "text": "hihi follow my trade on @base! cc @betashop.eth @airstack",
+    "numberOfRecasts": 17,
+    "numberOfLikes": 92,
+    "numberOfReplies": 14,
+    "channel": "airstaack",
+    "mentions": [
+      { "fid": "12142", "position": 24 },
+      { "fid": "602", "position": 29 },
+      { "fid": "20909", "position": 30 }
+    ],
+    "frame": {
+      "frameHash": "0xbbd09a3a2c6b96eff53d9ad622b5637374bd2ec7b9c706fd8c908a6bc1a6bdc0",
+      "frameUrl": "https://share.airstack.xyz/s/gf"
+    }
   }
 ]
 ```
@@ -2512,6 +2580,10 @@ export enum Features {
    * Fetches Farcaster channels of a Farcaster user.
    */
   FARCASTER_CHANNELS = "farcaster_channels",
+  /**
+   * Fetches Farcaster casts of a Farcaster user.
+   */
+  FARCASTER_CASTS = "farcaster_casts",
 }
 ```
 

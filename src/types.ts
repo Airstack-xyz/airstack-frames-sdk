@@ -2125,6 +2125,10 @@ export enum Features {
    * Fetches Farcaster channels of a Farcaster user.
    */
   FARCASTER_CHANNELS = "farcaster_channels",
+  /**
+   * Fetches Farcaster casts of a Farcaster user.
+   */
+  FARCASTER_CASTS = "farcaster_casts",
 }
 
 export interface OnchainDataInput {
@@ -2163,8 +2167,15 @@ export interface OnchainDataOutput {
     | (FarcasterFollowingsOutputData | null)[]
     | null
     | undefined;
-  farcasterFollowers?: any;
-  farcasterChannels?: any;
+  farcasterFollowers?:
+    | (FarcasterFollowersOutputData | null)[]
+    | null
+    | undefined;
+  farcasterChannels?:
+    | (FarcasterChannelsByParticipantOutputData | null)[]
+    | null
+    | undefined;
+  farcasterCasts?: (FarcasterUserCastsOutputData | null)[] | null | undefined;
 }
 
 export enum AllowListCriteriaEnum {
@@ -2327,3 +2338,55 @@ export enum TrendingSwapsCriteria {
    */
   UniqueSellWallets = "unique_sell_wallets",
 }
+
+export interface FarcasterUserCastsInput {
+  fid: number;
+  hasEmbeds?: boolean;
+  hasFrames?: boolean;
+  hasMentions?: boolean;
+  limit?: number;
+}
+
+export interface FarcasterUserCastsOutputData {
+  castHash: string | null;
+  castedAtTimestamp: any;
+  castUrl: string | null;
+  embeds: any[] | null;
+  text: string | null;
+  numberOfRecasts: number | null;
+  numberOfLikes: number | null;
+  numberOfReplies: number | null;
+  channel: string | undefined;
+  mentions: Array<{ fid: string | null; position: number | null }> | null;
+  frame: { frameHash: string | null; frameUrl: string | null } | null;
+}
+
+export type FarcasterUserCastsOutput = IteratePaginationResponse<
+  (FarcasterUserCastsOutputData | null)[] | null | undefined
+>;
+
+export type FarcasterUserCastsQueryVariables = Exact<{
+  identity: Scalars["Identity"]["input"];
+  hasEmbeds?: InputMaybe<Scalars["Boolean"]["input"]>;
+  hasFrames?: Scalars["Boolean"]["input"];
+  hasMentions?: Scalars["Boolean"]["input"];
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
+
+export type FarcasterUserCastsQuery = {
+  FarcasterCasts: {
+    Cast: Array<{
+      hash: string | null;
+      castedAtTimestamp: any | null;
+      embeds: Array<any | null> | null;
+      url: string | null;
+      text: string | null;
+      numberOfRecasts: number | null;
+      numberOfLikes: number | null;
+      numberOfReplies: number | null;
+      channel: { channelId: string } | null;
+      mentions: Array<{ fid: string | null; position: number | null }> | null;
+      frame: { frameHash: string | null; frameUrl: string | null } | null;
+    }> | null;
+  } | null;
+};

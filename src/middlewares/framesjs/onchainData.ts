@@ -2,6 +2,7 @@ import {
   getFarcasterChannelsByParticipant,
   getFarcasterFollowers,
   getFarcasterFollowings,
+  getFarcasterUserCasts,
   getFarcasterUserDetails,
   getFarcasterUserERC20Balances,
   getFarcasterUserERC20Mints,
@@ -21,6 +22,7 @@ import {
 import { config } from "dotenv";
 import { decodeFrameActionPayloadFromRequest } from "../../utils/decodeFrameActionPayloadFromRequest";
 import { FrameActionMessage, Message } from "@farcaster/core";
+import { config as configEnv } from "../../config";
 
 config();
 
@@ -33,7 +35,8 @@ export const onchainDataFramesjsMiddleware = (
   input: OnchainDataInput
 ): FramesMiddleware<any, OnchainDataOutput> => {
   const { apiKey, features } = input ?? {};
-  init(apiKey);
+  // If an apiKey is provided, initialize the SDK with custom API key
+  if (apiKey && !configEnv?.authKey) init(apiKey);
   return async (ctx, next) => {
     let onchainRes = {};
 
@@ -43,7 +46,6 @@ export const onchainDataFramesjsMiddleware = (
     }
     // body must be a JSON object
     const payload = await decodeFrameActionPayloadFromRequest(ctx.request);
-    console.log(payload);
 
     // for initial frame, directly return the Frame
     if (!payload) {
@@ -68,6 +70,7 @@ export const onchainDataFramesjsMiddleware = (
         farcasterFollowingsResponse,
         farcasterFollowersResponse,
         farcasterChannelsResponse,
+        farcasterCastsResponse,
       ] = await Promise.all([
         features.includes(Features.USER_DETAILS)
           ? getFarcasterUserDetails({
@@ -103,6 +106,9 @@ export const onchainDataFramesjsMiddleware = (
           : Promise.resolve(undefined),
         features.includes(Features.FARCASTER_CHANNELS)
           ? getFarcasterChannelsByParticipant({ fid })
+          : Promise.resolve(undefined),
+        features.includes(Features.FARCASTER_CASTS)
+          ? getFarcasterUserCasts({ fid })
           : Promise.resolve(undefined),
       ]);
 
@@ -165,6 +171,13 @@ export const onchainDataFramesjsMiddleware = (
         onchainRes = {
           ...onchainRes,
           farcasterChannels: farcasterChannelsResponse.data,
+        };
+      }
+
+      if (farcasterCastsResponse) {
+        onchainRes = {
+          ...onchainRes,
+          farcasterCasts: farcasterCastsResponse.data,
         };
       }
 

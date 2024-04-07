@@ -28,3 +28,4 @@ export * from "./getTrendingTokens";
 export * from "./validateCaptchaChallenge";
 export * from "./checkNumberOfFarcasterFollowers";
 export * from "./getTrendingSwaps";
+export * from "./getFarcasterUserCasts";

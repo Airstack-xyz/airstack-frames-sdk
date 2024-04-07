@@ -1,6 +1,6 @@
 {
   "name": "@airstack/frames",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Official Airstack Frames SDK",
   "main": "dist/cjs/index.js",
   "typings": "dist/types/index.d.ts",
@@ -67,7 +67,7 @@
     "vercel": "^33.6.3"
   },
   "dependencies": {
-    "@airstack/node": "^0.0.5",
+    "@airstack/node": "^0.0.6",
     "@bufbuild/buf": "^1.30.0",
     "@bufbuild/protobuf": "^1.8.0",
     "@bufbuild/protoc-gen-es": "^1.8.0",
