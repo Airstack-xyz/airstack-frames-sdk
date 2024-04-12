@@ -7,6 +7,7 @@ import {
 } from "../types";
 import { hexStringToUint8Array } from "../utils/hexStringToUint8Array";
 import { FrameActionMessage, Message } from "@farcaster/core";
+import { bytesFromBase64 } from "../utils/bytesFromBase64";
 
 /**
  * @description validate frames signature packet with Farcaster Hub
@@ -25,30 +26,44 @@ export async function validateFramesMessage(
     );
   }
 
-  const validateMessageResponse = await fetch(
-    "https://hubs.airstack.xyz/v1/validateMessage",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/octet-stream",
-        "x-airstack-hubs": config.authKey,
-      },
-      body: hexStringToUint8Array(body.trustedData.messageBytes),
+  if (!config.authKey) {
+    throw new Error("API Key is not provided.");
+  }
+
+  try {
+    const validateMessageResponse = await fetch(
+      "https://hubs.airstack.xyz/v1/validateMessage",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/octet-stream",
+          "x-airstack-hubs": config.authKey,
+        },
+        body: hexStringToUint8Array(body.trustedData.messageBytes),
+      }
+    );
+
+    const { valid, message }: ValidateFramesMessageJSONResponse =
+      await validateMessageResponse.json();
+
+    const formattedMessage = Message.fromJSON(message);
+    if (formattedMessage.data?.frameActionBody?.castId?.hash)
+      formattedMessage.data.frameActionBody.castId.hash = bytesFromBase64(
+        body.untrustedData.castId.hash
+      );
+
+    if (valid) {
+      return {
+        isValid: true,
+        message: formattedMessage as FrameActionMessage,
+      };
+    } else {
+      return {
+        isValid: false,
+        message: undefined,
+      };
     }
-  );
-
-  const { valid, message }: ValidateFramesMessageJSONResponse =
-    await validateMessageResponse.json();
-
-  if (valid) {
-    return {
-      isValid: true,
-      message: Message.fromJSON(message) as FrameActionMessage,
-    };
-  } else {
-    return {
-      isValid: false,
-      message: undefined,
-    };
+  } catch (e) {
+    throw new Error(JSON.stringify(e));
   }
 }
