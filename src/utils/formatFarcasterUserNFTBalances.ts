@@ -3,7 +3,7 @@ import { FarcasterNftBalancesQuery } from "../types";
 export function formatFarcasterUserNFTBalances(
   data: FarcasterNftBalancesQuery
 ) {
-  const { ethereum, base, zora, gold } = data ?? {};
+  const { ethereum, base, zora, gold, degen } = data ?? {};
   return [
     ...(ethereum?.TokenBalance?.map(
       ({
@@ -90,6 +90,34 @@ export function formatFarcasterUserNFTBalances(
       }
     ) ?? []),
     ...(gold?.TokenBalance?.map(
+      ({
+        blockchain,
+        tokenAddress,
+        formattedAmount: amount,
+        amount: amountInWei,
+        token,
+        tokenNfts,
+        tokenId,
+        tokenType,
+      }) => {
+        const { name, symbol } = token ?? {};
+        const { contentValue, metaData } = tokenNfts ?? {};
+        const { image } = contentValue ?? {};
+        return {
+          blockchain,
+          tokenAddress,
+          tokenId,
+          amount,
+          amountInWei,
+          name,
+          symbol,
+          image,
+          metaData,
+          tokenType,
+        };
+      }
+    ) ?? []),
+    ...(degen?.TokenBalance?.map(
       ({
         blockchain,
         tokenAddress,

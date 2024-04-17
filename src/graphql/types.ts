@@ -1520,6 +1520,7 @@ export type TokenBalancesOutput = {
 
 export enum TokenBlockchain {
   Base = 'base',
+  Degen = 'degen',
   Ethereum = 'ethereum',
   Gold = 'gold',
   Zora = 'zora'
@@ -1612,18 +1613,12 @@ export type TokenNftsNestedInput = {
   blockchain: InputMaybe<TokenBlockchain>;
   filter: InputMaybe<TokenNftFilter>;
   limit: InputMaybe<Scalars['Int']['input']>;
-  order: InputMaybe<Array<InputMaybe<TokenNftOrderBy>>>;
+  order: InputMaybe<Array<TokenNftOrderBy>>;
 };
 
 export type TokenNftsOutput = {
   TokenNft: Maybe<Array<TokenNft>>;
   pageInfo: Maybe<PageInfo>;
-};
-
-export type TokenOrderBy = {
-  name: InputMaybe<OrderBy>;
-  symbol: InputMaybe<OrderBy>;
-  type: InputMaybe<OrderBy>;
 };
 
 export type TokenTransfer = {
@@ -1668,9 +1663,6 @@ export type TokenTransfer = {
 };
 
 export type TokenTransferFilter = {
-  _and: InputMaybe<Array<TokenTransferFilter>>;
-  _nor: InputMaybe<Array<TokenTransferFilter>>;
-  _or: InputMaybe<Array<TokenTransferFilter>>;
   blockTimestamp: InputMaybe<Time_Comparator_Exp>;
   formattedAmount: InputMaybe<Float_Comparator_Exp>;
   from: InputMaybe<Identity_Comparator_Exp>;
@@ -1734,7 +1726,6 @@ export type TokensInput = {
   cursor: InputMaybe<Scalars['String']['input']>;
   filter: TokenFilter;
   limit: InputMaybe<Scalars['Int']['input']>;
-  order: InputMaybe<Array<TokenOrderBy>>;
 };
 
 export type TokensOutput = {
@@ -1870,7 +1861,7 @@ export type TrendingTokensInput = {
   cursor: InputMaybe<Scalars['String']['input']>;
   filter: InputMaybe<TrendingTokensFilter>;
   limit: InputMaybe<Scalars['Int']['input']>;
-  swappable: Boolean_Comparator_Exp;
+  swappable: InputMaybe<Boolean_Comparator_Exp>;
   timeFrame: TimeFrame;
   transferType: TrendingTokensTransferType;
 };
@@ -2079,17 +2070,6 @@ export type FarcasterFollowingsQueryVariables = Exact<{
 
 
 export type FarcasterFollowingsQuery = { SocialFollowings: { Following: Array<{ followingAddress: { socials: Array<{ profileName: string | null, fnames: Array<string | null> | null, userId: string | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null }> | null } | null };
-
-export type MyQueryQueryVariables = Exact<{
-  identity: Scalars['Identity']['input'];
-  hasEmbeds?: InputMaybe<Scalars['Boolean']['input']>;
-  hasFrames: Scalars['Boolean']['input'];
-  hasMentions: Scalars['Boolean']['input'];
-  limit?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type MyQueryQuery = { FarcasterCasts: { Cast: Array<{ hash: string | null, castedAtTimestamp: any | null, embeds: Array<any | null> | null, url: string | null, text: string | null, numberOfRecasts: number | null, numberOfLikes: number | null, channel: { channelId: string } | null, mentions: Array<{ fid: string | null, position: number | null }> | null, frame: { frameHash: string | null, frameUrl: string | null } | null }> | null } | null };
 
 export type FarcasterUserDetailsQueryVariables = Exact<{
   fid: Scalars['String']['input'];

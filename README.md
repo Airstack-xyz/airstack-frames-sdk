@@ -768,15 +768,15 @@ console.log(data);
 
 ### `getFarcasterUserERC20Balances`
 
-Fetch ERC20 tokens owned by a Farcaster user of a given FID across Ethereum, Base, and Zora.
+Fetch ERC20 tokens owned by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
 
 **Input**
 
-| Field    | Type                                    | Required | Description                                                                                                                                     |
-| -------- | --------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                         |
-| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 balance. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
-| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                           |
+| Field    | Type                                    | Required | Description                                                                                                                                                                                           |
+| -------- | --------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                               |
+| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 balance. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
+| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                                 |
 
 **Code Sample**
 
@@ -830,16 +830,16 @@ console.log(data);
 
 ### `getFarcasterUserNFTBalances`
 
-Fetch ERC721 and ERC1155 NFT collections owned by a Farcaster user of a given FID across Ethereum, Base, and Zora.
+Fetch ERC721 and ERC1155 NFT collections owned by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
 
 **Input**
 
-| Field       | Type                                    | Required | Description                                                                                                                                   |
-| ----------- | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                       |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT balance. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT balances that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                 |
-| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                         |
+| Field       | Type                                    | Required | Description                                                                                                                                                                                         |
+| ----------- | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                             |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT balance. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT balances that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                                                                       |
+| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                               |
 
 **Code Sample**
 
@@ -915,15 +915,15 @@ console.log(data);
 
 ### `getFarcasterUserERC20Mints`
 
-Fetch ERC20 tokens minted by a Farcaster user of a given FID across Ethereum, Base, and Zora.
+Fetch ERC20 tokens minted by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
 
 **Input**
 
-| Field    | Type                                    | Required | Description                                                                                                                                   |
-| -------- | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                       |
-| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 mints. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
-| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                         |
+| Field    | Type                                    | Required | Description                                                                                                                                                                                         |
+| -------- | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                             |
+| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 mints. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
+| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                               |
 
 **Code Sample**
 
@@ -977,16 +977,16 @@ console.log(data);
 
 ### `getFarcasterUserNFTMints`
 
-Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given FID across Ethereum, Base, and Zora.
+Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
 
 **Input**
 
-| Field       | Type                                    | Required | Description                                                                                                                                 |
-| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                     |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT mints. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT mints that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                  |
-| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                       |
+| Field       | Type                                    | Required | Description                                                                                                                                                                                       |
+| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                           |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT mints. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT mints that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                                                                        |
+| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                             |
 
 **Code Sample**
 
@@ -1062,16 +1062,16 @@ console.log(data);
 
 ### `getFarcasterUserTokenSentFrom`
 
-Fetch all token transfers sent from a Farcaster user of a given FID across Ethereum, Base, and Zora.
+Fetch all token transfers sent from a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
 
 **Input**
 
-| Field       | Type                                    | Required | Description                                                                                                                                       |
-| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                           |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                               |
-| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                            |
+| Field       | Type                                    | Required | Description                                                                                                                                                                                             |
+| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                                 |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                                                                                     |
+| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                  |
 
 **Code Sample**
 
@@ -1135,16 +1135,16 @@ console.log(data);
 
 ### `getFarcasterUserTokenReceivedBy`
 
-Fetch all token transfers received by a Farcaster user of a given FID across Ethereum, Base, and Zora.
+Fetch all token transfers received by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
 
 **Input**
 
-| Field       | Type                                    | Required | Description                                                                                                                                       |
-| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                           |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Base, and Zora. Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                               |
-| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                            |
+| Field       | Type                                    | Required | Description                                                                                                                                                                                             |
+| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                                 |
+| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
+| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                                                                                     |
+| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                  |
 
 **Code Sample**
 
@@ -1667,7 +1667,7 @@ console.log(data);
 
 ### `checkTokenHoldByFarcasterUser`
 
-Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Base, and Zora.
+Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
 
 | Field   | Type                                                 | Required | Description                                                     |
 | ------- | ---------------------------------------------------- | -------- | --------------------------------------------------------------- |
@@ -1733,7 +1733,7 @@ console.log(data);
 
 ### `checkTokenMintedByFarcasterUser`
 
-Check If a Farcaster user of a given FID minted a list of ERC20/721/1155 tokens across Ethereum, Base, and Zora.
+Check If a Farcaster user of a given FID minted a list of ERC20/721/1155 tokens across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
 
 | Field   | Type                                                 | Required | Description                                                       |
 | ------- | ---------------------------------------------------- | -------- | ----------------------------------------------------------------- |
@@ -2430,6 +2430,7 @@ export enum TokenBlockchain {
   Ethereum = "ethereum",
   Gold = "gold",
   Zora = "zora",
+  Degen = "degen",
 }
 ```
 
@@ -2541,19 +2542,19 @@ export enum Features {
    */
   USER_DETAILS = "user_details",
   /**
-   * Fetches ERC20 mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   * Fetches ERC20 mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
    */
   ERC20_MINTS = "erc20_mints",
   /**
-   * Fetches NFT mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   * Fetches NFT mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
    */
   NFT_MINTS = "nft_mints",
   /**
-   * Fetches ERC20 balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   * Fetches ERC20 balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
    */
   ERC20_BALANCES = "erc20_balances",
   /**
-   * Fetches NFT balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   * Fetches NFT balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
    */
   NFT_BALANCES = "nft_balances",
   /**
@@ -2561,11 +2562,11 @@ export enum Features {
    */
   POAPS = "poaps",
   /**
-   * Fetches token transfers sent by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   * Fetches token transfers sent by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
    */
   TOKEN_TRANSFERS_SENT = "token_transfers_sent",
   /**
-   * Fetches token transfers received by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
+   * Fetches token transfers received by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
    */
   TOKEN_TRANSFERS_RECEIVED = "token_transfers_received",
   /**
