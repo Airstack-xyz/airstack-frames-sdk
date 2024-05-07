@@ -516,6 +516,15 @@ console.log(data);
     "large": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/large.png",
     "original": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/original_image.png"
   },
+  "custodyAddress": "0x66bd69c7064d35d146ca78e6b186e57679fba249",
+  "connectedAddresses": [
+    {
+      "address": "0xeaf55242a90bb3289db8184772b0b98562053559",
+      "blockchain": "ethereum",
+      "chainId": "1",
+      "timestamp": "2023-05-31T13:58:49Z"
+    }
+  ],
   "userAssociatedAddresses": [
     "0x66bd69c7064d35d146ca78e6b186e57679fba249",
     "0xeaf55242a90bb3289db8184772b0b98562053559"
@@ -578,6 +587,15 @@ console.log(data);
       "large": "https://assets.airstack.xyz/image/social/RS9r7sdCb5orXeB0+tLLRPxtnJo80la3zRRVAYc9gPR+ne8TitCLgEJ41Gp1LV6g/large.jpg",
       "original": "https://assets.airstack.xyz/image/social/RS9r7sdCb5orXeB0+tLLRPxtnJo80la3zRRVAYc9gPR+ne8TitCLgEJ41Gp1LV6g/original_image.jpg"
     },
+    "custodyAddress": "0x42fae5a53f0194f6f9587926e206a852c5c726bf",
+    "connectedAddresses": [
+      {
+        "address": "0x42fae5a53f0194f6f9587926e206a852c5c726bf",
+        "blockchain": "ethereum",
+        "chainId": "1",
+        "timestamp": "2023-05-31T13:58:49Z"
+      }
+    ],
     "userAssociatedAddresses": ["0x42fae5a53f0194f6f9587926e206a852c5c726bf"],
     "followerCount": 1,
     "followingCount": 74
@@ -638,6 +656,15 @@ console.log(data);
       "large": "https://assets.airstack.xyz/image/social/HmDDiN8HQWR/6f6nrPI8+P6fwctlKaEu/dM8+QnZz/Y=/large.png",
       "original": "https://assets.airstack.xyz/image/social/HmDDiN8HQWR/6f6nrPI8+P6fwctlKaEu/dM8+QnZz/Y=/original_image.png"
     },
+    "custodyAddress": "0xda52abca28fadeab9771ba45a2ff346c4db97d7f",
+    "connectedAddresses": [
+      {
+        "address": "0xda52abca28fadeab9771ba45a2ff346c4db97d7f",
+        "blockchain": "ethereum",
+        "chainId": "1",
+        "timestamp": "2023-05-31T13:58:49Z"
+      }
+    ],
     "userAssociatedAddresses": ["0xda52abca28fadeab9771ba45a2ff346c4db97d7f"],
     "followerCount": 58,
     "followingCount": 0
@@ -1348,6 +1375,15 @@ console.log(data);
       "large": "https://assets.airstack.xyz/image/social/94uonfbLlRHZf6qh2LpPC6Fg4DNg3uCUrXkwlo+jA/I=/large.gif",
       "original": "https://assets.airstack.xyz/image/social/94uonfbLlRHZf6qh2LpPC6Fg4DNg3uCUrXkwlo+jA/I=/original_image.gif"
     },
+    "custodyAddress": "0xe1b1e3bbf4f29bd7253d6fc1e2ddc9cacb0a546a",
+    "connectedAddresses": [
+      {
+        "address": "0x0964256674e42d61f0ff84097e28f65311786ccb",
+        "blockchain": "ethereum",
+        "chainId": "1",
+        "timestamp": "2023-05-31T13:58:49Z"
+      }
+    ],
     "userAssociatedAddresses": [
       "0xe1b1e3bbf4f29bd7253d6fc1e2ddc9cacb0a546a",
       "0x0964256674e42d61f0ff84097e28f65311786ccb"
@@ -1423,6 +1459,15 @@ console.log(data);
           "large": "https://assets.airstack.xyz/image/social/sxSmw/OjqyuT+uMDpHiSTmqOH5F76hwnx6Q35elGlUkt5nWRe8xrgnJemShOmjeN/large.jpg",
           "original": "https://assets.airstack.xyz/image/social/sxSmw/OjqyuT+uMDpHiSTmqOH5F76hwnx6Q35elGlUkt5nWRe8xrgnJemShOmjeN/original_image.jpg"
         },
+        "custodyAddress": "0x53667ed77b56d5a94d6df994ab4fd142b7585e68",
+        "connectedAddresses": [
+          {
+            "address": "0x547a2e8d97dc99be21e509fa93c4fa5dd76b8ed0",
+            "blockchain": "ethereum",
+            "chainId": "1",
+            "timestamp": "2023-05-31T13:58:49Z"
+          }
+        ],
         "userAssociatedAddresses": [
           "0x53667ed77b56d5a94d6df994ab4fd142b7585e68",
           "0x547a2e8d97dc99be21e509fa93c4fa5dd76b8ed0"
@@ -1547,6 +1592,15 @@ console.log(data);
           "large": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/large.png",
           "original": "https://assets.airstack.xyz/image/social/TQjjhuaajVkwqgzZVvgFQYU1qxNfVHQgSmZjTcXRrzQ=/original_image.png"
         },
+        "custodyAddress": "0x66bd69c7064d35d146ca78e6b186e57679fba249",
+        "connectedAddresses": [
+          {
+            "address": "0xeaf55242a90bb3289db8184772b0b98562053559",
+            "blockchain": "ethereum",
+            "chainId": "1",
+            "timestamp": "2023-05-31T13:58:49Z"
+          }
+        ],
         "userAssociatedAddresses": [
           "0x66bd69c7064d35d146ca78e6b186e57679fba249",
           "0xeaf55242a90bb3289db8184772b0b98562053559"
@@ -1605,6 +1659,15 @@ console.log(data);
   {
     "profileName": "zachterrell",
     "fnames": ["zachterrell.eth", "zachterrell"],
+    "custodyAddress": "0xbce5a0d16dc2031dc53da79c34ddb366e76dc482",
+    "connectedAddresses": [
+      {
+        "address": "0x5a492d1e15f2ae4b418e424ba9a1d112d6e9706a",
+        "blockchain": "ethereum",
+        "chainId": "1",
+        "timestamp": "2023-05-31T13:58:49Z"
+      }
+    ],
     "userAssociatedAddresses": [
       "0xbce5a0d16dc2031dc53da79c34ddb366e76dc482",
       "0x5a492d1e15f2ae4b418e424ba9a1d112d6e9706a"
@@ -2458,6 +2521,7 @@ export enum NFTType {
 ```ts
 export enum FarcasterChannelActionType {
   Cast = "cast",
+  Follow = "follow",
   Reply = "reply",
 }
 ```

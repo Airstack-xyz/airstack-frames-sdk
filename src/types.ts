@@ -40,6 +40,16 @@ export interface FarcasterFollowersOutputData {
   userAssociatedAddresses: string[] | null | undefined;
   followerCount: number | null | undefined;
   followingCount: number | null | undefined;
+  custodyAddress: string | null | undefined;
+  connectedAddresses:
+    | {
+        address: any;
+        blockchain: string | null;
+        chainId: string | null;
+        timestamp: any;
+      }[]
+    | null
+    | undefined;
   profileImage:
     | {
         extraSmall: string | null;
@@ -68,6 +78,16 @@ export interface FarcasterFollowingsOutputData {
   userAssociatedAddresses: string[] | null | undefined;
   followerCount: number | null | undefined;
   followingCount: number | null | undefined;
+  custodyAddress: string | null | undefined;
+  connectedAddresses:
+    | {
+        address: any;
+        blockchain: string | null;
+        chainId: string | null;
+        timestamp: any;
+      }[]
+    | null
+    | undefined;
   profileImage:
     | {
         extraSmall: string | null;
@@ -95,6 +115,16 @@ export type FarcasterUserDetailsData =
       userAssociatedAddresses: string[] | null | undefined;
       followerCount: number | null | undefined;
       followingCount: number | null | undefined;
+      custodyAddress: string | null | undefined;
+      connectedAddresses:
+        | {
+            address: any;
+            blockchain: string | null;
+            chainId: string | null;
+            timestamp: any;
+          }[]
+        | null
+        | undefined;
       profileImage:
         | {
             extraSmall: string | null;
@@ -230,6 +260,16 @@ export interface SearchFarcastersOutputData {
   followerCount: number | null;
   followingCount: number | null;
   fid: string | null;
+  custodyAddress: string | null | undefined;
+  connectedAddresses:
+    | {
+        address: any;
+        blockchain: string | null;
+        chainId: string | null;
+        timestamp: any;
+      }[]
+    | null
+    | undefined;
   profileImage:
     | {
         extraSmall: string | null;
@@ -1621,6 +1661,16 @@ export interface FarcasterChannelParticipantsOutputData {
   userAssociatedAddresses?: string[] | null | undefined;
   followerCount?: number | null | undefined;
   followingCount?: number | null | undefined;
+  custodyAddress?: string | null | undefined;
+  connectedAddresses?:
+    | {
+        address: any;
+        blockchain: string | null;
+        chainId: string | null;
+        timestamp: any;
+      }[]
+    | null
+    | undefined;
   profileImage:
     | {
         extraSmall: string | null;
@@ -1660,6 +1710,16 @@ export interface FarcasterChannelsByParticipantOutputData {
     userAssociatedAddresses: Array<any> | null;
     followerCount: number | null;
     followingCount: number | null;
+    custodyAddress: string | null | undefined;
+    connectedAddresses:
+      | {
+          address: any;
+          blockchain: string | null;
+          chainId: string | null;
+          timestamp: any;
+        }[]
+      | null
+      | undefined;
     profileImage:
       | {
           extraSmall: string | null;
@@ -1699,6 +1759,16 @@ export interface SearchFarcasterChannelsOutputData {
     userAssociatedAddresses: Array<any> | null;
     followerCount: number | null;
     followingCount: number | null;
+    custodyAddress: string | null | undefined;
+    connectedAddresses:
+      | {
+          address: any;
+          blockchain: string | null;
+          chainId: string | null;
+          timestamp: any;
+        }[]
+      | null
+      | undefined;
     profileImage:
       | {
           extraSmall: string | null;
@@ -1752,7 +1822,7 @@ export interface FarcasterChannelsByHostOutputData {
 }
 
 export type FarcasterChannelsByHostOutput = IteratePaginationResponse<
-  FarcasterChannelsByParticipantOutputData[] | null | undefined
+  FarcasterChannelsByHostOutputData[] | null | undefined
 >;
 
 export interface ValidateFramesMessageInput {

@@ -22,6 +22,12 @@ export const farcasterUserDetailsQuery = /* GraphQL */ `
         userAssociatedAddresses
         followerCount
         followingCount
+        connectedAddresses {
+          address
+          blockchain
+          chainId
+          timestamp
+        }
       }
     }
   }

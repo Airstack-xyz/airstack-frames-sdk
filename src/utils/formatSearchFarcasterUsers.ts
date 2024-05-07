@@ -6,6 +6,8 @@ export function formatSearchFarcasterUsers(data: SearchFarcasterUsersQuery) {
       ({
         profileName,
         fnames,
+        custodyAddress,
+        connectedAddresses,
         userAssociatedAddresses,
         followerCount,
         followingCount,
@@ -16,6 +18,8 @@ export function formatSearchFarcasterUsers(data: SearchFarcasterUsersQuery) {
         return {
           profileName,
           fnames,
+          custodyAddress,
+          connectedAddresses,
           userAssociatedAddresses,
           followerCount,
           followingCount,

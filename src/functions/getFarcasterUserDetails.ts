@@ -29,6 +29,8 @@ export async function getFarcasterUserDetails(
   const {
     profileName,
     fnames,
+    custodyAddress,
+    connectedAddresses,
     profileImageContentValue,
     userAssociatedAddresses,
     followerCount,
@@ -42,6 +44,8 @@ export async function getFarcasterUserDetails(
           profileName,
           fnames,
           profileImage,
+          custodyAddress,
+          connectedAddresses,
           userAssociatedAddresses,
           followerCount,
           followingCount,

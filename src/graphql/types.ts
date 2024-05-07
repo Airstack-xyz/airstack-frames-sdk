@@ -332,6 +332,7 @@ export type FarcasterCast = {
   parentFid: Maybe<Scalars['String']['output']>;
   parentHash: Maybe<Scalars['String']['output']>;
   parentUrl: Maybe<Scalars['String']['output']>;
+  quotedCast: Maybe<FarcasterCast>;
   rawText: Maybe<Scalars['String']['output']>;
   rootParentHash: Maybe<Scalars['String']['output']>;
   rootParentUrl: Maybe<Scalars['String']['output']>;
@@ -343,13 +344,12 @@ export type FarcasterCast = {
 export type FarcasterCastFilter = {
   castedAtTimestamp: InputMaybe<Time_Comparator_Exp>;
   castedBy: InputMaybe<Identity_Comparator_Exp>;
-  frameUrl: InputMaybe<Simple_String_Comparator_Exp>;
+  frameUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
   hasEmbeds: InputMaybe<Boolean_Comparator_Exp>;
   hasFrames: InputMaybe<Boolean_Comparator_Exp>;
   hasMentions: InputMaybe<Boolean_Comparator_Exp>;
-  hash: InputMaybe<Simple_String_Comparator_Exp>;
-  parentHash: InputMaybe<Simple_String_Comparator_Exp>;
-  url: InputMaybe<Simple_String_Comparator_Exp>;
+  hash: InputMaybe<String_Eq_In_Comparator_Exp>;
+  url: InputMaybe<String_Eq_In_Comparator_Exp>;
 };
 
 export type FarcasterCastInput = {
@@ -412,8 +412,8 @@ export type FarcasterChannelActionType_Comparator_Exp = {
 export type FarcasterChannelFilter = {
   channelId: InputMaybe<String_Comparator_Exp>;
   createdAtTimestamp: InputMaybe<Time_Comparator_Exp>;
+  hostId: InputMaybe<String_Comparator_Exp>;
   hostIdentity: InputMaybe<Identity_Comparator_Exp>;
-  hostIds: InputMaybe<String_Comparator_Exp>;
   leadId: InputMaybe<String_Comparator_Exp>;
   leadIdentity: InputMaybe<Identity_Comparator_Exp>;
   name: InputMaybe<Regex_String_Comparator_Exp>;
@@ -533,6 +533,77 @@ export type FarcasterFrameMessageOutput = {
   message: Maybe<FrameMessage>;
   messageByte: Maybe<Scalars['String']['output']>;
   messageRaw: Maybe<Scalars['Map']['output']>;
+};
+
+export type FarcasterQuotedRecastsFilter = {
+  parentCastedBy: InputMaybe<Identity_Comparator_Exp>;
+  parentHash: InputMaybe<String_Eq_In_Comparator_Exp>;
+  parentUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
+  recastedBy: InputMaybe<Identity_Comparator_Exp>;
+};
+
+export type FarcasterQuotedRecastsInput = {
+  blockchain: EveryBlockchain;
+  cursor: InputMaybe<Scalars['String']['input']>;
+  filter: FarcasterQuotedRecastsFilter;
+  limit: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type FarcasterQuotedRecastsOutput = {
+  QuotedRecast: Maybe<Array<FarcasterCast>>;
+  pageInfo: Maybe<PageInfo>;
+};
+
+export type FarcasterReaction = {
+  cast: Maybe<FarcasterCast>;
+  castHash: Maybe<Scalars['String']['output']>;
+  reactedBy: Maybe<Social>;
+};
+
+export enum FarcasterReactionCriteria {
+  Liked = 'liked',
+  Recasted = 'recasted',
+  Replied = 'replied'
+}
+
+export type FarcasterReactionsFilter = {
+  castHash: InputMaybe<String_Eq_In_Comparator_Exp>;
+  castUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
+  criteria: FarcasterReactionCriteria;
+  frameUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
+  reactedBy: InputMaybe<Identity_Comparator_Exp>;
+};
+
+export type FarcasterReactionsInput = {
+  blockchain: EveryBlockchain;
+  cursor: InputMaybe<Scalars['String']['input']>;
+  filter: FarcasterReactionsFilter;
+  limit: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type FarcasterReactionsOutput = {
+  Criteria: Maybe<FarcasterReactionCriteria>;
+  Reaction: Maybe<Array<FarcasterReaction>>;
+  pageInfo: Maybe<PageInfo>;
+};
+
+export type FarcasterRepliesFilter = {
+  parentCastedBy: InputMaybe<Identity_Comparator_Exp>;
+  parentHash: InputMaybe<String_Eq_In_Comparator_Exp>;
+  parentUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
+  repliedBy: InputMaybe<Identity_Comparator_Exp>;
+};
+
+export type FarcasterRepliesInput = {
+  blockchain: EveryBlockchain;
+  cursor: InputMaybe<Scalars['String']['input']>;
+  filter: FarcasterRepliesFilter;
+  limit: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type FarcasterRepliesOutput = {
+  Reply: Maybe<Array<FarcasterCast>>;
+  pageInfo: Maybe<PageInfo>;
 };
 
 export type Float_Comparator_Exp = {
@@ -936,6 +1007,9 @@ export type Query = {
   FarcasterCasts: Maybe<FarcasterCastOutput>;
   FarcasterChannelParticipants: Maybe<FarcasterChannelParticipantsOutput>;
   FarcasterChannels: Maybe<FarcasterChannelsOutput>;
+  FarcasterQuotedRecasts: Maybe<FarcasterQuotedRecastsOutput>;
+  FarcasterReactions: Maybe<FarcasterReactionsOutput>;
+  FarcasterReplies: Maybe<FarcasterRepliesOutput>;
   FarcasterValidateFrameMessage: Maybe<FarcasterFrameMessageOutput>;
   PoapEvents: Maybe<PoapEventsOutput>;
   Poaps: Maybe<PoapsOutput>;
@@ -978,6 +1052,21 @@ export type QueryFarcasterChannelParticipantsArgs = {
 
 export type QueryFarcasterChannelsArgs = {
   input: FarcasterChannelsInput;
+};
+
+
+export type QueryFarcasterQuotedRecastsArgs = {
+  input: FarcasterQuotedRecastsInput;
+};
+
+
+export type QueryFarcasterReactionsArgs = {
+  input: FarcasterReactionsInput;
+};
+
+
+export type QueryFarcasterRepliesArgs = {
+  input: FarcasterRepliesInput;
 };
 
 
@@ -1390,6 +1479,11 @@ export type String_Comparator_Exp = {
 
 export type String_Eq_Comparator_Exp = {
   _eq: InputMaybe<Scalars['String']['input']>;
+};
+
+export type String_Eq_In_Comparator_Exp = {
+  _eq: InputMaybe<Scalars['String']['input']>;
+  _in: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export enum TimeFrame {
@@ -2102,7 +2196,7 @@ export type FarcasterChannelParticipantsQueryVariables = Exact<{
 }>;
 
 
-export type FarcasterChannelParticipantsQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ participant: { profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null } | null }> | null } | null };
+export type FarcasterChannelParticipantsQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ participant: { profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, custodyAddress: any | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null } | null }> | null } | null };
 
 export type FarcasterChannelsByHostQueryVariables = Exact<{
   host: Scalars['String']['input'];
@@ -2123,7 +2217,7 @@ export type FarcasterChannelsByParticipantQueryVariables = Exact<{
 }>;
 
 
-export type FarcasterChannelsByParticipantQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ channelId: string, channel: { name: string, description: string, imageUrl: string, createdAtTimestamp: any, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } }> | null } | null };
+export type FarcasterChannelsByParticipantQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ channelId: string, channel: { name: string, description: string, imageUrl: string, createdAtTimestamp: any, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, custodyAddress: any | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null } }> | null } | null };
 
 export type FarcasterFollowersQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
@@ -2131,7 +2225,7 @@ export type FarcasterFollowersQueryVariables = Exact<{
 }>;
 
 
-export type FarcasterFollowersQuery = { SocialFollowers: { Follower: Array<{ followerAddress: { socials: Array<{ profileName: string | null, fnames: Array<string | null> | null, userId: string | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null }> | null } | null };
+export type FarcasterFollowersQuery = { SocialFollowers: { Follower: Array<{ followerAddress: { socials: Array<{ profileName: string | null, fnames: Array<string | null> | null, userId: string | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, custodyAddress: any | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null } | null }> | null } | null };
 
 export type FarcasterFollowingsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
@@ -2139,14 +2233,14 @@ export type FarcasterFollowingsQueryVariables = Exact<{
 }>;
 
 
-export type FarcasterFollowingsQuery = { SocialFollowings: { Following: Array<{ followingAddress: { socials: Array<{ profileName: string | null, fnames: Array<string | null> | null, userId: string | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null }> | null } | null };
+export type FarcasterFollowingsQuery = { SocialFollowings: { Following: Array<{ followingAddress: { socials: Array<{ profileName: string | null, fnames: Array<string | null> | null, userId: string | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, custodyAddress: any | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null } | null }> | null } | null };
 
 export type FarcasterUserDetailsQueryVariables = Exact<{
   fid: Scalars['String']['input'];
 }>;
 
 
-export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, custodyAddress: any | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
+export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, custodyAddress: any | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null } | null };
 
 export type FarcasterUserPoaPsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
@@ -2172,7 +2266,7 @@ export type SearchFarcasterChannelsQueryVariables = Exact<{
 }>;
 
 
-export type SearchFarcasterChannelsQuery = { FarcasterChannels: { FarcasterChannel: Array<{ name: string, description: string, imageUrl: string, createdAtTimestamp: any, channelId: string, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null }> | null } | null };
+export type SearchFarcasterChannelsQuery = { FarcasterChannels: { FarcasterChannel: Array<{ name: string, description: string, imageUrl: string, createdAtTimestamp: any, channelId: string, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, custodyAddress: any | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null }> | null } | null };
 
 export type SearchFarcasterUsersQueryVariables = Exact<{
   profileName: Scalars['String']['input'];
@@ -2180,7 +2274,7 @@ export type SearchFarcasterUsersQueryVariables = Exact<{
 }>;
 
 
-export type SearchFarcasterUsersQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null } | null };
+export type SearchFarcasterUsersQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, custodyAddress: any | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null } | null };
 
 export type TrendingMintsQueryVariables = Exact<{
   timeFrame: TimeFrame;
