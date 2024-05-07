@@ -21,6 +21,13 @@ export const farcasterChannelDetailsQuery = /* GraphQL */ `
               original
             }
           }
+          custodyAddress: userAddress
+          connectedAddresses {
+            address
+            blockchain
+            chainId
+            timestamp
+          }
           userAssociatedAddresses
           followerCount
           followingCount

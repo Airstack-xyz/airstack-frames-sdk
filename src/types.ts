@@ -1628,6 +1628,16 @@ export interface FarcasterChannelDetailsOutput {
           userAssociatedAddresses: Array<any> | null;
           followerCount: number | null;
           followingCount: number | null;
+          custodyAddress: string | null | undefined;
+          connectedAddresses:
+            | {
+                address: any;
+                blockchain: string | null;
+                chainId: string | null;
+                timestamp: any;
+              }[]
+            | null
+            | undefined;
           profileImage:
             | {
                 extraSmall: string | null;
