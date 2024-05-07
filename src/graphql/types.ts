@@ -335,6 +335,7 @@ export type FarcasterCast = {
   rawText: Maybe<Scalars['String']['output']>;
   rootParentHash: Maybe<Scalars['String']['output']>;
   rootParentUrl: Maybe<Scalars['String']['output']>;
+  socialCapitalValue: Maybe<SocialCapitalValue>;
   text: Maybe<Scalars['String']['output']>;
   url: Maybe<Scalars['String']['output']>;
 };
@@ -369,6 +370,9 @@ export type FarcasterChannel = {
   dappName: Scalars['String']['output'];
   dappSlug: Scalars['String']['output'];
   description: Scalars['String']['output'];
+  followerCount: Maybe<Scalars['Int']['output']>;
+  hostIds: Maybe<Array<Scalars['String']['output']>>;
+  hostProfiles: Maybe<Array<Social>>;
   /** Airstack unique identifier for the data point */
   id: Scalars['ID']['output'];
   imageUrl: Scalars['String']['output'];
@@ -377,6 +381,11 @@ export type FarcasterChannel = {
   name: Scalars['String']['output'];
   participants: Maybe<Array<FarcasterChannelParticipant>>;
   url: Scalars['String']['output'];
+};
+
+
+export type FarcasterChannelHostProfilesArgs = {
+  input: InputMaybe<SocialsNestedInput>;
 };
 
 
@@ -391,6 +400,7 @@ export type FarcasterChannelParticipantsArgs = {
 
 export enum FarcasterChannelActionType {
   Cast = 'cast',
+  Follow = 'follow',
   Reply = 'reply'
 }
 
@@ -402,6 +412,8 @@ export type FarcasterChannelActionType_Comparator_Exp = {
 export type FarcasterChannelFilter = {
   channelId: InputMaybe<String_Comparator_Exp>;
   createdAtTimestamp: InputMaybe<Time_Comparator_Exp>;
+  hostIdentity: InputMaybe<Identity_Comparator_Exp>;
+  hostIds: InputMaybe<String_Comparator_Exp>;
   leadId: InputMaybe<String_Comparator_Exp>;
   leadIdentity: InputMaybe<Identity_Comparator_Exp>;
   name: InputMaybe<Regex_String_Comparator_Exp>;
@@ -416,6 +428,7 @@ export type FarcasterChannelNestedInput = {
 
 export type FarcasterChannelOrderBy = {
   createdAtTimestamp: InputMaybe<OrderBy>;
+  followerCount: InputMaybe<OrderBy>;
 };
 
 export type FarcasterChannelParticipant = {
@@ -429,6 +442,7 @@ export type FarcasterChannelParticipant = {
   id: Maybe<Scalars['ID']['output']>;
   lastActionTimestamp: Scalars['Time']['output'];
   lastCastedTimestamp: Maybe<Scalars['Time']['output']>;
+  lastFollowedTimestamp: Maybe<Scalars['Time']['output']>;
   lastRepliedTimestamp: Maybe<Scalars['Time']['output']>;
   participant: Maybe<Social>;
   participantId: Scalars['String']['output'];
@@ -933,6 +947,7 @@ export type Query = {
   TokenNfts: Maybe<TokenNftsOutput>;
   TokenTransfers: Maybe<TokenTransfersOutput>;
   Tokens: Maybe<TokensOutput>;
+  TrendingCasts: Maybe<TrendingCastsOutput>;
   TrendingMints: Maybe<TrendingMintsOutput>;
   TrendingSwaps: Maybe<TrendingSwapsOutput>;
   TrendingTokens: Maybe<TrendingTokensOutput>;
@@ -1018,6 +1033,11 @@ export type QueryTokenTransfersArgs = {
 
 export type QueryTokensArgs = {
   input: TokensInput;
+};
+
+
+export type QueryTrendingCastsArgs = {
+  input: TrendingCastsInput;
 };
 
 
@@ -1188,6 +1208,12 @@ export type SocialFollowersArgs = {
 
 export type SocialFollowingsArgs = {
   input: InputMaybe<SocialFollowingNestedInput>;
+};
+
+export type SocialCapitalValue = {
+  formattedValue: Maybe<Scalars['Float']['output']>;
+  hash: Maybe<Scalars['String']['output']>;
+  rawValue: Maybe<Scalars['String']['output']>;
 };
 
 export enum SocialDappName {
@@ -1736,6 +1762,50 @@ export type TokensOutput = {
 export enum TrendingBlockchain {
   Base = 'base'
 }
+
+export type TrendingCast = {
+  cast: Maybe<FarcasterCast>;
+  criteria: Maybe<Scalars['String']['output']>;
+  criteriaCount: Maybe<Scalars['Float']['output']>;
+  hash: Maybe<Scalars['String']['output']>;
+  id: Maybe<Scalars['String']['output']>;
+  socialCapitalValueFormatted: Maybe<Scalars['Float']['output']>;
+  socialCapitalValueRaw: Maybe<Scalars['String']['output']>;
+  timeFrom: Maybe<Scalars['Time']['output']>;
+  timeTo: Maybe<Scalars['Time']['output']>;
+};
+
+export enum TrendingCastTimeFrame {
+  EightHours = 'eight_hours',
+  FourHours = 'four_hours',
+  OneDay = 'one_day',
+  OneHour = 'one_hour',
+  SevenDays = 'seven_days',
+  TwelveHours = 'twelve_hours',
+  TwoDays = 'two_days',
+  TwoHours = 'two_hours'
+}
+
+export enum TrendingCastsCriteria {
+  Likes = 'likes',
+  LikesRecastsReplies = 'likes_recasts_replies',
+  Recasts = 'recasts',
+  Replies = 'replies',
+  SocialCapitalValue = 'social_capital_value'
+}
+
+export type TrendingCastsInput = {
+  blockchain: EveryBlockchain;
+  criteria: TrendingCastsCriteria;
+  cursor: InputMaybe<Scalars['String']['input']>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  timeFrame: TrendingCastTimeFrame;
+};
+
+export type TrendingCastsOutput = {
+  TrendingCast: Maybe<Array<TrendingCast>>;
+  pageInfo: Maybe<PageInfo>;
+};
 
 export type TrendingFilter = {
   address: InputMaybe<Trending_Comparator_Exp>;
