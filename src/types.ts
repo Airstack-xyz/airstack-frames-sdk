@@ -2643,17 +2643,23 @@ export interface FarcasterUserCastsInput {
 }
 
 export interface FarcasterUserCastsOutputData {
-  castHash: string | null;
+  castHash: string | null | undefined;
   castedAtTimestamp: any;
-  castUrl: string | null;
-  embeds: any[] | null;
-  text: string | null;
-  numberOfRecasts: number | null;
-  numberOfLikes: number | null;
-  numberOfReplies: number | null;
-  channel: string | undefined;
-  mentions: Array<{ fid: string | null; position: number | null }> | null;
-  frame: { frameHash: string | null; frameUrl: string | null } | null;
+  castUrl: string | null | undefined;
+  embeds: any[] | null | undefined;
+  text: string | null | undefined;
+  numberOfRecasts: number | null | undefined;
+  numberOfLikes: number | null | undefined;
+  numberOfReplies: number | null | undefined;
+  channel: string | undefined | undefined;
+  mentions:
+    | Array<{ fid: string | null; position: number | null }>
+    | null
+    | undefined;
+  frame:
+    | { frameHash: string | null; frameUrl: string | null }
+    | null
+    | undefined;
 }
 
 export type FarcasterUserCastsOutput = IteratePaginationResponse<
@@ -2697,3 +2703,35 @@ export interface FarcasterChannelFollowersInput {
 
 export type FarcasterChannelFollowersOutput =
   FarcasterChannelParticipantsOutput;
+
+export interface FarcasterUserRepliesInput {
+  fid: number;
+  limit?: number;
+}
+
+export type FarcasterUserRepliesOutputData = FarcasterUserCastsOutputData;
+
+export type FarcasterUserRepliesOutput = IteratePaginationResponse<
+  (FarcasterUserRepliesOutputData | null)[] | null | undefined
+>;
+
+export type farcasterUserRecastsInput = FarcasterUserRepliesInput;
+export type FarcasterUserRecastsOutputData = FarcasterUserCastsOutputData;
+
+export type FarcasterUserRecastsOutput = IteratePaginationResponse<
+  (FarcasterUserRepliesOutputData | null)[] | null | undefined
+>;
+
+export type farcasterUserQuotedRecastsInput = FarcasterUserRepliesInput;
+export type FarcasterUserQuotedRecastsOutputData = FarcasterUserCastsOutputData;
+
+export type FarcasterUserQuotedRecastsOutput = IteratePaginationResponse<
+  (FarcasterUserRepliesOutputData | null)[] | null | undefined
+>;
+
+export type farcasterUserLikesInput = FarcasterUserRepliesInput;
+export type FarcasterUserLikesOutputData = FarcasterUserCastsOutputData;
+
+export type FarcasterUserLikesOutput = IteratePaginationResponse<
+  (FarcasterUserRepliesOutputData | null)[] | null | undefined
+>;

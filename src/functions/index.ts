@@ -30,3 +30,7 @@ export * from "./checkNumberOfFarcasterFollowers";
 export * from "./getTrendingSwaps";
 export * from "./getFarcasterUserCasts";
 export * from "./getFarcasterChannelFollowers";
+export * from "./getFarcasterUserReplies";
+export * from "./getFarcasterUserRecasts";
+export * from "./getFarcasterUserQuotedRecasts";
+export * from "./getFarcasterUserLikes";

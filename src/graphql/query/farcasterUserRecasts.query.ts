@@ -1,10 +1,10 @@
 export const farcasterUserRecasts = /* GraphQL */ `
-  query FarcasterUserRecasts($identity: Identity!) {
+  query FarcasterUserRecasts($identity: Identity!, $limit: Int! = 200) {
     FarcasterReactions(
       input: {
         filter: { criteria: recasted, reactedBy: { _eq: $identity } }
         blockchain: ALL
-        limit: 200
+        limit: $limit
       }
     ) {
       Reaction {

@@ -2156,13 +2156,6 @@ export type XmtPsOutput = {
   pageInfo: Maybe<PageInfo>;
 };
 
-export type FarcasterUserLikesQueryVariables = Exact<{
-  identity: Scalars['Identity']['input'];
-}>;
-
-
-export type FarcasterUserLikesQuery = { FarcasterReactions: { Reaction: Array<{ cast: { hash: string | null, castedAtTimestamp: any | null, embeds: Array<any | null> | null, url: string | null, text: string | null, numberOfRecasts: number | null, numberOfLikes: number | null, numberOfReplies: number | null, channel: { channelId: string } | null, mentions: Array<{ fid: string | null, position: number | null }> | null, frame: { frameHash: string | null, frameUrl: string | null } | null } | null }> | null } | null };
-
 export type CheckIsFollowedByFarcasterUserQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
   isFollowedBy: InputMaybe<Array<Scalars['Identity']['input']> | Scalars['Identity']['input']>;
@@ -2249,6 +2242,14 @@ export type FarcasterUserDetailsQueryVariables = Exact<{
 
 export type FarcasterUserDetailsQuery = { Socials: { Social: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, custodyAddress: any | null, profileImageContentValue: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null } | null };
 
+export type FarcasterUserLikesQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+  limit?: Scalars['Int']['input'];
+}>;
+
+
+export type FarcasterUserLikesQuery = { FarcasterReactions: { Reaction: Array<{ cast: { hash: string | null, castedAtTimestamp: any | null, embeds: Array<any | null> | null, url: string | null, text: string | null, numberOfRecasts: number | null, numberOfLikes: number | null, numberOfReplies: number | null, channel: { channelId: string } | null, mentions: Array<{ fid: string | null, position: number | null }> | null, frame: { frameHash: string | null, frameUrl: string | null } | null } | null }> | null } | null };
+
 export type FarcasterUserPoaPsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2259,6 +2260,7 @@ export type FarcasterUserPoaPsQuery = { Poaps: { Poap: Array<{ poapEvent: { even
 
 export type FarcasterUserQuotedRecastsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
+  limit?: Scalars['Int']['input'];
 }>;
 
 
@@ -2266,6 +2268,7 @@ export type FarcasterUserQuotedRecastsQuery = { FarcasterQuotedRecasts: { Quoted
 
 export type FarcasterUserRecastsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
+  limit?: Scalars['Int']['input'];
 }>;
 
 
@@ -2273,6 +2276,7 @@ export type FarcasterUserRecastsQuery = { FarcasterReactions: { Reaction: Array<
 
 export type FarcasterUserRepliesQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
+  limit?: Scalars['Int']['input'];
 }>;
 
 

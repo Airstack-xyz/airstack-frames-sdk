@@ -1,10 +1,10 @@
 export const farcasterUserQuotedRecasts = /* GraphQL */ `
-  query FarcasterUserQuotedRecasts($identity: Identity!) {
+  query FarcasterUserQuotedRecasts($identity: Identity!, $limit: Int! = 200) {
     FarcasterQuotedRecasts(
       input: {
         filter: { recastedBy: { _eq: $identity } }
         blockchain: ALL
-        limit: 200
+        limit: $limit
       }
     ) {
       QuotedRecast {

@@ -1,10 +1,10 @@
 export const farcasterUserReplies = /* GraphQL */ `
-  query FarcasterUserReplies($identity: Identity!) {
+  query FarcasterUserReplies($identity: Identity!, $limit: Int! = 200) {
     FarcasterReplies(
       input: {
         filter: { repliedBy: { _eq: $identity } }
         blockchain: ALL
-        limit: 200
+        limit: $limit
       }
     ) {
       Reply {
