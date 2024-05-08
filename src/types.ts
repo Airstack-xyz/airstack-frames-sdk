@@ -2685,3 +2685,15 @@ export type FarcasterUserCastsQuery = {
     }> | null;
   } | null;
 };
+
+export interface FarcasterChannelFollowersInput {
+  channel: string;
+  limit?: number;
+  lastActionTimestamp?: {
+    before?: any;
+    after?: any;
+  };
+}
+
+export type FarcasterChannelFollowersOutput =
+  FarcasterChannelParticipantsOutput;

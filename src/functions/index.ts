@@ -29,3 +29,4 @@ export * from "./validateCaptchaChallenge";
 export * from "./checkNumberOfFarcasterFollowers";
 export * from "./getTrendingSwaps";
 export * from "./getFarcasterUserCasts";
+export * from "./getFarcasterChannelFollowers";
