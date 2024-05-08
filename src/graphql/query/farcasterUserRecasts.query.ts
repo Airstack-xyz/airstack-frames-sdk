@@ -1,8 +1,8 @@
-export const farcasterUserLikes = /* GraphQL */ `
-  query FarcasterUserLikes($identity: Identity!) {
+export const farcasterUserRecasts = /* GraphQL */ `
+  query FarcasterUserRecasts($identity: Identity!) {
     FarcasterReactions(
       input: {
-        filter: { criteria: liked, reactedBy: { _eq: $identity } }
+        filter: { criteria: recasted, reactedBy: { _eq: $identity } }
         blockchain: ALL
         limit: 200
       }

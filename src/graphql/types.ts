@@ -2156,6 +2156,13 @@ export type XmtPsOutput = {
   pageInfo: Maybe<PageInfo>;
 };
 
+export type FarcasterUserLikesQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+}>;
+
+
+export type FarcasterUserLikesQuery = { FarcasterReactions: { Reaction: Array<{ cast: { hash: string | null, castedAtTimestamp: any | null, embeds: Array<any | null> | null, url: string | null, text: string | null, numberOfRecasts: number | null, numberOfLikes: number | null, numberOfReplies: number | null, channel: { channelId: string } | null, mentions: Array<{ fid: string | null, position: number | null }> | null, frame: { frameHash: string | null, frameUrl: string | null } | null } | null }> | null } | null };
+
 export type CheckIsFollowedByFarcasterUserQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
   isFollowedBy: InputMaybe<Array<Scalars['Identity']['input']> | Scalars['Identity']['input']>;
@@ -2249,6 +2256,27 @@ export type FarcasterUserPoaPsQueryVariables = Exact<{
 
 
 export type FarcasterUserPoaPsQuery = { Poaps: { Poap: Array<{ poapEvent: { eventName: string | null, eventId: string | null, eventURL: string | null, isVirtualEvent: boolean | null, startDate: any | null, endDate: any | null, city: string | null } | null }> | null } | null };
+
+export type FarcasterUserQuotedRecastsQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+}>;
+
+
+export type FarcasterUserQuotedRecastsQuery = { FarcasterQuotedRecasts: { QuotedRecast: Array<{ hash: string | null, castedAtTimestamp: any | null, embeds: Array<any | null> | null, url: string | null, text: string | null, numberOfRecasts: number | null, numberOfLikes: number | null, numberOfReplies: number | null, channel: { channelId: string } | null, mentions: Array<{ fid: string | null, position: number | null }> | null, frame: { frameHash: string | null, frameUrl: string | null } | null }> | null } | null };
+
+export type FarcasterUserRecastsQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+}>;
+
+
+export type FarcasterUserRecastsQuery = { FarcasterReactions: { Reaction: Array<{ cast: { hash: string | null, castedAtTimestamp: any | null, embeds: Array<any | null> | null, url: string | null, text: string | null, numberOfRecasts: number | null, numberOfLikes: number | null, numberOfReplies: number | null, channel: { channelId: string } | null, mentions: Array<{ fid: string | null, position: number | null }> | null, frame: { frameHash: string | null, frameUrl: string | null } | null } | null }> | null } | null };
+
+export type FarcasterUserRepliesQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+}>;
+
+
+export type FarcasterUserRepliesQuery = { FarcasterReplies: { Reply: Array<{ hash: string | null, castedAtTimestamp: any | null, embeds: Array<any | null> | null, url: string | null, text: string | null, numberOfRecasts: number | null, numberOfLikes: number | null, numberOfReplies: number | null, channel: { channelId: string } | null, mentions: Array<{ fid: string | null, position: number | null }> | null, frame: { frameHash: string | null, frameUrl: string | null } | null }> | null } | null };
 
 export type NumberOfFarcasterFollowersQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
