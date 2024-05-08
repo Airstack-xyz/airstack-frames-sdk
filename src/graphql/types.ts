@@ -2185,7 +2185,7 @@ export type FarcasterChannelDetailsQueryVariables = Exact<{
 }>;
 
 
-export type FarcasterChannelDetailsQuery = { FarcasterChannels: { FarcasterChannel: Array<{ name: string, description: string, imageUrl: string, createdAtTimestamp: any, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null }> | null }> | null } | null };
+export type FarcasterChannelDetailsQuery = { FarcasterChannels: { FarcasterChannel: Array<{ name: string, description: string, imageUrl: string, createdAtTimestamp: any, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, custodyAddress: any | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null }> | null } | null };
 
 export type FarcasterChannelParticipantsQueryVariables = Exact<{
   actionType?: InputMaybe<Array<FarcasterChannelActionType> | FarcasterChannelActionType>;
