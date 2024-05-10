@@ -2715,21 +2715,21 @@ export type FarcasterUserRepliesOutput = IteratePaginationResponse<
   (FarcasterUserRepliesOutputData | null)[] | null | undefined
 >;
 
-export type farcasterUserRecastsInput = FarcasterUserRepliesInput;
+export type FarcasterUserRecastsInput = FarcasterUserRepliesInput;
 export type FarcasterUserRecastsOutputData = FarcasterUserCastsOutputData;
 
 export type FarcasterUserRecastsOutput = IteratePaginationResponse<
   (FarcasterUserRepliesOutputData | null)[] | null | undefined
 >;
 
-export type farcasterUserQuotedRecastsInput = FarcasterUserRepliesInput;
+export type FarcasterUserQuotedRecastsInput = FarcasterUserRepliesInput;
 export type FarcasterUserQuotedRecastsOutputData = FarcasterUserCastsOutputData;
 
 export type FarcasterUserQuotedRecastsOutput = IteratePaginationResponse<
   (FarcasterUserRepliesOutputData | null)[] | null | undefined
 >;
 
-export type farcasterUserLikesInput = FarcasterUserRepliesInput;
+export type FarcasterUserLikesInput = FarcasterUserRepliesInput;
 export type FarcasterUserLikesOutputData = FarcasterUserCastsOutputData;
 
 export type FarcasterUserLikesOutput = IteratePaginationResponse<

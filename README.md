@@ -33,6 +33,10 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`getFarcasterFollowers`](#getfarcasterfollowers)
   - [`getFarcasterFollowings`](#getfarcasterfollowings)
   - [`getFarcasterUserCasts`](#getfarcasterusercasts)
+  - [`getFarcasterUserReplies`](#getfarcasteruserreplies)
+  - [`getFarcasterUserRecasts`](#getfarcasteruserrecasts)
+  - [`getFarcasterUserQuotedRecasts`](#getfarcasteruserquotedrecasts)
+  - [`getFarcasterUserLikes`](#getfarcasteruserlikes)
   - [`getFarcasterUserPoaps`](#getfarcasteruserpoaps)
   - [`getFarcasterUserERC20Balances`](#getfarcasterusererc20balances)
   - [`getFarcasterUserNFTBalances`](#getfarcasterusernftbalances)
@@ -690,7 +694,6 @@ Fetch all casts of a Farcaster user. You can also filter it further by fetching 
 
 ```ts
 import {
-  init,
   getFarcasterUserCasts,
   FarcasterUserCastsInput,
   FarcasterUserCastsOutput,
@@ -735,6 +738,215 @@ console.log(data);
       "frameHash": "0xbbd09a3a2c6b96eff53d9ad622b5637374bd2ec7b9c706fd8c908a6bc1a6bdc0",
       "frameUrl": "https://share.airstack.xyz/s/gf"
     }
+  }
+]
+```
+
+### `getFarcasterUserReplies`
+
+Fetch all replies of a Farcaster user in descending timestamp order.
+
+**Input**
+
+| Field   | Type     | Required | Description                                                                                           |
+| ------- | -------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `fid`   | `number` | true     | FID of a Farcaster user                                                                               |
+| `limit` | `number` | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  FarcasterUserRepliesInput,
+  FarcasterUserRepliesOutput,
+  getFarcasterUserReplies,
+} from "@airstack/frames";
+
+const input: FarcasterUserRepliesInput = {
+  fid: 1,
+  limit: 200,
+};
+const { data, error }: FarcasterUserRepliesOutput =
+  await getFarcasterUserReplies(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "castHash": "0xc63982f4e05a8c055d85631a91472d501e420250",
+    "castedAtTimestamp": "2022-12-20T20:29:00Z",
+    "castUrl": "https://warpcast.com/farcaster/0xc63982f4",
+    "embeds": [],
+    "text": "another testy test",
+    "numberOfRecasts": 41,
+    "numberOfLikes": 131,
+    "numberOfReplies": 12,
+    "channel": "fc-dev",
+    "mentions": [],
+    "frame": null
+  }
+]
+```
+
+### `getFarcasterUserRecasts`
+
+Fetch all recasts of a Farcaster user in descending timestamp order.
+
+**Input**
+
+| Field   | Type     | Required | Description                                                                                           |
+| ------- | -------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `fid`   | `number` | true     | FID of a Farcaster user                                                                               |
+| `limit` | `number` | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  FarcasterUserRecastsInput,
+  FarcasterUserRecastsOutput,
+  getFarcasterUserRecasts,
+} from "@airstack/frames";
+
+const input: FarcasterUserRecastsInput = {
+  fid: 602,
+  limit: 200,
+};
+const { data, error }: FarcasterUserRecastsOutput =
+  await getFarcasterUserRecasts(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "castHash": "0xfb5d70a65059fcee6a8bcf8c35731b449ecf328c",
+    "castedAtTimestamp": "2024-03-22T22:00:08Z",
+    "castUrl": "https://warpcast.com/betashop.eth/0xfb5d70a6",
+    "embeds": [],
+    "text": "🚀 launch: Airstack Farcaster Frame Validator 1.0.1\n",
+    "numberOfRecasts": 26,
+    "numberOfLikes": 75,
+    "numberOfReplies": 9,
+    "channel": "fc-devs",
+    "mentions": [],
+    "frame": null
+  }
+]
+```
+
+### `getFarcasterUserQuotedRecasts`
+
+Fetch all quoted recasts of a Farcaster user in descending timestamp order.
+
+**Input**
+
+| Field   | Type     | Required | Description                                                                                           |
+| ------- | -------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `fid`   | `number` | true     | FID of a Farcaster user                                                                               |
+| `limit` | `number` | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  FarcasterUserQuotedRecastsInput,
+  FarcasterUserQuotedRecastsOutput,
+  getFarcasterUserQuotedRecasts,
+} from "@airstack/frames";
+
+const input: FarcasterUserQuotedRecastsInput = {
+  fid: 602,
+  limit: 200,
+};
+const { data, error }: FarcasterUserQuotedRecastsOutput =
+  await getFarcasterUserQuotedRecasts(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "castHash": "0x5b08dd51fe7ba6c5645dfda9e1c2dffb99ae38fd",
+    "castedAtTimestamp": "2024-05-08T15:37:20Z",
+    "castUrl": "https://warpcast.com/betashop.eth/0x5b08dd51",
+    "embeds": [],
+    "text": "build great frames = get free analytics and rewards from Airstack",
+    "numberOfRecasts": 6,
+    "numberOfLikes": 39,
+    "numberOfReplies": 3,
+    "channel": "airstack",
+    "mentions": [],
+    "frame": null
+  }
+]
+```
+
+### `getFarcasterUserLikes`
+
+Fetch all casts liked by a Farcaster user in descending timestamp order.
+
+**Input**
+
+| Field   | Type     | Required | Description                                                                                           |
+| ------- | -------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `fid`   | `number` | true     | FID of a Farcaster user                                                                               |
+| `limit` | `number` | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
+
+**Code Sample**
+
+```ts
+import {
+  FarcasterUserLikesInput,
+  FarcasterUserLikesOutput,
+  getFarcasterUserLikes,
+} from "@airstack/frames";
+
+const input: FarcasterUserLikesInput = {
+  fid: 602,
+  limit: 200,
+};
+const { data, error }: FarcasterUserLikesOutput = await getFarcasterUserLikes(
+  input
+);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "castHash": "0xf94e79d8b812a3a9a127444515b17d83ee31d09a",
+    "castedAtTimestamp": "2024-05-07T20:52:29Z",
+    "castUrl": "https://warpcast.com/0xhuangkuan/0xf94e79d8",
+    "embeds": [],
+    "text": "I like the strategy",
+    "numberOfRecasts": 0,
+    "numberOfLikes": 1,
+    "numberOfReplies": 0,
+    "channel": "fc-devs",
+    "mentions": [],
+    "frame": null
   }
 ]
 ```

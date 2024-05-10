@@ -4,7 +4,7 @@ import { iteratePagination } from "../utils/iteratePagination";
 import {
   FarcasterUserQuotedRecastsOutput,
   FarcasterUserQuotedRecastsOutputData,
-  farcasterUserQuotedRecastsInput,
+  FarcasterUserQuotedRecastsInput,
 } from "../types";
 import {
   FarcasterUserQuotedRecastsQuery,
@@ -24,7 +24,7 @@ import { formatFarcasterUserQuotedRecasts } from "../utils/formatFarcasterUserQu
  * @returns An array of Farcaster quoted recasts casted by a Farcaster user
  */
 export async function getFarcasterUserQuotedRecasts(
-  input: farcasterUserQuotedRecastsInput
+  input: FarcasterUserQuotedRecastsInput
 ): Promise<FarcasterUserQuotedRecastsOutput> {
   const { fid, limit } = input ?? {};
   const variable: FarcasterUserQuotedRecastsQueryVariables = {

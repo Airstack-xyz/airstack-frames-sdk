@@ -1,10 +1,10 @@
 import { fetchQueryWithPagination } from "@airstack/node";
-import { farcasterUserRecasts as query } from "../graphql/query/farcasterUserRecasts.query";
+import { farcasterUserLikes as query } from "../graphql/query/farcasterUserLikes.query";
 import { iteratePagination } from "../utils/iteratePagination";
 import {
   FarcasterUserLikesOutput,
   FarcasterUserLikesOutputData,
-  farcasterUserLikesInput,
+  FarcasterUserLikesInput,
 } from "../types";
 import {
   FarcasterUserLikesQuery,
@@ -24,7 +24,7 @@ import { formatFarcasterUserLikes } from "../utils/formatFarcasterUserLikes";
  * @returns An array of Farcaster casts liked by a Farcaster user
  */
 export async function getFarcasterUserLikes(
-  input: farcasterUserLikesInput
+  input: FarcasterUserLikesInput
 ): Promise<FarcasterUserLikesOutput> {
   const { fid, limit } = input ?? {};
   const variable: FarcasterUserLikesQueryVariables = {
