@@ -3,7 +3,7 @@ import { FarcasterUserErc20MintsQuery } from "../types";
 export function formatFarcasterUserERC20Mints(
   data: FarcasterUserErc20MintsQuery
 ) {
-  const { ethereum, base, zora, gold, degen } = data ?? {};
+  const { ethereum, base, zora, gold, degen, ham } = data ?? {};
   return [
     ...(ethereum?.TokenTransfer?.map(
       ({
@@ -98,6 +98,29 @@ export function formatFarcasterUserERC20Mints(
       }
     ) ?? []),
     ...(degen?.TokenTransfer?.map(
+      ({
+        blockchain,
+        tokenAddress,
+        formattedAmount: amount,
+        amount: amountInWei,
+        token,
+        blockTimestamp,
+        blockNumber,
+      }) => {
+        const { name, symbol } = token ?? {};
+        return {
+          blockchain,
+          tokenAddress,
+          amount,
+          amountInWei,
+          name,
+          symbol,
+          blockTimestamp,
+          blockNumber,
+        };
+      }
+    ) ?? []),
+    ...(ham?.TokenTransfer?.map(
       ({
         blockchain,
         tokenAddress,

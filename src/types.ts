@@ -382,6 +382,15 @@ export type FarcasterErc20BalancesQuery = {
       token: { name: string | null; symbol: string | null } | null;
     }> | null;
   } | null;
+  ham?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
 };
 
 export type FarcasterUserErc20MintsQueryVariables = Exact<{
@@ -439,6 +448,18 @@ export type FarcasterUserErc20MintsQuery = {
     }> | null;
   } | null;
   degen?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      formattedAmount: number | null;
+      amount: string | null;
+      tokenAddress: any | null;
+      blockNumber: number | null;
+      blockTimestamp: any | null;
+      transactionHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+    }> | null;
+  } | null;
+  ham?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       formattedAmount: number | null;
@@ -654,6 +675,44 @@ export type FarcasterNftBalancesQuery = {
       } | null;
     }> | null;
   } | null;
+  ham?: {
+    TokenBalance: Array<{
+      tokenType: TokenType | null;
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      tokenId: string;
+      formattedAmount: number | null;
+      amount: string;
+      token: { name: string | null; symbol: string | null } | null;
+      tokenNfts: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
 };
 
 export type FarcasterUserNftMintsQueryVariables = Exact<{
@@ -828,6 +887,47 @@ export type FarcasterUserNftMintsQuery = {
     }> | null;
   } | null;
   degen?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: NFTType | null;
+      formattedAmount: number | null;
+      amount: string | null;
+      tokenAddress: any | null;
+      tokenId: string;
+      blockNumber: number | null;
+      blockTimestamp: any | null;
+      transactionHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
+  ham?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       tokenType: NFTType | null;
@@ -1157,6 +1257,51 @@ export type FarcasterUserTokenSentFromQuery = {
       } | null;
     }> | null;
   } | null;
+  ham?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      receiver: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
 };
 
 export enum TokenType {
@@ -1397,6 +1542,51 @@ export type FarcasterUserTokenReceivedByQuery = {
       } | null;
     }> | null;
   } | null;
+  ham?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      blockTimestamp: any | null;
+      blockNumber: number | null;
+      tokenAddress: any | null;
+      tokenId: string | null;
+      tokenType: TokenType | null;
+      amountInWei: string | null;
+      amount: number | null;
+      txHash: string;
+      token: { name: string | null; symbol: string | null } | null;
+      sender: {
+        addresses: Array<any> | null;
+        socials: Array<{ fid: string | null }> | null;
+      } | null;
+      tokenNft: {
+        contentValue: {
+          image: {
+            extraSmall: string | null;
+            small: string | null;
+            medium: string | null;
+            large: string | null;
+            original: string | null;
+          } | null;
+        } | null;
+        metaData: {
+          name: string | null;
+          description: string | null;
+          image: string | null;
+          imageData: string | null;
+          externalUrl: string | null;
+          animationUrl: string | null;
+          youtubeUrl: string | null;
+          backgroundColor: string | null;
+          attributes: Array<{
+            displayType: string | null;
+            maxValue: string | null;
+            trait_type: string | null;
+            value: string | null;
+          }> | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | null;
 };
 
 export interface FarcasterUserTokenReceivedByInput {
@@ -1503,6 +1693,13 @@ export type CheckTokenHoldByFarcasterUserQuery = {
       amount: string;
     }> | null;
   } | null;
+  ham?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
 };
 
 export interface CheckTokenHoldByFarcasterUserInput {
@@ -1571,6 +1768,14 @@ export type CheckTokenMintedByFarcasterUserQuery = {
     }> | null;
   } | null;
   degen?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: TokenType | null;
+      formattedAmount: number | null;
+      tokenAddress: any | null;
+    }> | null;
+  } | null;
+  ham?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       tokenType: TokenType | null;
@@ -1926,6 +2131,9 @@ export type CreateAllowListQueryVariables = Exact<{
   degenTokens?: InputMaybe<
     Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
   >;
+  hamTokens?: InputMaybe<
+    Array<Scalars["Address"]["input"]> | Scalars["Address"]["input"]
+  >;
 }>;
 
 export type CreateAllowListQuery = {
@@ -1971,6 +2179,13 @@ export type CreateAllowListQuery = {
     }> | null;
   } | null;
   degen: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  ham: {
     TokenBalance: Array<{
       blockchain: TokenBlockchain | null;
       tokenAddress: any;

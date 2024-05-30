@@ -331,10 +331,8 @@ export type FarcasterCast = {
   parentCast: Maybe<FarcasterCast>;
   parentFid: Maybe<Scalars['String']['output']>;
   parentHash: Maybe<Scalars['String']['output']>;
-  parentUrl: Maybe<Scalars['String']['output']>;
-  quotedCast: Maybe<FarcasterCast>;
+  quotedCast: Maybe<Array<Maybe<FarcasterCast>>>;
   rawText: Maybe<Scalars['String']['output']>;
-  rootParentHash: Maybe<Scalars['String']['output']>;
   rootParentUrl: Maybe<Scalars['String']['output']>;
   socialCapitalValue: Maybe<SocialCapitalValue>;
   text: Maybe<Scalars['String']['output']>;
@@ -349,6 +347,7 @@ export type FarcasterCastFilter = {
   hasFrames: InputMaybe<Boolean_Comparator_Exp>;
   hasMentions: InputMaybe<Boolean_Comparator_Exp>;
   hash: InputMaybe<String_Eq_In_Comparator_Exp>;
+  rootParentUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
   url: InputMaybe<String_Eq_In_Comparator_Exp>;
 };
 
@@ -371,25 +370,26 @@ export type FarcasterChannel = {
   dappSlug: Scalars['String']['output'];
   description: Scalars['String']['output'];
   followerCount: Maybe<Scalars['Int']['output']>;
-  hostIds: Maybe<Array<Scalars['String']['output']>>;
-  hostProfiles: Maybe<Array<Social>>;
   /** Airstack unique identifier for the data point */
   id: Scalars['ID']['output'];
   imageUrl: Scalars['String']['output'];
+  isModerationEnabled: Maybe<Scalars['Boolean']['output']>;
   leadIds: Maybe<Array<Scalars['String']['output']>>;
   leadProfiles: Maybe<Array<Social>>;
+  moderatorIds: Maybe<Array<Scalars['String']['output']>>;
+  moderatorProfiles: Maybe<Array<Social>>;
   name: Scalars['String']['output'];
   participants: Maybe<Array<FarcasterChannelParticipant>>;
   url: Scalars['String']['output'];
 };
 
 
-export type FarcasterChannelHostProfilesArgs = {
+export type FarcasterChannelLeadProfilesArgs = {
   input: InputMaybe<SocialsNestedInput>;
 };
 
 
-export type FarcasterChannelLeadProfilesArgs = {
+export type FarcasterChannelModeratorProfilesArgs = {
   input: InputMaybe<SocialsNestedInput>;
 };
 
@@ -412,10 +412,10 @@ export type FarcasterChannelActionType_Comparator_Exp = {
 export type FarcasterChannelFilter = {
   channelId: InputMaybe<String_Comparator_Exp>;
   createdAtTimestamp: InputMaybe<Time_Comparator_Exp>;
-  hostId: InputMaybe<String_Comparator_Exp>;
-  hostIdentity: InputMaybe<Identity_Comparator_Exp>;
   leadId: InputMaybe<String_Comparator_Exp>;
   leadIdentity: InputMaybe<Identity_Comparator_Exp>;
+  moderatorId: InputMaybe<String_Comparator_Exp>;
+  moderatorIdentity: InputMaybe<Identity_Comparator_Exp>;
   name: InputMaybe<Regex_String_Comparator_Exp>;
 };
 
@@ -432,7 +432,7 @@ export type FarcasterChannelOrderBy = {
 };
 
 export type FarcasterChannelParticipant = {
-  channel: FarcasterChannel;
+  channel: Maybe<FarcasterChannel>;
   channelActions: Maybe<Array<FarcasterChannelActionType>>;
   channelId: Scalars['String']['output'];
   channelName: Scalars['String']['output'];
@@ -508,7 +508,6 @@ export type FarcasterFrame = {
   castedAtTimestamp: Maybe<Scalars['Time']['output']>;
   frameHash: Maybe<Scalars['String']['output']>;
   frameUrl: Maybe<Scalars['String']['output']>;
-  id: Maybe<Scalars['String']['output']>;
   imageAspectRatio: Maybe<Scalars['String']['output']>;
   imageUrl: Maybe<Scalars['String']['output']>;
   inputText: Maybe<Scalars['String']['output']>;
@@ -569,6 +568,7 @@ export enum FarcasterReactionCriteria {
 export type FarcasterReactionsFilter = {
   castHash: InputMaybe<String_Eq_In_Comparator_Exp>;
   castUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
+  channelId: InputMaybe<String_Comparator_Exp>;
   criteria: FarcasterReactionCriteria;
   frameUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
   reactedBy: InputMaybe<Identity_Comparator_Exp>;
@@ -588,6 +588,7 @@ export type FarcasterReactionsOutput = {
 };
 
 export type FarcasterRepliesFilter = {
+  hash: InputMaybe<String_Eq_In_Comparator_Exp>;
   parentCastedBy: InputMaybe<Identity_Comparator_Exp>;
   parentHash: InputMaybe<String_Eq_In_Comparator_Exp>;
   parentUrl: InputMaybe<String_Eq_In_Comparator_Exp>;
@@ -716,6 +717,52 @@ export type Mentions = {
   fid: Maybe<Scalars['String']['output']>;
   position: Maybe<Scalars['Int']['output']>;
   profile: Maybe<Social>;
+};
+
+export type NativeBalance = {
+  /** Token amount the address currently holds */
+  amount: Scalars['String']['output'];
+  /** Blockchain where the token smart contract is deployed */
+  blockchain: Maybe<NativeBalanceBlockchain>;
+  /** Unique identifier for the blockchain */
+  chainId: Scalars['String']['output'];
+  /** Formatted token balance in decimals */
+  formattedAmount: Maybe<Scalars['Float']['output']>;
+  /** Airstack unique identifier for the data point */
+  id: Scalars['ID']['output'];
+  /** Block number of the latest token balance change happened */
+  lastUpdatedBlock: Scalars['Int']['output'];
+  /** Timestamp of the latest token balance change happened */
+  lastUpdatedTimestamp: Maybe<Scalars['Time']['output']>;
+  /** Nested Query allowing to retrieve address, domain names, social profiles of the owner */
+  owner: Wallet;
+};
+
+export enum NativeBalanceBlockchain {
+  Degen = 'degen'
+}
+
+export type NativeBalanceFilter = {
+  formattedAmount: InputMaybe<Float_Comparator_Exp>;
+  lastUpdatedTimestamp: InputMaybe<Time_Comparator_Exp>;
+  owner: InputMaybe<Identity_Comparator_Exp>;
+};
+
+export type NativeBalanceOrderBy = {
+  lastUpdatedTimestamp: InputMaybe<OrderBy>;
+};
+
+export type NativeBalancesInput = {
+  blockchain: NativeBalanceBlockchain;
+  cursor: InputMaybe<Scalars['String']['input']>;
+  filter: NativeBalanceFilter;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  order: InputMaybe<Array<NativeBalanceOrderBy>>;
+};
+
+export type NativeBalancesOutput = {
+  NativeBalance: Maybe<Array<NativeBalance>>;
+  pageInfo: Maybe<PageInfo>;
 };
 
 export type NftAttribute = {
@@ -1272,6 +1319,7 @@ export type Social = {
   profileTokenIdHex: Maybe<Scalars['String']['output']>;
   profileTokenUri: Maybe<Scalars['String']['output']>;
   profileUrl: Maybe<Scalars['String']['output']>;
+  socialCapital: Maybe<SocialCapital>;
   twitterUserName: Maybe<Scalars['String']['output']>;
   updatedAt: Maybe<Scalars['Time']['output']>;
   userAddress: Maybe<Scalars['Address']['output']>;
@@ -1299,6 +1347,12 @@ export type SocialFollowingsArgs = {
   input: InputMaybe<SocialFollowingNestedInput>;
 };
 
+export type SocialCapital = {
+  socialCapitalRank: Maybe<Scalars['Int']['output']>;
+  socialCapitalScore: Maybe<Scalars['Float']['output']>;
+  socialCapitalScoreRaw: Maybe<Scalars['String']['output']>;
+};
+
 export type SocialCapitalValue = {
   formattedValue: Maybe<Scalars['Float']['output']>;
   hash: Maybe<Scalars['String']['output']>;
@@ -1319,6 +1373,7 @@ export enum SocialDappSlug {
   FarcasterGoerli = 'farcaster_goerli',
   FarcasterOptimism = 'farcaster_optimism',
   FarcasterV2Optimism = 'farcaster_v2_optimism',
+  FarcasterV3Optimism = 'farcaster_v3_optimism',
   LensPolygon = 'lens_polygon',
   LensV2Polygon = 'lens_v2_polygon'
 }
@@ -1337,6 +1392,8 @@ export type SocialFilter = {
   isDefault: InputMaybe<Boolean_Comparator_Exp>;
   profileCreatedAtBlockTimestamp: InputMaybe<Time_Comparator_Exp>;
   profileName: InputMaybe<Regex_String_Comparator_Exp>;
+  socialCapitalRank: InputMaybe<Int_Comparator_Exp>;
+  socialCapitalScore: InputMaybe<Float_Comparator_Exp>;
   updatedAt: InputMaybe<Time_Comparator_Exp>;
   userAssociatedAddresses: InputMaybe<Address_Comparator_Exp>;
   userId: InputMaybe<String_Comparator_Exp>;
@@ -1444,6 +1501,8 @@ export type SocialOrderBy = {
   followerCount: InputMaybe<OrderBy>;
   followingCount: InputMaybe<OrderBy>;
   profileCreatedAtBlockTimestamp: InputMaybe<OrderBy>;
+  socialCapitalRank: InputMaybe<OrderBy>;
+  socialCapitalScore: InputMaybe<OrderBy>;
   updatedAt: InputMaybe<OrderBy>;
 };
 
@@ -1643,6 +1702,7 @@ export enum TokenBlockchain {
   Degen = 'degen',
   Ethereum = 'ethereum',
   Gold = 'gold',
+  Ham = 'ham',
   Zora = 'zora'
 }
 
@@ -1733,7 +1793,7 @@ export type TokenNftsNestedInput = {
   blockchain: InputMaybe<TokenBlockchain>;
   filter: InputMaybe<TokenNftFilter>;
   limit: InputMaybe<Scalars['Int']['input']>;
-  order: InputMaybe<Array<TokenNftOrderBy>>;
+  order: InputMaybe<Array<InputMaybe<TokenNftOrderBy>>>;
 };
 
 export type TokenNftsOutput = {
@@ -1854,19 +1914,28 @@ export type TokensOutput = {
 };
 
 export enum TrendingBlockchain {
-  Base = 'base'
+  Base = 'base',
+  Degen = 'degen'
 }
 
 export type TrendingCast = {
   cast: Maybe<FarcasterCast>;
+  channel: Maybe<FarcasterChannel>;
   criteria: Maybe<Scalars['String']['output']>;
   criteriaCount: Maybe<Scalars['Float']['output']>;
+  fid: Maybe<Scalars['Int']['output']>;
   hash: Maybe<Scalars['String']['output']>;
   id: Maybe<Scalars['String']['output']>;
+  rootParentUrl: Maybe<Scalars['String']['output']>;
   socialCapitalValueFormatted: Maybe<Scalars['Float']['output']>;
   socialCapitalValueRaw: Maybe<Scalars['String']['output']>;
   timeFrom: Maybe<Scalars['Time']['output']>;
   timeTo: Maybe<Scalars['Time']['output']>;
+};
+
+export type TrendingCastFilter = {
+  fid: InputMaybe<TrendingCast_Int_Comparator_Exp>;
+  rootParentUrl: InputMaybe<String_Eq_Comparator_Exp>;
 };
 
 export enum TrendingCastTimeFrame {
@@ -1880,6 +1949,10 @@ export enum TrendingCastTimeFrame {
   TwoHours = 'two_hours'
 }
 
+export type TrendingCast_Int_Comparator_Exp = {
+  _eq: InputMaybe<Scalars['Int']['input']>;
+};
+
 export enum TrendingCastsCriteria {
   Likes = 'likes',
   LikesRecastsReplies = 'likes_recasts_replies',
@@ -1892,6 +1965,7 @@ export type TrendingCastsInput = {
   blockchain: EveryBlockchain;
   criteria: TrendingCastsCriteria;
   cursor: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TrendingCastFilter>;
   limit: InputMaybe<Scalars['Int']['input']>;
   timeFrame: TrendingCastTimeFrame;
 };
@@ -2217,7 +2291,7 @@ export type FarcasterChannelsByParticipantQueryVariables = Exact<{
 }>;
 
 
-export type FarcasterChannelsByParticipantQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ channelId: string, channel: { name: string, description: string, imageUrl: string, createdAtTimestamp: any, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, custodyAddress: any | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null } }> | null } | null };
+export type FarcasterChannelsByParticipantQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ channelId: string, channel: { name: string, description: string, imageUrl: string, createdAtTimestamp: any, hosts: Array<{ profileName: string | null, fnames: Array<string | null> | null, userAssociatedAddresses: Array<any> | null, followerCount: number | null, followingCount: number | null, fid: string | null, custodyAddress: any | null, profileImage: { image: { extraSmall: string | null, small: string | null, medium: string | null, large: string | null, original: string | null } | null } | null, connectedAddresses: Array<{ address: any | null, blockchain: string | null, chainId: string | null, timestamp: any | null }> | null }> | null } | null }> | null } | null };
 
 export type FarcasterFollowersQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];

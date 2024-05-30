@@ -3,7 +3,7 @@ import { FarcasterErc20BalancesQuery } from "../types";
 export function formatFarcasterUserERC20Balances(
   data: FarcasterErc20BalancesQuery
 ) {
-  const { ethereum, base, zora, gold, degen } = data ?? {};
+  const { ethereum, base, zora, gold, degen, ham } = data ?? {};
   return [
     ...(ethereum?.TokenBalance?.map(
       ({
@@ -82,6 +82,25 @@ export function formatFarcasterUserERC20Balances(
       }
     ) ?? []),
     ...(degen?.TokenBalance?.map(
+      ({
+        blockchain,
+        tokenAddress,
+        formattedAmount: amount,
+        amount: amountInWei,
+        token,
+      }) => {
+        const { name, symbol } = token ?? {};
+        return {
+          blockchain,
+          tokenAddress,
+          amount,
+          amountInWei,
+          name,
+          symbol,
+        };
+      }
+    ) ?? []),
+    ...(ham?.TokenBalance?.map(
       ({
         blockchain,
         tokenAddress,

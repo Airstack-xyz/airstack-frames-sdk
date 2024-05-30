@@ -58,6 +58,10 @@ export async function createAllowList(
     tokens
       ?.filter((t) => t?.chain === TokenBlockchain.Degen)
       ?.map((t) => t?.tokenAddress) ?? [];
+  const hamTokens =
+    tokens
+      ?.filter((t) => t?.chain === TokenBlockchain.Ham)
+      ?.map((t) => t?.tokenAddress) ?? [];
   const variables: CreateAllowListQueryVariables = {
     fid: fid?.toString() ?? "1",
     identity: `fc_fid:${fid}`,
@@ -69,6 +73,7 @@ export async function createAllowList(
     zoraTokens,
     goldTokens,
     degenTokens,
+    hamTokens,
   };
   const chains = [
     ...(ethereumTokens?.length > 0 ? [TokenBlockchain.Ethereum] : []),
@@ -76,6 +81,7 @@ export async function createAllowList(
     ...(zoraTokens?.length > 0 ? [TokenBlockchain.Zora] : []),
     ...(goldTokens?.length > 0 ? [TokenBlockchain.Gold] : []),
     ...(degenTokens?.length > 0 ? [TokenBlockchain.Degen] : []),
+    ...(hamTokens?.length > 0 ? [TokenBlockchain.Ham] : []),
   ];
   const { data, error } = await fetchQuery(
     query(allowListCriteria, chains),
@@ -91,6 +97,7 @@ export async function createAllowList(
     zora,
     gold,
     degen,
+    ham,
   } = (data as CreateAllowListQuery) ?? {};
   // Check if user attended the listed POAPs
   const isPoapsAttended =
@@ -154,6 +161,14 @@ export async function createAllowList(
             chain,
             tokenAddress,
             isHold: (degen?.TokenBalance ?? [])?.some(
+              (t) => t?.tokenAddress === tokenAddress
+            ),
+          };
+        case TokenBlockchain.Ham:
+          return {
+            chain,
+            tokenAddress,
+            isHold: (ham?.TokenBalance ?? [])?.some(
               (t) => t?.tokenAddress === tokenAddress
             ),
           };

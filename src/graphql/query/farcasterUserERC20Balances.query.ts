@@ -7,6 +7,7 @@ export const farcasterUserERC20Balances = (
     TokenBlockchain.Zora,
     TokenBlockchain.Gold,
     TokenBlockchain.Degen,
+    TokenBlockchain.Ham,
   ]
 ) => {
   return (

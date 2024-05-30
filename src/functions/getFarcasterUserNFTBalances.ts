@@ -20,7 +20,7 @@ import {
  *  limit: 100,
  * });
  * @param {Number} input.fid Farcaster user FID
- * @param {Array<TokenBlockchain>} [input.chains=[TokenBlockchain.Ethereum, TokenBlockchain.Base, TokenBlockchain.Zora, TokenBlockchain.Gold, TokenBlockchain.Degen]] Array of chains to query
+ * @param {Array<TokenBlockchain>} [input.chains=[TokenBlockchain.Ethereum, TokenBlockchain.Base, TokenBlockchain.Zora, TokenBlockchain.Gold, TokenBlockchain.Degen, TokenBlockchain.Ham]] Array of chains to query
  * @param {Array<NFTType>} [input.tokenType=[NFTType.ERC721, NFTType.ERC1155]] Type of NFT, either ERC721 or ERC1155.
  * @param {Number} [input.limit=200] Number of JSON responses returned per API call. Maximum value is 200.
  * @returns An array of ERC721 and ERC1155 NFTs hold by Farcaster user

@@ -7,6 +7,7 @@ export const farcasterUserERC20Mints = (
     TokenBlockchain.Zora,
     TokenBlockchain.Gold,
     TokenBlockchain.Degen,
+    TokenBlockchain.Ham,
   ]
 ) =>
   /* GraphQL */ `

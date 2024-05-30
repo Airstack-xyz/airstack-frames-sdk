@@ -7,6 +7,7 @@ export const farcasterUserTokenSentFromQuery = (
     TokenBlockchain.Zora,
     TokenBlockchain.Gold,
     TokenBlockchain.Degen,
+    TokenBlockchain.Ham,
   ]
 ) =>
   /* GraphQL */ `
