@@ -2950,3 +2950,19 @@ export type FarcasterUserLikesOutputData = FarcasterUserCastsOutputData;
 export type FarcasterUserLikesOutput = IteratePaginationResponse<
   (FarcasterUserRepliesOutputData | null)[] | null | undefined
 >;
+
+export interface CheckChannelActionsByFarcasterUserInput {
+  fid: number;
+  channelActions: FarcasterChannelActionType[];
+  channelId: string;
+}
+
+export interface CheckChannelActionsByFarcasterUserOutput {
+  error: any;
+  data:
+    | {
+        channelAction: FarcasterChannelActionType;
+        isActionTaken: boolean;
+      }[]
+    | null;
+}

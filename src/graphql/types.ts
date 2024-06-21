@@ -417,6 +417,7 @@ export type FarcasterChannelFilter = {
   moderatorId: InputMaybe<String_Comparator_Exp>;
   moderatorIdentity: InputMaybe<Identity_Comparator_Exp>;
   name: InputMaybe<Regex_String_Comparator_Exp>;
+  url: InputMaybe<String_Comparator_Exp>;
 };
 
 export type FarcasterChannelNestedInput = {
@@ -2229,6 +2230,15 @@ export type XmtPsOutput = {
   XMTP: Maybe<Array<Xmtp>>;
   pageInfo: Maybe<PageInfo>;
 };
+
+export type CheckChannelActionsByFarcasterUserQueryVariables = Exact<{
+  channelActions: InputMaybe<Array<FarcasterChannelActionType> | FarcasterChannelActionType>;
+  identity: InputMaybe<Scalars['Identity']['input']>;
+  channelId: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CheckChannelActionsByFarcasterUserQuery = { FarcasterChannelParticipants: { FarcasterChannelParticipant: Array<{ channelActions: Array<FarcasterChannelActionType> | null }> | null } | null };
 
 export type CheckIsFollowedByFarcasterUserQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];

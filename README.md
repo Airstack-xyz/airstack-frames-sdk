@@ -50,6 +50,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`getFarcasterChannelsByHost`](#getfarcasterchannelsbyhost)
   - [`searchFarcasterChannels`](#searchfarcasterchannels)
   - [`searchFarcasterUsers`](#searchfarcasterusers)
+  - [`checkChannelActionsByFarcasterUser`](#checkchannelactionsbyfarcasteruser)
   - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
   - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
   - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
@@ -1895,6 +1896,55 @@ console.log(data);
       "original": "https://assets.airstack.xyz/image/social/u/+rRF4VjBM2b96BzHIZBcRKdFQ3MzIbCkEp6TV3KlQ=/original_image.jpg"
     }
   }
+]
+```
+
+### `checkChannelActionsByFarcasterUser`
+
+Check If a Farcaster user of a given FID has attended a list of POAP events.
+
+**Input**
+
+| Field            | Type                                                          | Required | Description                                                                       |
+| ---------------- | ------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------- |
+| `fid`            | `string`                                                      | true     | FID of a Farcaster user.                                                          |
+| `channelActions` | [`FarcasterChannelActionType[]`](#farcasterchannelactiontype) | true     | List of channel actions to check if the user has taken any of the listed actions. |
+| `channelId`      | `boolean`                                                     | true     | The Farcaster Channel ID.                                                         |
+
+**Code Sample**
+
+```ts
+import {
+  checkChannelActionsByFarcasterUser,
+  CheckChannelActionsByFarcasterUserInput,
+  CheckChannelActionsByFarcasterUserOutput,
+  FarcasterChannelActionType,
+} from "@airstack/frames";
+
+const input: CheckChannelActionsByFarcasterUserInput = {
+  fid: 602,
+  channelActions: [
+    FarcasterChannelActionType.Follow,
+    FarcasterChannelActionType.Cast,
+    FarcasterChannelActionType.Reply,
+  ],
+  channelId: "fc-devs",
+};
+const { data, error }: CheckChannelActionsByFarcasterUserOutput =
+  await checkChannelActionsByFarcasterUser(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  { "channelAction": "follow", "isActionTaken": true },
+  { "channelAction": "cast", "isActionTaken": true },
+  { "channelAction": "reply", "isActionTaken": false }
 ]
 ```
 
