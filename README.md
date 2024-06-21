@@ -1901,7 +1901,7 @@ console.log(data);
 
 ### `checkChannelActionsByFarcasterUser`
 
-Check If a Farcaster user of a given FID has attended a list of POAP events.
+Check If a Farcaster user of a given FID has taken any channel action (cast, reply, of follow) on a specific channel.
 
 **Input**
 
