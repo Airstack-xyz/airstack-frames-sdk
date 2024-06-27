@@ -2231,6 +2231,15 @@ export type XmtPsOutput = {
   pageInfo: Maybe<PageInfo>;
 };
 
+export type CheckCastReactionsByFarcasterUserQueryVariables = Exact<{
+  castHashes: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  criteria: FarcasterReactionCriteria;
+  identity: Scalars['Identity']['input'];
+}>;
+
+
+export type CheckCastReactionsByFarcasterUserQuery = { FarcasterReactions: { Reaction: Array<{ cast: { castedAtTimestamp: any | null, hash: string | null } | null }> | null } | null };
+
 export type CheckChannelActionsByFarcasterUserQueryVariables = Exact<{
   channelActions: InputMaybe<Array<FarcasterChannelActionType> | FarcasterChannelActionType>;
   identity: InputMaybe<Scalars['Identity']['input']>;

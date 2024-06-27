@@ -1,46 +1,46 @@
 import { fetchQuery } from "@airstack/node";
 import {
-  CheckIsFollowedByFarcasterUserQuery,
-  CheckIsFollowedByFarcasterUserQueryVariables,
+  CheckCastReactionsByFarcasterUserQuery,
+  CheckCastReactionsByFarcasterUserQueryVariables,
 } from "../graphql/types";
 import {
-  CheckIsFollowedByFarcasterUserInput,
-  CheckIsFollowedByFarcasterUserOutput,
+  CheckCastReactionsByFarcasterUserInput,
+  CheckCastReactionsByFarcasterUserOutput,
 } from "../types";
-import { checkIsFollowedByFarcasterUserQuery as query } from "../graphql/query/checkIsFollowedByFarcasterUser.query";
+import { checkCastReactionsByFarcasterUserQuery as query } from "../graphql/query/checkCastReactionsByFarcasterUser.query";
 
 /**
- * @description Check If a Farcaster user of a given FID is followed by an array of Farcaster users with certain FIDs.
+ * @description Check If a Farcaster user of a given FID has reacted to a list of casts.
  * @example
- * const { data, error } = await checkIsFollowedByFarcasterUser({
+ * const { data, error } = await checkCastReactionsByFarcasterUser({
  *  fid: 1,
- *  isFollowedBy: [2, 3, 4],
+ *  criteria: FarcasterReactionCriteria.Likes,
+ *  castHashes: ["0x4c17ff12d9a925a0dec822a8cbf06f46c6268553"],
  * });
  * @param {Number} input.fid Farcaster user FID
- * @param {Array<Number>} input.isFollowedBy List of FIDs to check if the given user is followed by these list of Farcaster user with the provided FIDs
- * @returns List of the FID in `isFollowedBy` with true or false associated on the status of following or not
+ * @param {FarcasterReactionCriteria} input.criteria Either liked, replied, or recasted
+ * @param {Array<String>} input.castHashes List of cast hashes to check if the user has reacted to any of the listed casts
+ * @returns List of the cast hashes and return status of whether user has reacted to any of the listed casts, returned in `isReacted` field
  */
-export async function checkIsFollowedByFarcasterUser(
-  input: CheckIsFollowedByFarcasterUserInput
-): Promise<CheckIsFollowedByFarcasterUserOutput> {
-  const { fid, isFollowedBy } = input ?? {};
-  const variable: CheckIsFollowedByFarcasterUserQueryVariables = {
+export async function checkCastReactionsByFarcasterUser(
+  input: CheckCastReactionsByFarcasterUserInput
+): Promise<CheckCastReactionsByFarcasterUserOutput> {
+  const { fid, criteria, castHashes } = input ?? {};
+  const variable: CheckCastReactionsByFarcasterUserQueryVariables = {
     identity: `fc_fid:${fid}`,
-    isFollowedBy: isFollowedBy?.map((fid) => `fc_fid:${fid}`),
+    criteria,
+    castHashes,
   };
   const { data, error } = await fetchQuery(query, variable);
-  const { Following } =
-    (data as CheckIsFollowedByFarcasterUserQuery)?.Wallet?.socialFollowings ??
-    {};
+  const { Reaction } =
+    (data as CheckCastReactionsByFarcasterUserQuery)?.FarcasterReactions ?? {};
   return {
     data: error
       ? null
-      : isFollowedBy?.map((fid) => ({
-          fid,
-          isFollowedBy: (Following ?? [])?.some((f) =>
-            f?.followerAddress?.farcaster?.some(
-              (fc: { fid: string | null }) => fc?.fid === fid.toString()
-            )
+      : castHashes?.map((h) => ({
+          castHash: h,
+          isReacted: (Reaction ?? [])?.some(
+            ({ cast }) => cast?.hash === h?.toLowerCase()
           ),
         })) ?? [],
     error,

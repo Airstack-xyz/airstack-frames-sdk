@@ -35,3 +35,4 @@ export * from "./getFarcasterUserRecasts";
 export * from "./getFarcasterUserQuotedRecasts";
 export * from "./getFarcasterUserLikes";
 export * from "./checkChannelActionsByFarcasterUser";
+export * from "./checkCastReactionsByFarcasterUser";

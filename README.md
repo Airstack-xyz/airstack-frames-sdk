@@ -51,6 +51,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`searchFarcasterChannels`](#searchfarcasterchannels)
   - [`searchFarcasterUsers`](#searchfarcasterusers)
   - [`checkChannelActionsByFarcasterUser`](#checkchannelactionsbyfarcasteruser)
+  - [`checkCastReactionsByFarcasterUser`](#checkcastreactionsbyfarcasteruser)
   - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
   - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
   - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
@@ -69,6 +70,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`TokenBlockchain`](#tokenblockchain)
   - [`TokenType`](#tokentype)
   - [`NFTType`](#nfttype)
+  - [`FarcasterReactionCriteria`](#farcasterreactioncriteria)
   - [`FarcasterChannelActionType`](#farcasterchannelactiontype)
   - [`Audience`](#audience)
   - [`Criteria`](#criteria)
@@ -1901,7 +1903,7 @@ console.log(data);
 
 ### `checkChannelActionsByFarcasterUser`
 
-Check If a Farcaster user of a given FID has taken any channel action (cast, reply, of follow) on a specific channel.
+Check If a Farcaster user of a given FID has taken any channel action (cast, reply, or follow) on a specific channel.
 
 **Input**
 
@@ -1945,6 +1947,59 @@ console.log(data);
   { "channelAction": "follow", "isActionTaken": true },
   { "channelAction": "cast", "isActionTaken": true },
   { "channelAction": "reply", "isActionTaken": false }
+]
+```
+
+### `checkCastReactionsByFarcasterUser`
+
+Check If a Farcaster user of a given FID has reacted to a list of casts.
+
+**Input**
+
+| Field        | Type                                                      | Required | Description                                                                     |
+| ------------ | --------------------------------------------------------- | -------- | ------------------------------------------------------------------------------- |
+| `fid`        | `string`                                                  | true     | FID of a Farcaster user.                                                        |
+| `criteria`   | [`FarcasterReactionCriteria`](#farcasterreactioncriteria) | true     | Either liked, replied, or recasted                                              |
+| `castHashes` | `string[]`                                                | true     | List of cast hashes to check if the user has reacted to any of the listed casts |
+
+**Code Sample**
+
+```ts
+import {
+  checkCastReactionsByFarcasterUser,
+  CheckCastReactionsByFarcasterUserInput,
+  CheckCastReactionsByFarcasterUserOutput,
+  FarcasterReactionCriteria,
+} from "@airstack/frames";
+
+const input: CheckCastReactionsByFarcasterUserInput = {
+  fid: 602,
+  criteria: FarcasterReactionCriteria.Liked,
+  castHashes: [
+    "0xa9c8d1fe4bd5fb496240526dd82e12d9c4237fdf",
+    "0xdde4cf7ea740497d430b59a0f82b405eac10095e",
+  ],
+};
+const { data, error }: CheckCastReactionsByFarcasterUserOutput =
+  await checkCastReactionsByFarcasterUser(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "castHash": "0xa9c8d1fe4bd5fb496240526dd82e12d9c4237fdf",
+    "isReacted": true
+  },
+  {
+    "castHash": "0xdde4cf7ea740497d430b59a0f82b405eac10095e",
+    "isReacted": false
+  }
 ]
 ```
 
@@ -2776,6 +2831,16 @@ export enum TokenType {
 export enum NFTType {
   ERC721 = "ERC721",
   ERC1155 = "ERC1155",
+}
+```
+
+### `FarcasterReactionCriteria`
+
+```ts
+export enum FarcasterReactionCriteria {
+  Liked = "liked",
+  Recasted = "recasted",
+  Replied = "replied",
 }
 ```
 

@@ -11,6 +11,7 @@ import {
   TokenType as AirstackTokenType,
   TrendingTokensCriteria,
   Int_Comparator_Exp,
+  FarcasterReactionCriteria,
 } from "./graphql/types";
 import { ImageResponse } from "@vercel/og";
 import type { UrlObject } from "url";
@@ -22,6 +23,7 @@ export {
   Audience,
   TimeFrame,
   TrendingMintsCriteria as Criteria,
+  FarcasterReactionCriteria,
 } from "./graphql/types";
 
 export type ConfigType = {
@@ -2963,6 +2965,22 @@ export interface CheckChannelActionsByFarcasterUserOutput {
     | {
         channelAction: FarcasterChannelActionType;
         isActionTaken: boolean;
+      }[]
+    | null;
+}
+
+export interface CheckCastReactionsByFarcasterUserInput {
+  fid: number;
+  criteria: FarcasterReactionCriteria;
+  castHashes: string[];
+}
+
+export interface CheckCastReactionsByFarcasterUserOutput {
+  error: any;
+  data:
+    | {
+        castHash: string;
+        isReacted: boolean;
       }[]
     | null;
 }
