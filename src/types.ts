@@ -2984,3 +2984,42 @@ export interface CheckCastReactionsByFarcasterUserOutput {
       }[]
     | null;
 }
+
+export interface CheckSpecificNFTsHoldByFarcasterUserInput {
+  fid: number;
+  nfts: {
+    tokenAddress: string;
+    tokenId: string;
+    chain: TokenBlockchain;
+  }[];
+}
+
+export interface CheckSpecificNFTsHoldByFarcasterUserOutput {
+  error: any;
+  data:
+    | {
+        chain: TokenBlockchain;
+        tokenAddress: string;
+        tokenId: string;
+        isHold: boolean;
+      }[]
+    | null;
+}
+
+export type CheckSpecificNFTsHoldFarcasterUserQueryVariables = Exact<{
+  identity: InputMaybe<Scalars["Identity"]["input"]>;
+  [key: `tokenAddress${number}`]: InputMaybe<Scalars["Address"]["input"]>;
+  [key: `tokenId${number}`]: InputMaybe<Scalars["String"]["input"]>;
+  [key: `chain${number}`]: TokenBlockchain;
+}>;
+
+export type CheckSpecificNFTsHoldFarcasterUserQuery = {
+  [key: `nft${number}`]: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      tokenId: string | null;
+      formattedAmount: number | null;
+    }> | null;
+  } | null;
+};

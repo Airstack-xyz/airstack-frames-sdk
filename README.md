@@ -53,6 +53,7 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`checkChannelActionsByFarcasterUser`](#checkchannelactionsbyfarcasteruser)
   - [`checkCastReactionsByFarcasterUser`](#checkcastreactionsbyfarcasteruser)
   - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
+  - [`checkSpecificNFTsHoldFarcasterUser`](#checkspecificnftsholdfarcasteruser)
   - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
   - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
   - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
@@ -2042,6 +2043,67 @@ console.log(data);
   { "eventId": 160005, "isAttended": true },
   { "eventId": 159993, "isAttended": true },
   { "eventId": 13242, "isAttended": false }
+]
+```
+
+### `checkSpecificNFTsHoldFarcasterUser`
+
+Check If a Farcaster user of a given FID holds a list of specific token IDs from various ERC721/1155 NFT collections across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
+
+| Field  | Type                                                                   | Required | Description                                                   |
+| ------ | ---------------------------------------------------------------------- | -------- | ------------------------------------------------------------- |
+| `fid`  | `string`                                                               | true     | FID of a Farcaster user.                                      |
+| `nfts` | `{ chain: TokenBlockchain; tokenAddress: string; tokenId: string; }[]` | true     | List of NFTs to check if the Farcaster user hold any of them. |
+
+**Code Sample**
+
+```ts
+import {
+  checkSpecificNFTsHoldFarcasterUser,
+  CheckSpecificNFTsHoldByFarcasterUserInput,
+  CheckSpecificNFTsHoldByFarcasterUserOutput,
+  TokenBlockchain,
+} from "@airstack/frames";
+
+const input: CheckSpecificNFTsHoldByFarcasterUserInput = {
+  fid: 6806,
+  nfts: [
+    {
+      tokenAddress: "0xe2fb0e28d391ca747481b3f0dff906644416fac9",
+      tokenId: "1",
+      chain: TokenBlockchain.Base,
+    },
+    {
+      tokenAddress: "0xe2fb0e28d391ca747481b3f0dff906644416fac9",
+      tokenId: "2",
+      chain: TokenBlockchain.Base,
+    },
+  ],
+};
+const { data, error }: CheckSpecificNFTsHoldByFarcasterUserOutput =
+  await checkSpecificNFTsHoldFarcasterUser(input);
+
+if (error) throw new Error(error);
+
+console.log(data);
+```
+
+**Response Sample**
+
+```json
+[
+  {
+    "chain": "base",
+    "tokenAddress": "0xe2fb0e28d391ca747481b3f0dff906644416fac9",
+    "tokenId": "1",
+    "isHold": false
+  },
+  {
+    "chain": "base",
+    "tokenAddress": "0xe2fb0e28d391ca747481b3f0dff906644416fac9",
+    "tokenId": "2",
+    "isHold": true
+  }
 ]
 ```
 
