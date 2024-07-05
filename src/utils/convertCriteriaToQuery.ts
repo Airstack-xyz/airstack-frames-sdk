@@ -2,6 +2,7 @@ import {
   checkIsFollowedByFarcasterUser,
   checkIsFollowingFarcasterUser,
   checkNumberOfFarcasterFollowers,
+  checkSpecificNFTsHoldFarcasterUser,
   checkTokenHoldByFarcasterUser,
   checkTokenMintedByFarcasterUser,
 } from "../functions";
@@ -53,11 +54,19 @@ export const convertCriteriaToQuery = (
                 : false;
             case AllowListCriteria.TOKEN_HOLD:
               return (async () => {
-                const { data } = await checkTokenHoldByFarcasterUser({
-                  fid,
-                  token: [value],
-                });
-                return data?.[0]?.isHold;
+                let tokenHoldRes;
+                if (value?.tokenId) {
+                  tokenHoldRes = await checkSpecificNFTsHoldFarcasterUser({
+                    fid,
+                    nfts: [value],
+                  });
+                } else {
+                  tokenHoldRes = await checkTokenHoldByFarcasterUser({
+                    fid,
+                    token: [value],
+                  });
+                }
+                return tokenHoldRes?.data?.[0]?.isHold;
               })();
             case AllowListCriteria.TOKEN_MINT:
               return (async () => {
