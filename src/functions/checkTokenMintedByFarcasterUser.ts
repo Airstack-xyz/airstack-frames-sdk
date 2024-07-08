@@ -46,6 +46,9 @@ export async function checkTokenMintedByFarcasterUser(
   const hamTokens = token
     ?.filter((t) => t?.chain === TokenBlockchain.Ham)
     ?.map((t) => t?.tokenAddress);
+  const stpTokens = token
+    ?.filter((t) => t?.chain === TokenBlockchain.Stp)
+    ?.map((t) => t?.tokenAddress);
   const variable: CheckTokenMintedByFarcasterUserQueryVariables = {
     identity: `fc_fid:${fid}`,
     ...(ethereumTokens?.length > 0 ? { ethereumTokens } : {}),
@@ -54,6 +57,7 @@ export async function checkTokenMintedByFarcasterUser(
     ...(goldTokens?.length > 0 ? { goldTokens } : {}),
     ...(degenTokens?.length > 0 ? { degenTokens } : {}),
     ...(hamTokens?.length > 0 ? { hamTokens } : {}),
+    ...(stpTokens?.length > 0 ? { stpTokens } : {}),
   };
   const chains = [
     ...(ethereumTokens?.length > 0 ? [TokenBlockchain.Ethereum] : []),
@@ -62,9 +66,10 @@ export async function checkTokenMintedByFarcasterUser(
     ...(goldTokens?.length > 0 ? [TokenBlockchain.Gold] : []),
     ...(degenTokens?.length > 0 ? [TokenBlockchain.Degen] : []),
     ...(hamTokens?.length > 0 ? [TokenBlockchain.Ham] : []),
+    ...(stpTokens?.length > 0 ? [TokenBlockchain.Stp] : []),
   ];
   const { data, error } = await fetchQuery(query(chains), variable);
-  const { ethereum, base, zora, gold, degen, ham } =
+  const { ethereum, base, zora, gold, degen, ham, stp } =
     (data as CheckTokenMintedByFarcasterUserQuery) ?? {};
   return {
     data: error
@@ -116,6 +121,14 @@ export async function checkTokenMintedByFarcasterUser(
                 chain,
                 tokenAddress,
                 isMinted: (ham?.TokenTransfer ?? [])?.some(
+                  (t) => t?.tokenAddress === tokenAddress
+                ),
+              };
+            case TokenBlockchain.Stp:
+              return {
+                chain,
+                tokenAddress,
+                isMinted: (stp?.TokenTransfer ?? [])?.some(
                   (t) => t?.tokenAddress === tokenAddress
                 ),
               };

@@ -1702,6 +1702,13 @@ export type CheckTokenHoldByFarcasterUserQuery = {
       amount: string;
     }> | null;
   } | null;
+  stp?: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
 };
 
 export interface CheckTokenHoldByFarcasterUserInput {
@@ -1778,6 +1785,14 @@ export type CheckTokenMintedByFarcasterUserQuery = {
     }> | null;
   } | null;
   ham?: {
+    TokenTransfer: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenType: TokenType | null;
+      formattedAmount: number | null;
+      tokenAddress: any | null;
+    }> | null;
+  } | null;
+  stp?: {
     TokenTransfer: Array<{
       blockchain: TokenBlockchain | null;
       tokenType: TokenType | null;
@@ -2189,6 +2204,13 @@ export type CreateAllowListQuery = {
     }> | null;
   } | null;
   ham: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      amount: string;
+    }> | null;
+  } | null;
+  stp: {
     TokenBalance: Array<{
       blockchain: TokenBlockchain | null;
       tokenAddress: any;

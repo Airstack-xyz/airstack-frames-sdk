@@ -2874,6 +2874,7 @@ export enum TokenBlockchain {
   Zora = "zora",
   Degen = "degen",
   Ham = "ham",
+  Stp = "stp",
 }
 ```
 

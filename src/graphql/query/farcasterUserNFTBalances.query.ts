@@ -8,6 +8,7 @@ export const farcasterUserNFTBalances = (
     TokenBlockchain.Gold,
     TokenBlockchain.Degen,
     TokenBlockchain.Ham,
+    TokenBlockchain.Stp,
   ]
 ) =>
   /* GraphQL */ `

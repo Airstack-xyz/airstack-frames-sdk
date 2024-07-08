@@ -8,6 +8,7 @@ export const farcasterUserERC20Balances = (
     TokenBlockchain.Gold,
     TokenBlockchain.Degen,
     TokenBlockchain.Ham,
+    TokenBlockchain.Stp,
   ]
 ) => {
   return (

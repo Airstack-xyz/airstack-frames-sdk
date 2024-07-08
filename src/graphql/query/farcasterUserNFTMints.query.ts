@@ -8,6 +8,7 @@ export const farcasterUserNFTMints = (
     TokenBlockchain.Gold,
     TokenBlockchain.Degen,
     TokenBlockchain.Ham,
+    TokenBlockchain.Stp,
   ]
 ) =>
   /* GraphQL */ `
