@@ -2,7 +2,8 @@ import { AllowListCriteria, TokenBlockchain } from "../../types";
 
 export const createAllowListQuery = (
   allowListCriteria: AllowListCriteria,
-  chains: TokenBlockchain[]
+  chains: TokenBlockchain[],
+  nftLength: number
 ) => {
   const {
     eventIds,
@@ -10,6 +11,7 @@ export const createAllowListQuery = (
     numberOfFollowersOnFarcaster,
     tokens,
   } = allowListCriteria ?? {};
+  const numbersArray = Array.from(Array(nftLength).keys());
   return (
     `
     query CreateAllowList(
@@ -42,6 +44,15 @@ export const createAllowListQuery = (
       `
       : "") +
     `${chains?.map?.((chain) => `$${chain}Tokens: [Address!]`).join("\n")}` +
+    numbersArray
+      ?.map(
+        (k) => `
+    $tokenAddress${k}: Address
+    $tokenId${k}: String
+    $chain${k}: TokenBlockchain!
+    `
+      )
+      ?.join("\n") +
     `
     ) {
       ` +
@@ -125,6 +136,29 @@ export const createAllowListQuery = (
     }`
       )
       ?.join("") +
+    numbersArray
+      .map(
+        (k) => `
+    nft${k}: TokenBalances(
+      input: {
+        filter: {
+          tokenType: { _in: [ERC1155, ERC721] }
+          tokenAddress: { _eq: $tokenAddress${k} }
+          tokenId: { _eq: $tokenId${k} }
+          owner: { _eq: $identity }
+        }
+        blockchain: $chain${k}
+      }
+    ) {
+      TokenBalance {
+        blockchain
+        tokenAddress
+        tokenId
+        formattedAmount
+      }
+    }`
+      )
+      ?.join("\n") +
     `
     }
   `

@@ -38,28 +38,41 @@ export async function createAllowList(
     isFollowingOnFarcaster,
     tokens,
   } = allowListCriteria;
+  const [specifcNFTs, otherTokens] = tokens
+    ? tokens?.reduce(
+        (acc: any[][], token) => {
+          if (token?.tokenId) {
+            acc[0].push(token);
+          } else {
+            acc[1].push(token);
+          }
+          return acc;
+        },
+        [[], []]
+      )
+    : [[], []];
   const ethereumTokens =
-    tokens
+    otherTokens
       ?.filter((t) => t?.chain === TokenBlockchain.Ethereum)
       ?.map((t) => t?.tokenAddress) ?? [];
   const baseTokens =
-    tokens
+    otherTokens
       ?.filter((t) => t?.chain === TokenBlockchain.Base)
       ?.map((t) => t?.tokenAddress) ?? [];
   const zoraTokens =
-    tokens
+    otherTokens
       ?.filter((t) => t?.chain === TokenBlockchain.Zora)
       ?.map((t) => t?.tokenAddress) ?? [];
   const goldTokens =
-    tokens
+    otherTokens
       ?.filter((t) => t?.chain === TokenBlockchain.Gold)
       ?.map((t) => t?.tokenAddress) ?? [];
   const degenTokens =
-    tokens
+    otherTokens
       ?.filter((t) => t?.chain === TokenBlockchain.Degen)
       ?.map((t) => t?.tokenAddress) ?? [];
   const hamTokens =
-    tokens
+    otherTokens
       ?.filter((t) => t?.chain === TokenBlockchain.Ham)
       ?.map((t) => t?.tokenAddress) ?? [];
   const variables: CreateAllowListQueryVariables = {
@@ -74,6 +87,14 @@ export async function createAllowList(
     goldTokens,
     degenTokens,
     hamTokens,
+    ...Object.assign(
+      {},
+      ...specifcNFTs?.map((_, i) => ({
+        [`tokenAddress${i}`]: _.tokenAddress,
+        [`tokenId${i}`]: _.tokenId,
+        [`chain${i}`]: _.chain,
+      }))
+    ),
   };
   const chains = [
     ...(ethereumTokens?.length > 0 ? [TokenBlockchain.Ethereum] : []),
@@ -84,7 +105,7 @@ export async function createAllowList(
     ...(hamTokens?.length > 0 ? [TokenBlockchain.Ham] : []),
   ];
   const { data, error } = await fetchQuery(
-    query(allowListCriteria, chains),
+    query(allowListCriteria, chains, specifcNFTs?.length),
     variables
   );
 
@@ -122,7 +143,7 @@ export async function createAllowList(
     (numberOfFollowersOnFC?.Social ?? []).length > 0;
   // Check if user holds the listed tokens
   const isTokensHold =
-    tokens?.map(({ chain, tokenAddress }) => {
+    otherTokens?.map(({ chain, tokenAddress }) => {
       switch (chain) {
         case TokenBlockchain.Ethereum:
           return {
@@ -181,6 +202,21 @@ export async function createAllowList(
       }
     }) ?? [];
 
+  const isSpecificNFTsHold = specifcNFTs?.map(
+    ({ chain, tokenAddress, tokenId }, i) => ({
+      chain,
+      tokenAddress,
+      tokenId,
+      isHold:
+        (data as CreateAllowListQuery)?.[`nft${i}`]?.TokenBalance?.some(
+          (t) =>
+            t.tokenAddress === tokenAddress &&
+            t.tokenId === tokenId &&
+            t.blockchain === chain
+        ) ?? false,
+    })
+  );
+
   if (isAllowedFunction) {
     // If a custom isAllowedFunction is provided,
     // use it to determine if the user is allowed
@@ -190,6 +226,7 @@ export async function createAllowList(
         isFollowingUsersOnFarcaster,
         isFarcasterFollowerCountAbove,
         isTokensHold,
+        isSpecificNFTsHold,
       }),
     };
   }
@@ -207,7 +244,10 @@ export async function createAllowList(
           ? isFollowingUsersOnFarcaster?.every(({ isFollowing }) => isFollowing)
           : true) &&
         (numberOfFollowersOnFarcaster ? isFarcasterFollowerCountAbove : true) &&
-        (tokens ? isTokensHold?.every(({ isHold }) => isHold) : true),
+        (otherTokens ? isTokensHold?.every(({ isHold }) => isHold) : true) &&
+        (specifcNFTs
+          ? isSpecificNFTsHold?.every(({ isHold }) => isHold)
+          : true),
     error,
   };
 }

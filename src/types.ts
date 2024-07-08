@@ -2083,6 +2083,7 @@ export interface AllowListCriteria {
   tokens?: {
     tokenAddress: string;
     chain: TokenBlockchain;
+    tokenId?: string;
   }[];
 }
 
@@ -2194,6 +2195,14 @@ export type CreateAllowListQuery = {
       amount: string;
     }> | null;
   } | null;
+  [key: `nft${number}`]: {
+    TokenBalance: Array<{
+      blockchain: TokenBlockchain | null;
+      tokenAddress: any;
+      tokenId: string | null;
+      formattedAmount: number | null;
+    }> | null;
+  } | null;
 };
 
 export interface CreateAllowListInput {
@@ -2204,6 +2213,7 @@ export interface CreateAllowListInput {
     isFollowingUsersOnFarcaster,
     isFarcasterFollowerCountAbove,
     isTokensHold,
+    isSpecificNFTsHold,
   }: {
     isPoapsAttended?: { eventId: number; isAttended: boolean }[];
     isFollowingUsersOnFarcaster?: { fid: number; isFollowing: boolean }[];
@@ -2211,6 +2221,12 @@ export interface CreateAllowListInput {
     isTokensHold?: {
       chain: TokenBlockchain;
       tokenAddress: string;
+      isHold: boolean;
+    }[];
+    isSpecificNFTsHold?: {
+      chain: TokenBlockchain;
+      tokenAddress: string;
+      tokenId: string;
       isHold: boolean;
     }[];
   }) => Promise<boolean> | boolean;
