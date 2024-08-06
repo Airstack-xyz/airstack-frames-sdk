@@ -19,12 +19,9 @@ import {
   OnchainDataInput,
   OnchainDataOutput,
 } from "../../types";
-import { config } from "dotenv";
 import { decodeFrameActionPayloadFromRequest } from "../../utils/decodeFrameActionPayloadFromRequest";
 import { FrameActionMessage, Message } from "@farcaster/core";
 import { config as configEnv } from "../../config";
-
-config();
 
 /**
  *
