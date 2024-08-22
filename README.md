@@ -1,6 +1,5 @@
 <div align="center">
   <h1 align="center">Official Airstack Frames SDK</h1>
-  <img src="./assets/image.png" alt="code snippets" height=350/>
   <h3>Powered By</h3>
   <a align="center" href="https://airstack.xyz" target="_blank">
   <picture>
