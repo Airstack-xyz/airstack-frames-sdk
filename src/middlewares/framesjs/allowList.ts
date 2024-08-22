@@ -1,6 +1,6 @@
-import { FramesMiddleware } from "../../types";
+import type { FramesMiddleware } from "../../types";
 import { decodeFrameActionPayloadFromRequest } from "../../utils/decodeFrameActionPayloadFromRequest";
-import { FrameActionMessage, Message } from "@farcaster/core";
+import { type FrameActionMessage, Message } from "@farcaster/core";
 
 import { config } from "../../config";
 import { init } from "../../init";

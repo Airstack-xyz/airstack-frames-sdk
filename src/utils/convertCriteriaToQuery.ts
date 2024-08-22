@@ -2,9 +2,6 @@ import {
   checkIsFollowedByFarcasterUser,
   checkIsFollowingFarcasterUser,
   checkNumberOfFarcasterFollowers,
-  checkSpecificNFTsHoldFarcasterUser,
-  checkTokenHoldByFarcasterUser,
-  checkTokenMintedByFarcasterUser,
 } from "../functions";
 import { evaluateAllowListCriteria } from "./evaluateAllowListCriteria";
 import { AllowListCriteriaEnum as AllowListCriteria } from "../types";
@@ -52,36 +49,11 @@ export const convertCriteriaToQuery = (
                     return data?.[0]?.isFollowing;
                   })()
                 : false;
-            case AllowListCriteria.TOKEN_HOLD:
-              return (async () => {
-                let tokenHoldRes;
-                if (value?.tokenId) {
-                  tokenHoldRes = await checkSpecificNFTsHoldFarcasterUser({
-                    fid,
-                    nfts: [value],
-                  });
-                } else {
-                  tokenHoldRes = await checkTokenHoldByFarcasterUser({
-                    fid,
-                    token: [value],
-                  });
-                }
-                return tokenHoldRes?.data?.[0]?.isHold;
-              })();
-            case AllowListCriteria.TOKEN_MINT:
-              return (async () => {
-                const { data } = await checkTokenMintedByFarcasterUser({
-                  fid,
-                  token: [value],
-                });
-                return data?.[0]?.isMinted;
-              })();
             default:
               return null;
           }
-        } else {
-          return evaluateAllowListCriteria(fid, condition, { castFid });
         }
+        return evaluateAllowListCriteria(fid, condition, { castFid });
       })
     );
   } catch (error) {

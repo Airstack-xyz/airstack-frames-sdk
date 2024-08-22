@@ -1,2 +1,2 @@
-export * from "./onchainData";
+export * from "./farcasterData";
 export * from "./allowList";

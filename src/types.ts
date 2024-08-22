@@ -2231,26 +2231,11 @@ export interface CreateAllowListInput {
   fid: number | undefined;
   allowListCriteria: AllowListCriteria;
   isAllowedFunction?: ({
-    isPoapsAttended,
     isFollowingUsersOnFarcaster,
     isFarcasterFollowerCountAbove,
-    isTokensHold,
-    isSpecificNFTsHold,
   }: {
-    isPoapsAttended?: { eventId: number; isAttended: boolean }[];
     isFollowingUsersOnFarcaster?: { fid: number; isFollowing: boolean }[];
     isFarcasterFollowerCountAbove?: boolean;
-    isTokensHold?: {
-      chain: TokenBlockchain;
-      tokenAddress: string;
-      isHold: boolean;
-    }[];
-    isSpecificNFTsHold?: {
-      chain: TokenBlockchain;
-      tokenAddress: string;
-      tokenId: string;
-      isHold: boolean;
-    }[];
   }) => Promise<boolean> | boolean;
 }
 
@@ -2261,15 +2246,10 @@ export interface CreateAllowListOutput {
 
 export type Pretty<type> = { [key in keyof type]: type[key] } & unknown;
 
-export interface OnchainDataMiddlewareParameters {
+export interface FarcasterDataMiddlewareParameters {
   apiKey?: string;
   features: {
     userDetails?: any;
-    erc20Balances?: any;
-    nftBalances?: any;
-    erc20Mints?: any;
-    nftMints?: any;
-    poaps?: any;
     channels?: any;
     followers?: any;
     followings?: any;
@@ -2277,7 +2257,7 @@ export interface OnchainDataMiddlewareParameters {
   env?: "prod" | "dev";
 }
 
-export type OnchainDataVariables = {
+export type FarcasterDataVariables = {
   userDetails?:
     | Pretty<{
         profileName: string | null | undefined;
@@ -2298,23 +2278,6 @@ export type OnchainDataVariables = {
       }>
     | null
     | undefined;
-  erc20Balances?:
-    | Pretty<(FarcasterUserERC20BalancesOutputData | null)[]>
-    | null
-    | undefined;
-  nftBalances?:
-    | Pretty<(FarcasterUserNFTBalancesOutputData | null)[]>
-    | null
-    | undefined;
-  erc20Mints?:
-    | Pretty<(FarcasterUserERC20MintsOutputData | null)[]>
-    | null
-    | undefined;
-  nftMints?:
-    | Pretty<(FarcasterUserNFTMintsOutputData | null)[]>
-    | null
-    | undefined;
-  poaps?: Pretty<(FarcasterUserPoapsOutputData | null)[]> | null | undefined;
   channels?:
     | Pretty<(FarcasterChannelsByParticipantOutputData | null)[]>
     | null
@@ -2636,34 +2599,6 @@ export enum Features {
    */
   USER_DETAILS = "user_details",
   /**
-   * Fetches ERC20 mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
-   */
-  ERC20_MINTS = "erc20_mints",
-  /**
-   * Fetches NFT mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
-   */
-  NFT_MINTS = "nft_mints",
-  /**
-   * Fetches ERC20 balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
-   */
-  ERC20_BALANCES = "erc20_balances",
-  /**
-   * Fetches NFT balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
-   */
-  NFT_BALANCES = "nft_balances",
-  /**
-   * Fetches POAP events attended by a Farcaster user.
-   */
-  POAPS = "poaps",
-  /**
-   * Fetches token transfers sent by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
-   */
-  TOKEN_TRANSFERS_SENT = "token_transfers_sent",
-  /**
-   * Fetches token transfers received by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Zora, etc.
-   */
-  TOKEN_TRANSFERS_RECEIVED = "token_transfers_received",
-  /**
    * Fetches Farcaster followings of a Farcaster user.
    */
   FARCASTER_FOLLOWINGS = "farcaster_followings",
@@ -2681,7 +2616,7 @@ export enum Features {
   FARCASTER_CASTS = "farcaster_casts",
 }
 
-export interface OnchainDataInput {
+export interface FarcasterDataInput {
   /**
    * Airstack API Key. Get your key from https://app.airstack.xyz/profile-settings/api-keys.
    */
@@ -2692,27 +2627,8 @@ export interface OnchainDataInput {
   features: Features[];
 }
 
-export interface OnchainDataOutput {
+export interface FarcasterDataOutput {
   userDetails?: FarcasterUserDetailsData;
-  erc20Mints?: (FarcasterUserERC20MintsOutputData | null)[] | null | undefined;
-  nftMints?: (FarcasterUserNFTMintsOutputData | null)[] | null | undefined;
-  erc20Balances?:
-    | (FarcasterUserERC20BalancesOutputData | null)[]
-    | null
-    | undefined;
-  nftBalances?:
-    | (FarcasterUserNFTBalancesOutputData | null)[]
-    | null
-    | undefined;
-  poaps?: (FarcasterUserPoapsOutputData | null)[] | null | undefined;
-  tokenTransfersSent?:
-    | (FarcasterUserTokenSentFromOutputData | null)[]
-    | null
-    | undefined;
-  tokenTransfersReceived?:
-    | (FarcasterUserTokenReceivedByOutputData | null)[]
-    | null
-    | undefined;
   farcasterFollowings?:
     | (FarcasterFollowingsOutputData | null)[]
     | null
@@ -2745,14 +2661,6 @@ export enum AllowListCriteriaEnum {
    * Check if the user is following the caster
    */
   FARCASTER_FOLLOWING_CASTER = "farcaster_following_caster",
-  /**
-   * Check if the user is holding certain token
-   */
-  TOKEN_HOLD = "token_hold",
-  /**
-   * Check if the user has minted certain token
-   */
-  TOKEN_MINT = "token_mint",
 }
 
 export interface CheckNumberOfFarcasterFollowersrOutput {

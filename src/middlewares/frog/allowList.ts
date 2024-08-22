@@ -1,11 +1,9 @@
 import type { MiddlewareHandler } from "hono";
-import {
-  createAllowList,
-  validateFramesMessage,
-  init,
+import { createAllowList, validateFramesMessage, init } from "../../";
+import type {
   AllowListMiddlewareParameters,
   AllowListMiddlewareVariables,
-} from "../..";
+} from "../../types";
 import { config } from "../../config";
 
 export function allowListFrogMiddleware(

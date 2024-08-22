@@ -10,9 +10,9 @@
   </a>
 </div>
 
-The Airstack Frames SDK empowers developers to seamlessly integrate onchain data, including token balances, token mints, Farcaster followers and followings, POAPs, and more, into their Frames using just a few lines of code.
+The Airstack Frames SDK empowers developers to seamlessly integrate Farcaster data, including Farcaster user details, Farcaster followers and followings, Farcaster casts, Farcaster channels and more, into their Frames using just a few lines of code.
 
-Additionally, developers can leverage the SDK to create an allow list feature, enabling checks for token ownership, token mints, following status, and more.
+Additionally, developers can leverage the SDK to create an allow list feature, enabling checks for channel followings, user following status, and more.
 
 Designed with TypeScript, the SDK offers full type support for those building Frames with TypeScript.
 
@@ -23,9 +23,6 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
 - [Set Environment Variables](#set-environment-variables)
 - [Get Started](#get-started)
 - [Functions](#functions)
-  - [`getTrendingMints`](#gettrendingmints)
-  - [`getTrendingSwaps`](#gettrendingswaps)
-  - [`getTrendingTokens`](#gettrendingtokens)
   - [`validateFramesMessage`](#validateframesmessage)
   - [`generateCaptchaChallenge`](#generatecaptchachallenge)
   - [`validateCaptchaChallenge`](#validatecaptchachallenge)
@@ -37,13 +34,6 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`getFarcasterUserRecasts`](#getfarcasteruserrecasts)
   - [`getFarcasterUserQuotedRecasts`](#getfarcasteruserquotedrecasts)
   - [`getFarcasterUserLikes`](#getfarcasteruserlikes)
-  - [`getFarcasterUserPoaps`](#getfarcasteruserpoaps)
-  - [`getFarcasterUserERC20Balances`](#getfarcasterusererc20balances)
-  - [`getFarcasterUserNFTBalances`](#getfarcasterusernftbalances)
-  - [`getFarcasterUserERC20Mints`](#getfarcasterusererc20mints)
-  - [`getFarcasterUserNFTMints`](#getfarcasterusernftmints)
-  - [`getFarcasterUserTokenSentFrom`](#getfarcasterusertokensentfrom)
-  - [`getFarcasterUserTokenReceivedBy`](#getfarcasterusertokenreceivedby)
   - [`getFarcasterChannelDetails`](#getfarcasterchanneldetails)
   - [`getFarcasterChannelParticipants`](#getfarcasterchannelparticipants)
   - [`getFarcasterChannelsByParticipant`](#getfarcasterchannelsbyparticipant)
@@ -52,37 +42,23 @@ Designed with TypeScript, the SDK offers full type support for those building Fr
   - [`searchFarcasterUsers`](#searchfarcasterusers)
   - [`checkChannelActionsByFarcasterUser`](#checkchannelactionsbyfarcasteruser)
   - [`checkCastReactionsByFarcasterUser`](#checkcastreactionsbyfarcasteruser)
-  - [`checkPoapAttendedByFarcasterUser`](#checkpoapattendedbyfarcasteruser)
-  - [`checkSpecificNFTsHoldFarcasterUser`](#checkspecificnftsholdfarcasteruser)
-  - [`checkTokenHoldByFarcasterUser`](#checktokenholdbyfarcasteruser)
-  - [`checkTokenMintedByFarcasterUser`](#checktokenmintedbyfarcasteruser)
   - [`checkIsFollowingFarcasterUser`](#checkisfollowingfarcasteruser)
   - [`checkIsFollowedByFarcasterUser`](#checkisfollowedbyfarcasteruser)
   - [`createAllowList`](#createallowlist)
   - [`fetchQuery`](#fetchquery)
   - [`fetchQueryWithPagination`](#fetchquerywithpagination)
 - [Frog Middlewares](#frog-middlewares)
-  - [Onchain Data Middleware](#onchain-data-middleware)
+  - [Farcaster Data Middleware](#farcaster-data-middleware)
   - [Allow List Middleware](#allow-list-middleware)
 - [Frames.js Middlewares](#framesjs-middlewares)
-  - [Onchain Data Middleware](#onchain-data-middleware-1)
+  - [Farcaster Data Middleware](#farcaster-data-middleware-1)
   - [Allow List Middleware](#allow-list-middleware-1)
 - [Enum](#enum)
-  - [`TokenBlockchain`](#tokenblockchain)
-  - [`TokenType`](#tokentype)
-  - [`NFTType`](#nfttype)
   - [`FarcasterReactionCriteria`](#farcasterreactioncriteria)
   - [`FarcasterChannelActionType`](#farcasterchannelactiontype)
-  - [`Audience`](#audience)
-  - [`Criteria`](#criteria)
-  - [`TrendingTokensCriteria`](#trendingtokenscriteria)
-  - [`TimeFrame`](#timeframe)
-  - [`TransferType`](#transfertype)
   - [`FrameRatio`](#frameratio)
   - [`Features`](#features)
   - [`AllowListCriteriaEnum`](#allowlistcriteriaenum)
-  - [`TrendingSwapsBlockchain`](#trendingswapsblockchain)
-  - [`TrendingSwapsCriteria`](#trendingswapscriteria)
 - [Paginations](#paginations)
 
 ## Install
@@ -112,182 +88,6 @@ init(process.AIRSTACK_API_KEY);
 ```
 
 ## Functions
-
-### `getTrendingMints`
-
-Get trending mints in a given time frame by simply specifying the audience, criteria, and time frame that you prefer. All analysis and sorting will be done for you and you simply just need to receive the response from this function.
-
-**Input**
-
-| Field       | Type        | Required | Description                                                                                           |
-| ----------- | ----------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| `audience`  | `Audience`  | true     | The audience to get trending mints for                                                                |
-| `criteria`  | `Criteria`  | true     | The criteria to analyze and sort trending mints                                                       |
-| `timeFrame` | `TimeFrame` | true     | The time frame to analyze the trending mints, e.g. the last 1 hour                                    |
-| `limit`     | `number`    | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
-
-**Code Samples**
-
-```ts
-import {
-  getTrendingMints,
-  GetTrendingMintsInput,
-  GetTrendingMintsOutput,
-  Audience,
-  Criteria,
-  TimeFrame,
-} from "@airstack/frames";
-
-const input: GetTrendingMintsInput = {
-  audience: Audience.All,
-  criteria: Criteria.UniqueWallets,
-  timeFrame: TimeFrame.OneDay,
-  limit: 100,
-};
-const { data, error }: GetTrendingMintsOutput = await getTrendingMints(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Samples**
-
-```json
-[
-  {
-    "address": "0x9d70ccd59b3124e5227a9148413892f947697afd",
-    "erc1155TokenID": "",
-    "criteriaCount": 1880,
-    "timeFrom": "2024-03-07T15:17:00Z",
-    "timeTo": "2024-03-08T14:52:00Z",
-    "name": "Base's 2024 Mission, Strategy and Roadmap",
-    "symbol": "BASES2024MISSIONSTRATEGYANDROADMAP",
-    "type": "ERC721"
-  }
-]
-```
-
-### `getTrendingSwaps`
-
-Get trending tokens to swap in a given time frame by simply specifying the blockchains, criteria, and time frame that you prefer. All analysis and sorting will be done for you and you simply just need to receive the response from this function.
-
-**Input**
-
-| Field       | Type                                                    | Required | Description                                                                                           |
-| ----------- | ------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| `chains`    | [`TrendingSwapsBlockchain[]`](#trendingswapsblockchain) | true     | The blockchain to fetch from to get trending swaps for                                                |
-| `criteria`  | [`TrendingSwapsCriteria`](#trendingswapscriteria)       | true     | The criteria to analyze and sort trending swaps                                                       |
-| `timeFrame` | `TimeFrame`                                             | true     | The time frame to analyze the trending swaps, e.g. the last 1 hour                                    |
-| `limit`     | `number`                                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
-
-**Code Sample**
-
-```ts
-import {
-  getTrendingSwaps,
-  GetTrendingSwapsOutput,
-  GetTrendingSwapsInput,
-  TimeFrame,
-  TrendingSwapsBlockchain,
-  TrendingSwapsCriteria,
-} from "@airstack/frames";
-
-const input: GetTrendingSwapsInput = {
-  chains: [TrendingSwapsBlockchain.Base, TrendingSwapsBlockchain.Ethereum],
-  timeFrame: TimeFrame.EightHours,
-  criteria: TrendingSwapsCriteria.BuyTransactionCount,
-  limit: 1,
-};
-const { data, error }: GetTrendingSwapsOutput = await getTrendingSwaps(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "address": "0x532f27101965dd16442e59d40670faf5ebb142e4",
-    "blockchain": "base",
-    "buyTransactionCount": 468,
-    "buyVolume": 3795264.3856984717,
-    "sellTransactionCount": 264,
-    "sellVolume": 1750743.3966612488,
-    "timeFrom": "2024-04-04T12:53:00Z",
-    "timeTo": "2024-04-04T20:53:00Z",
-    "totalTransactionCount": 732,
-    "totalUniqueWallets": 503,
-    "totalVolume": 5546007.782359725,
-    "uniqueBuyWallets": 420,
-    "uniqueSellWallets": 103,
-    "name": "Brett",
-    "symbol": "BRETT"
-  }
-]
-```
-
-### `getTrendingTokens`
-
-Get trending tokens in a given time frame by simply specifying the audience, criteria, time frame, and transfer type that you prefer. All analysis and sorting will be done for you and you simply just need to receive the response from this function.
-
-**Input**
-
-| Field          | Type                     | Required | Description                                                                                           |
-| -------------- | ------------------------ | -------- | ----------------------------------------------------------------------------------------------------- |
-| `audience`     | `Audience`               | true     | The audience to get trending tokens for                                                               |
-| `criteria`     | `TrendingTokensCriteria` | true     | The criteria to analyze and sort trending tokens                                                      |
-| `timeFrame`    | `TimeFrame`              | true     | The time frame to analyze the trending tokens, e.g. the last 1 hour                                   |
-| `transferType` | `TransferType`           | true     | The type of transfer to get trending tokens for, either `all` or `self_initiated`                     |
-| `swappable`    | `boolean`                | true     | Whether a token is swappable on DEX or not.                                                           |
-| `limit`        | `number`                 | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
-
-**Code Samples**
-
-```ts
-import {
-  getTrendingTokens,
-  GetTrendingTokensInput,
-  GetTrendingTokensOutput,
-  Audience,
-  TrendingTokensCriteria,
-  TimeFrame,
-  TransferType,
-} from "@airstack/frames";
-
-const { data, error } = await getTrendingTokens({
-  audience: Audience.All,
-  criteria: TrendingTokensCriteria.UniqueWallets,
-  timeFrame: TimeFrame.OneDay,
-  transferType: TransferType.All,
-  swappable: true,
-  limit: 100,
-});
-const { data, error }: GetTrendingTokensOutput = await getTrendingTokens(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Samples**
-
-```json
-[
-  {
-    "address": "0xa0c05e2eed05912d9eb76d466167628e8024a708",
-    "criteriaCount": 8415,
-    "timeFrom": "2024-03-17T22:19:00Z",
-    "timeTo": "2024-03-18T13:55:00Z",
-    "name": "Ticker",
-    "symbol": "TICKER",
-    "type": "ERC20"
-  }
-]
-```
 
 ### `validateFramesMessage`
 
@@ -955,519 +755,6 @@ console.log(data);
 ]
 ```
 
-### `getFarcasterUserPoaps`
-
-Fetch all POAPs owned by a Farcaster user of a given FID.
-
-**Input**
-
-| Field   | Type     | Required | Description                                                                                           |
-| ------- | -------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| `fid`   | `number` | true     | FID of a Farcaster user                                                                               |
-| `limit` | `number` | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations). |
-
-**Code Sample**
-
-```ts
-import {
-  getFarcasterUserPoaps,
-  FarcasterUserPoapsInput,
-  FarcasterUserPoapsOutput,
-} from "@airstack/frames";
-
-const input: FarcasterUserPoapsInput = {
-  fid: 602,
-  limit: 100,
-};
-const {
-  data,
-  error,
-  hasNextPage,
-  hasPrevPage,
-  getNextPage,
-  getPrevPage,
-}: FarcasterUserPoapsOutput = await getFarcasterUserPoaps(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "eventName": "ETHGlobal New York 2023 Speaker",
-    "eventId": "151055",
-    "eventURL": "https://ethglobal.com/events/newyork2023",
-    "isVirtualEvent": false,
-    "startDate": "2023-09-22T00:00:00Z",
-    "endDate": "2023-09-25T00:00:00Z",
-    "city": "New York City"
-  }
-]
-```
-
-### `getFarcasterUserERC20Balances`
-
-Fetch ERC20 tokens owned by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-**Input**
-
-| Field    | Type                                    | Required | Description                                                                                                                                                                                           |
-| -------- | --------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                               |
-| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 balance. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
-| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                                 |
-
-**Code Sample**
-
-```ts
-import {
-  getFarcasterUserERC20Balances,
-  FarcasterUserERC20BalancesInput,
-  FarcasterUserERC20BalancesOutput,
-  TokenBlockchain,
-} from "@airstack/frames";
-
-const input: FarcasterUserERC20BalancesInput = {
-  fid: 602,
-  chains: [
-    TokenBlockchain.Ethereum,
-    TokenBlockchain.Base,
-    TokenBlockchain.Zora,
-  ],
-  limit: 100,
-};
-const {
-  data,
-  error,
-  hasNextPage,
-  hasPrevPage,
-  getNextPage,
-  getPrevPage,
-}: FarcasterUserERC20BalancesOutput = await getFarcasterUserERC20Balances(
-  input
-);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "blockchain": "ethereum",
-    "tokenAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-    "amount": 125,
-    "amountInWei": "125000000",
-    "name": "USD Coin",
-    "symbol": "USDC"
-  }
-]
-```
-
-### `getFarcasterUserNFTBalances`
-
-Fetch ERC721 and ERC1155 NFT collections owned by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-**Input**
-
-| Field       | Type                                    | Required | Description                                                                                                                                                                                         |
-| ----------- | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                             |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT balance. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT balances that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                                                                       |
-| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                               |
-
-**Code Sample**
-
-```ts
-import {
-  getFarcasterUserNFTBalances,
-  FarcasterUserNFTBalancesInput,
-  FarcasterUserNFTBalancesOutput,
-  TokenBlockchain,
-  NFTType,
-} from "@airstack/frames";
-
-const variables: FarcasterUserNFTBalancesInput = {
-  fid: 602,
-  tokenType: [NFTType.ERC721, NFTType.ERC1155],
-  chains: [
-    TokenBlockchain.Ethereum,
-    TokenBlockchain.Base,
-    TokenBlockchain.Zora,
-  ],
-  limit: 100,
-};
-const {
-  data,
-  error,
-  hasNextPage,
-  hasPrevPage,
-  getNextPage,
-  getPrevPage,
-}: FarcasterUserNFTBalancesOutput = await getFarcasterUserNFTBalances(
-  variables
-);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "blockchain": "zora",
-    "tokenAddress": "0xe03ef4b9db1a47464de84fb476f9baf493b3e886",
-    "tokenId": "110",
-    "amount": 1,
-    "amountInWei": "1",
-    "name": "Farcaster OG",
-    "symbol": "$FCOG",
-    "image": {
-      "extraSmall": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/extra_small.png",
-      "small": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/small.png",
-      "medium": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/medium.png",
-      "large": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/large.png",
-      "original": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/original_image.png"
-    },
-    "metaData": {
-      "name": "Farcaster OG 43",
-      "description": "Celebrating Farcaster at permissionless.",
-      "image": "ipfs://bafybeihbx6nx4h2wblf6nlsy6nkotzqynzsrgimgqzwqgw6gf7d27ewfqu",
-      "imageData": "",
-      "externalUrl": "",
-      "animationUrl": "",
-      "youtubeUrl": "",
-      "backgroundColor": "",
-      "attributes": null
-    },
-    "tokenType": "ERC721"
-  }
-]
-```
-
-### `getFarcasterUserERC20Mints`
-
-Fetch ERC20 tokens minted by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-**Input**
-
-| Field    | Type                                    | Required | Description                                                                                                                                                                                         |
-| -------- | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`    | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                             |
-| `chains` | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's ERC20 mints. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
-| `limit`  | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                               |
-
-**Code Sample**
-
-```ts
-import {
-  getFarcasterUserERC20Mints,
-  FarcasterUserERC20MintsInput,
-  FarcasterUserERC20MintsOutput,
-  TokenBlockchain,
-} from "@airstack/frames";
-
-const input: FarcasterUserERC20MintsInput = {
-  fid: 602,
-  chains: [
-    TokenBlockchain.Ethereum,
-    TokenBlockchain.Base,
-    TokenBlockchain.Zora,
-  ],
-  limit: 100,
-};
-const {
-  data,
-  error,
-  hasNextPage,
-  hasPrevPage,
-  getNextPage,
-  getPrevPage,
-}: FarcasterUserERC20MintsOutput = await getFarcasterUserERC20Mints(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "blockchain": "base",
-    "tokenAddress": "0x058d96baa6f9d16853970b333ed993acc0c35add",
-    "amount": 50,
-    "amountInWei": "50000000000000000000",
-    "name": "Staked SPORK",
-    "symbol": "sSPORK",
-    "blockTimestamp": "2024-01-03T18:43:02Z",
-    "blockNumber": 51901326
-  }
-]
-```
-
-### `getFarcasterUserNFTMints`
-
-Fetch ERC721 and ERC1155 NFT collections minted by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-**Input**
-
-| Field       | Type                                    | Required | Description                                                                                                                                                                                       |
-| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                           |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's NFT mints. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only NFT mints that has the same time with this input. Defaults to include all ERC721 and 1155 NFTs.                                                                                        |
-| `limit`     | `number`                                | false    | Number of results per pages. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                             |
-
-**Code Sample**
-
-```ts
-import {
-  getFarcasterUserNFTMints,
-  FarcasterUserNFTMintsInput,
-  FarcasterUserNFTMintsOutput,
-  TokenBlockchain,
-  NFTType,
-} from "@airstack/frames";
-
-const input: FarcasterUserNFTMintsInput = {
-  fid: 602,
-  chains: [
-    TokenBlockchain.Ethereum,
-    TokenBlockchain.Base,
-    TokenBlockchain.Zora,
-  ],
-  tokenType: [NFTType.ERC721, NFTType.ERC1155],
-  limit: 100,
-};
-const {
-  data,
-  error,
-  hasNextPage,
-  hasPrevPage,
-  getNextPage,
-  getPrevPage,
-}: FarcasterUserNFTMintsOutput = await getFarcasterUserNFTMints(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "blockchain": "base",
-    "tokenAddress": "0x7d5861cfe1c74aaa0999b7e2651bf2ebd2a62d89",
-    "tokenId": "94613",
-    "tokenType": "ERC721",
-    "amount": 1,
-    "amountInWei": "1",
-    "name": "Base Day One",
-    "symbol": "$BASEDAYONE",
-    "blockTimestamp": "2023-08-11T08:23:43Z",
-    "blockNumber": 2476438,
-    "image": {
-      "extraSmall": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/extra_small.gif",
-      "small": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/small.gif",
-      "medium": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/medium.gif",
-      "large": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/large.gif",
-      "original": "https://assets.airstack.xyz/image/nft/8453/VsImj/jHMngFqJSF7KWaDce4NeMMkjjE6vKrM78PzD+4gKMh74NjmrMUXl9+slIronvYbTNTE8aDkB1TuYwHPA==/original_image.gif"
-    },
-    "metaData": {
-      "name": "Base Day One 94613",
-      "description": "Base Day One commemorates the first day of Base. Watch it evolve as more people come onchain and collectively create our story. All proceeds will support the next generation of builders on Base; this does not confer any other rights. GET ONCHAIN at onchainsummer.xyz and mint to join us.",
-      "image": "ipfs://bafybeidkxtd2qck3omiccqhi2iebklr5yfsm33vivmgyfarlh62l462zka",
-      "imageData": "",
-      "externalUrl": "",
-      "animationUrl": "",
-      "youtubeUrl": "",
-      "backgroundColor": "",
-      "attributes": null
-    }
-  }
-]
-```
-
-### `getFarcasterUserTokenSentFrom`
-
-Fetch all token transfers sent from a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-**Input**
-
-| Field       | Type                                    | Required | Description                                                                                                                                                                                             |
-| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                                 |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                                                                                     |
-| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                  |
-
-**Code Sample**
-
-```ts
-import {
-  getFarcasterUserTokenSentFrom,
-  FarcasterUserTokenSentFromInput,
-  FarcasterUserTokenSentFromOutput,
-  TokenBlockchain,
-  TokenType,
-} from "@airstack/frames";
-
-const input: FarcasterUserTokenSentFromInput = {
-  fid: 602,
-  chains: [
-    TokenBlockchain.Ethereum,
-    TokenBlockchain.Base,
-    TokenBlockchain.Zora,
-  ],
-  tokenType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC1155],
-  limit: 100,
-};
-const {
-  data,
-  error,
-  hasNextPage,
-  hasPrevPage,
-  getNextPage,
-  getPrevPage,
-}: FarcasterUserTokenSentFromOutput = await getFarcasterUserTokenSentFrom(
-  input
-);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "blockchain": "base",
-    "tokenAddress": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
-    "amount": 100,
-    "amountInWei": "100000000",
-    "name": "USD Coin",
-    "symbol": "USDC",
-    "blockTimestamp": "2023-12-18T15:15:35Z",
-    "blockNumber": 8061594,
-    "tokenType": "ERC20",
-    "txHash": "0xf30a550eece968e1abdcae4de3bdb5f7b84f3d0b2335150149a7398b351567f5",
-    "receiver": {
-      "addresses": ["0x3a23f943181408eac424116af7b7790c94cb97a5"],
-      "socials": null
-    }
-  }
-]
-```
-
-### `getFarcasterUserTokenReceivedBy`
-
-Fetch all token transfers received by a Farcaster user of a given FID across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-**Input**
-
-| Field       | Type                                    | Required | Description                                                                                                                                                                                             |
-| ----------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fid`       | `number`                                | true     | FID of a Farcaster user                                                                                                                                                                                 |
-| `chains`    | [`TokenBlockchain[]`](#tokenblockchain) | false    | List of blockchains to fetch user's token transfers. Currently, supports Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain). Defaults to include all supported blockchains. |
-| `tokenType` | [`TokenType[]`](#tokentype)             | false    | Fetch only token transfers that transfered tokens within this input. Defaults to include all ERC20/721/1155 tokens.                                                                                     |
-| `limit`     | `number`                                | false    | Number of results per pages. Defaults to 200. Maximum value is 200. For more results, use [paginations](#paginations).                                                                                  |
-
-**Code Sample**
-
-```ts
-import {
-  getFarcasterUserTokenReceivedBy,
-  FarcasterUserTokenReceivedByInput,
-  FarcasterUserTokenReceivedByOutput,
-  TokenBlockchain,
-  TokenType,
-} from "@airstack/frames";
-
-const input: FarcasterUserTokenReceivedByInput = {
-  fid: 602,
-  chains: [
-    TokenBlockchain.Ethereum,
-    TokenBlockchain.Base,
-    TokenBlockchain.Zora,
-  ],
-  tokenType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC1155],
-  limit: 100,
-};
-const {
-  data,
-  error,
-  hasNextPage,
-  hasPrevPage,
-  getNextPage,
-  getPrevPage,
-}: FarcasterUserTokenReceivedByOutput = await getFarcasterUserTokenReceivedBy(
-  input
-);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "blockchain": "zora",
-    "tokenAddress": "0xe03ef4b9db1a47464de84fb476f9baf493b3e886",
-    "amount": 1,
-    "amountInWei": "1",
-    "name": "Farcaster OG",
-    "symbol": "$FCOG",
-    "blockTimestamp": "2023-10-11T21:02:39Z",
-    "blockNumber": 5182160,
-    "tokenType": "ERC721",
-    "txHash": "0x116d7d7d2f6e8adb7b6991348ff1869742dae538f0b68f36624ed2496bc2091e",
-    "sender": {
-      "addresses": ["0x3a23f943181408eac424116af7b7790c94cb97a5"],
-      "socials": null
-    },
-    "metaData": {
-      "name": "Farcaster OG 43",
-      "description": "Celebrating Farcaster at permissionless.",
-      "image": "ipfs://bafybeihbx6nx4h2wblf6nlsy6nkotzqynzsrgimgqzwqgw6gf7d27ewfqu",
-      "imageData": "",
-      "externalUrl": "",
-      "animationUrl": "",
-      "youtubeUrl": "",
-      "backgroundColor": "",
-      "attributes": null
-    },
-    "image": {
-      "extraSmall": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/extra_small.png",
-      "small": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/small.png",
-      "medium": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/medium.png",
-      "large": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/large.png",
-      "original": "https://assets.airstack.xyz/image/nft/7777777/PtYr9f5cHxXadiklS+Xzp805o/lFKCmd1jvpLmU58tO5UgOEdm56cjqIt1Gf/UK052NE4yYf2xmpwwrzjcDl+w==/original_image.png"
-    },
-    "tokenId": "110"
-  }
-]
-```
-
 ### `getFarcasterChannelDetails`
 
 Fetch all details of a given Farcaster channel, including name, description, warpcast URL, image URL, creation time, hosts, etc.
@@ -2004,241 +1291,6 @@ console.log(data);
 ]
 ```
 
-### `checkPoapAttendedByFarcasterUser`
-
-Check If a Farcaster user of a given FID has attended a list of POAP events.
-
-**Input**
-
-| Field     | Type       | Required | Description                                                         |
-| --------- | ---------- | -------- | ------------------------------------------------------------------- |
-| `fid`     | `string`   | true     | FID of a Farcaster user.                                            |
-| `eventId` | `number[]` | true     | List of POAP event IDs to check if the Farcaster user has attended. |
-
-**Code Sample**
-
-```ts
-import {
-  checkPoapAttendedByFarcasterUser,
-  CheckPoapAttendedByFarcasterUserInput,
-  CheckPoapAttendedByFarcasterUserOutput,
-} from "@airstack/frames";
-
-const input: CheckPoapAttendedByFarcasterUserInput = {
-  fid: 15971,
-  eventId: [160005, 159993, 13242],
-};
-const { data, error }: CheckPoapAttendedByFarcasterUserOutput =
-  await checkPoapAttendedByFarcasterUser(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  { "eventId": 160005, "isAttended": true },
-  { "eventId": 159993, "isAttended": true },
-  { "eventId": 13242, "isAttended": false }
-]
-```
-
-### `checkSpecificNFTsHoldFarcasterUser`
-
-Check If a Farcaster user of a given FID holds a list of specific token IDs from various ERC721/1155 NFT collections across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-| Field  | Type                                                                   | Required | Description                                                   |
-| ------ | ---------------------------------------------------------------------- | -------- | ------------------------------------------------------------- |
-| `fid`  | `string`                                                               | true     | FID of a Farcaster user.                                      |
-| `nfts` | `{ chain: TokenBlockchain; tokenAddress: string; tokenId: string; }[]` | true     | List of NFTs to check if the Farcaster user hold any of them. |
-
-**Code Sample**
-
-```ts
-import {
-  checkSpecificNFTsHoldFarcasterUser,
-  CheckSpecificNFTsHoldByFarcasterUserInput,
-  CheckSpecificNFTsHoldByFarcasterUserOutput,
-  TokenBlockchain,
-} from "@airstack/frames";
-
-const input: CheckSpecificNFTsHoldByFarcasterUserInput = {
-  fid: 6806,
-  nfts: [
-    {
-      tokenAddress: "0xe2fb0e28d391ca747481b3f0dff906644416fac9",
-      tokenId: "1",
-      chain: TokenBlockchain.Base,
-    },
-    {
-      tokenAddress: "0xe2fb0e28d391ca747481b3f0dff906644416fac9",
-      tokenId: "2",
-      chain: TokenBlockchain.Base,
-    },
-  ],
-};
-const { data, error }: CheckSpecificNFTsHoldByFarcasterUserOutput =
-  await checkSpecificNFTsHoldFarcasterUser(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "chain": "base",
-    "tokenAddress": "0xe2fb0e28d391ca747481b3f0dff906644416fac9",
-    "tokenId": "1",
-    "isHold": false
-  },
-  {
-    "chain": "base",
-    "tokenAddress": "0xe2fb0e28d391ca747481b3f0dff906644416fac9",
-    "tokenId": "2",
-    "isHold": true
-  }
-]
-```
-
-### `checkTokenHoldByFarcasterUser`
-
-Check If a Farcaster user of a given FID holds a list of ERC20/721/1155 tokens across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-| Field   | Type                                                 | Required | Description                                                     |
-| ------- | ---------------------------------------------------- | -------- | --------------------------------------------------------------- |
-| `fid`   | `string`                                             | true     | FID of a Farcaster user.                                        |
-| `token` | `{ chain: TokenBlockchain; tokenAddress: string }[]` | true     | List of tokens to check if the Farcaster user hold any of them. |
-
-**Code Sample**
-
-```ts
-import {
-  checkTokenHoldByFarcasterUser,
-  CheckTokenHoldByFarcasterUserInput,
-  CheckTokenHoldByFarcasterUserOutput,
-  TokenBlockchain,
-} from "@airstack/frames";
-
-const input: CheckTokenHoldByFarcasterUserInput = {
-  fid: 15971,
-  token: [
-    {
-      chain: TokenBlockchain.Base,
-      tokenAddress: "0x4c17ff12d9a925a0dec822a8cbf06f46c6268553",
-    },
-    {
-      chain: TokenBlockchain.Ethereum,
-      tokenAddress: "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
-    },
-    {
-      chain: TokenBlockchain.Zora,
-      tokenAddress: "0xa15bb830acd9ab46164e6840e3ef2dbbf9c5e2b3",
-    },
-  ],
-};
-const { data, error }: CheckTokenHoldByFarcasterUserOutput =
-  await checkTokenHoldByFarcasterUser(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "chain": "base",
-    "tokenAddress": "0x4c17ff12d9a925a0dec822a8cbf06f46c6268553",
-    "isHold": false
-  },
-  {
-    "chain": "ethereum",
-    "tokenAddress": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
-    "isHold": true
-  },
-  {
-    "chain": "zora",
-    "tokenAddress": "0xa15bb830acd9ab46164e6840e3ef2dbbf9c5e2b3",
-    "isHold": true
-  }
-]
-```
-
-### `checkTokenMintedByFarcasterUser`
-
-Check If a Farcaster user of a given FID minted a list of ERC20/721/1155 tokens across Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain).
-
-| Field   | Type                                                 | Required | Description                                                       |
-| ------- | ---------------------------------------------------- | -------- | ----------------------------------------------------------------- |
-| `fid`   | `string`                                             | true     | FID of a Farcaster user.                                          |
-| `token` | `{ chain: TokenBlockchain; tokenAddress: string }[]` | true     | List of tokens to check if the Farcaster user minted any of them. |
-
-**Code Sample**
-
-```ts
-import {
-  checkTokenMintedByFarcasterUser,
-  CheckTokenMintedByFarcasterUserInput,
-  CheckTokenMintedByFarcasterUserOutput,
-  TokenBlockchain,
-} from "@airstack/frames";
-
-const input: CheckTokenMintedByFarcasterUserInput = {
-  fid: 15971,
-  token: [
-    {
-      chain: TokenBlockchain.Base,
-      tokenAddress: "0x57965af45c3b33571aa5419cc5e9012d8dcab181",
-    },
-    {
-      chain: TokenBlockchain.Ethereum,
-      tokenAddress: "0xad08067c7d3d3dbc14a9df8d671ff2565fc5a1ae",
-    },
-    {
-      chain: TokenBlockchain.Zora,
-      tokenAddress: "0xa15bb830acd9ab46164e6840e3ef2dbbf9c5e2b3",
-    },
-  ],
-};
-const { data, error }: CheckTokenMintedByFarcasterUserOutput =
-  await checkTokenMintedByFarcasterUser(input);
-
-if (error) throw new Error(error);
-
-console.log(data);
-```
-
-**Response Sample**
-
-```json
-[
-  {
-    "chain": "base",
-    "tokenAddress": "0x57965af45c3b33571aa5419cc5e9012d8dcab181",
-    "isMinted": true
-  },
-  {
-    "chain": "ethereum",
-    "tokenAddress": "0xad08067c7d3d3dbc14a9df8d671ff2565fc5a1ae",
-    "isMinted": true
-  },
-  {
-    "chain": "zora",
-    "tokenAddress": "0xa15bb830acd9ab46164e6840e3ef2dbbf9c5e2b3",
-    "isMinted": false
-  }
-]
-```
-
 ### `checkIsFollowingFarcasterUser`
 
 Check If a Farcaster user of a given FID is following an array of Farcaster users with certain FIDs.
@@ -2338,27 +1390,11 @@ import {
   createAllowList,
   CreateAllowListInput,
   CreateAllowListOutput,
-  TokenBlockchain,
 } from "@airstack/frames";
 
 const allowListCriteria = {
-  eventIds: [166577],
   numberOfFollowersOnFarcaster: 100,
   isFollowingOnFarcaster: [2602],
-  tokens: [
-    {
-      tokenAddress: "0x95cb845b525f3a2126546e39d84169f1eca8c77f",
-      chain: TokenBlockchain.Ethereum,
-    },
-    {
-      tokenAddress: "0x2d45c399d7ca25341992038f12610c41a00a66ed",
-      chain: TokenBlockchain.Base,
-    },
-    {
-      tokenAddress: "0x743658ace931ea241dd0cb4ed38ec72cc8162ce1",
-      chain: TokenBlockchain.Zora,
-    },
-  ],
 };
 const input: CreateAllowListInput = {
   fid: 602,
@@ -2404,25 +1440,21 @@ import { fetchQuery } from "@airstack/frames";
 
 const { data, error } = await fetchQuery(
   /* GraphQL */ `
-    query FetchPOAPsInCommonQuery($a: Identity!, $b: Identity!) {
-      Poaps(
-        input: { filter: { owner: { _eq: $a } }, blockchain: ALL, limit: 200 }
+    query MyQuery($fid: String) {
+      Socials(
+        input: {
+          filter: { userId: { _eq: $fid }, dappName: { _eq: farcaster } }
+          blockchain: ethereum
+        }
       ) {
-        Poap {
-          poapEvent {
-            poaps(input: { filter: { owner: { _eq: $b } } }) {
-              poapEvent {
-                eventName
-              }
-            }
-          }
+        Social {
+          profileName
         }
       }
     }
   `,
   {
-    a: "betashop.eth",
-    b: "ipeciura.eth",
+    fid: "602",
   }
 );
 
@@ -2435,22 +1467,10 @@ console.log(data);
 
 ```json
 {
-  "Poaps": {
-    "Poap": [
+  "Socials": {
+    "Social": [
       {
-        "poapEvent": {
-          "poaps": [
-            {
-              "poapEvent": {
-                "poaps": [
-                  {
-                    "eventName": "You have met Patricio in September of 2023 (IRL)"
-                  }
-                ]
-              }
-            }
-          ]
-        }
+        "profileName": "betashop.eth"
       }
     ]
   }
@@ -2475,25 +1495,23 @@ import { fetchQueryWithPagination } from "@airstack/frames";
 
 const { data, error } = await fetchQueryWithPagination(
   /* GraphQL */ `
-    query FetchPOAPsInCommonQuery($a: Identity!, $b: Identity!) {
-      Poaps(
-        input: { filter: { owner: { _eq: $a } }, blockchain: ALL, limit: 200 }
+    query MyQuery($caster: Identity) {
+      FarcasterCasts(
+        input: {
+          filter: { castedBy: { _eq: $caster } }
+          blockchain: ALL
+          limit: 200
+        }
       ) {
-        Poap {
-          poapEvent {
-            poaps(input: { filter: { owner: { _eq: $b } } }) {
-              poapEvent {
-                eventName
-              }
-            }
-          }
+        Cast {
+          hash
+          text
         }
       }
     }
   `,
   {
-    a: "betashop.eth",
-    b: "ipeciura.eth",
+    caster: "betashop.eth",
   }
 );
 
@@ -2506,75 +1524,47 @@ console.log(data);
 
 ```json
 {
-  "Poaps": {
-    "Poap": [
-      {
-        "poapEvent": {
-          "poaps": [
-            {
-              "poapEvent": {
-                "poaps": [
-                  {
-                    "eventName": "You have met Patricio in September of 2023 (IRL)"
-                  }
-                ]
-              }
-            }
-          ]
+  "data": {
+    "FarcasterCasts": {
+      "Cast": [
+        {
+          "hash": "0xe1e306a22b54e07dddcc2623582d95e5d588c7b6",
+          "text": "Hello World!"
         }
-      }
-    ]
+      ]
+    }
   }
 }
 ```
 
 ## Frog Middlewares
 
-### Onchain Data Middleware
+### Farcaster Data Middleware
 
-The Onchain Data middleware injects onchain data of the user that interacted with the Frames, including Farcaster user details, token balances, token mints, POAPs, Farcaster channels, etc.
+The Farcaster Data middleware injects Farcaster data of the user that interacted with the Frames, including Farcaster user details, followers, followings, casts.
 
-For more details, check out the tutorial on Onchain Data Frog middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-frog-recipes-and-middleware/airstack-frog-middleware#onchain-data-middleware).
+For more details, check out the tutorial on Onchain Data Frog middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-frog-recipes-and-middleware/airstack-frog-middleware).
 
 **Input**
 
 | Parameters | Type                | Required | Description                                                                                                                                                 |
 | ---------- | ------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `apiKey`   | `string`            | false    | Configure API key, if no API key has been provided with `init` function.                                                                                    |
-| `features` | `Object`            | true     | An object that contains variables used for fetching onchain data of the user.                                                                               |
+| `features` | `Object`            | true     | An object that contains variables used for fetching Farcaster data of the user.                                                                             |
 | `env`      | `prod` &#124; `dev` | false    | Configure whether the environment is dev (using `untrustedData`) or prod (validate `trustedData` with `validateFramesMessage` API). By default, it is prod. |
 
 **Code Samples**
 
 ```ts
-import { onchainDataFrogMiddleware as onchain Data } from "@airstack/frames";
+import { farcasterDataFrogMiddleware } from "@airstack/frames";
 
-const onchainDataMiddleware = onchainData({
+const farcasterDataMiddleware = farcasterDataFrogMiddleware({
   features: {
     userDetails: {},
-    erc20Mints: {
-      chains: [TokenBlockchain.Base],
-      limit: 1,
-    },
-    nftMints: {
-      limit: 1,
-      chains: [TokenBlockchain.Base],
-    },
-    erc20Balances: {
-      chains: [TokenBlockchain.Base],
-      limit: 1,
-    },
-    nftBalances: {
-      limit: 1,
-      chains: [TokenBlockchain.Base],
-    },
-    poaps: {
-      limit: 1,
-    },
   },
 });
 
-app.frame("/", onchainDataMiddleware, async function (c) {
+app.frame("/", farcasterDataMiddleware, async function (c) {
   const { status } = c;
   if (status === "response") console.log(c.var);
   c.res({});
@@ -2601,76 +1591,13 @@ app.frame("/", onchainDataMiddleware, async function (c) {
     ],
     "followerCount": 65820,
     "followingCount": 2303
-  },
-  "erc20Balances": [
-    {
-      "blockchain": "base",
-      "tokenAddress": "0x10503dbed34e291655100a3c204528425abe3235",
-      "amount": 740,
-      "amountInWei": "740000000000000000000",
-      "name": "am00r",
-      "symbol": "AM00R"
-    }
-  ],
-  "nftBalances": [
-    {
-      "blockchain": "base",
-      "tokenAddress": "0xbd2019982628d26786d75e4477daf15489260d66",
-      "tokenId": "1",
-      "amount": 1,
-      "amountInWei": "1",
-      "name": "Doom scrolling",
-      "symbol": "",
-      "image": {},
-      "metaData": {},
-      "tokenType": "ERC1155"
-    }
-  ],
-  "erc20Mints": [
-    {
-      "blockchain": "base",
-      "tokenAddress": "0x058d96baa6f9d16853970b333ed993acc0c35add",
-      "amount": 50,
-      "amountInWei": "50000000000000000000",
-      "name": "Staked SPORK",
-      "symbol": "sSPORK",
-      "blockTimestamp": "2024-01-03T18:43:02Z",
-      "blockNumber": 51901326
-    }
-  ],
-  "nftMints": [
-    {
-      "blockchain": "base",
-      "tokenAddress": "0xb3da098a7251a647892203e0c256b4398d131a54",
-      "tokenId": "4442",
-      "tokenType": "ERC721",
-      "amount": 1,
-      "amountInWei": "1",
-      "name": "Mint A Penny",
-      "symbol": "PENNY",
-      "blockTimestamp": "2024-02-12T22:43:35Z",
-      "blockNumber": 10494234,
-      "image": {},
-      "metaData": {}
-    }
-  ],
-  "poaps": [
-    {
-      "eventName": "You have met Patricio in February of 2024 (IRL)",
-      "eventId": "167539",
-      "eventURL": "https://POAP.xyz",
-      "isVirtualEvent": false,
-      "startDate": "2024-02-01T00:00:00Z",
-      "endDate": "2024-03-01T00:00:00Z",
-      "city": ""
-    }
-  ]
+  }
 }
 ```
 
 ### Allow List Middleware
 
-The Allow List middleware injects allow list logic to check if a user is allowed to access a frame or not, based on various criterias, such as token holdings, Farcaster follower counts, following certain Farcaster users, or attended certain POAPs.
+The Allow List middleware injects allow list logic to check if a user is allowed to access a frame or not, based on various criterias, such as Farcaster follower counts and following certain Farcaster users.
 
 For more details, check out the tutorial on Allow List Frog middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-frog-recipes-and-middleware/airstack-frog-middleware#allow-list-middleware).
 
@@ -2690,13 +1617,8 @@ import { allowListFrogMiddleware as allowList } from "@airstack/frames";
 
 const allowListMiddleware = allowList({
   allowListCriteria: {
-    eventIds: [166577],
-    tokens: [
-      {
-        tokenAddress: "0xe03ef4b9db1a47464de84fb476f9baf493b3e886",
-        chain: TokenBlockchain.Zora,
-      },
-    ],
+    numberOfFollowersOnFarcaster: 100,
+    isFollowingOnFarcaster: [2602],
   },
 });
 
@@ -2717,11 +1639,11 @@ app.frame("/", allowListMiddleware, async function (c) {
 
 ## Frames.js Middlewares
 
-### Onchain Data Middleware
+### Farcaster Data Middleware
 
-The Onchain Data middleware injects onchain data of the user that interacts with the Frame, including Farcaster user details, token balances, token mints, POAPs, Farcaster channels, etc.
+The Farcaster Data middleware injects onchain data of the user that interacts with the Frame, including Farcaster user details, followings, followers, Farcaster channels, etc.
 
-For more details, check out the tutorial on Onchain Data Frames.js middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-framesjs-middleware/onchain-data).
+For more details, check out the tutorial on Farcaster Data Frames.js middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-framesjs-middleware/onchain-data).
 
 **Input**
 
@@ -2735,7 +1657,7 @@ For more details, check out the tutorial on Onchain Data Frames.js middleware [h
 ```ts
 import { createFrames, Button } from "frames.js/next";
 import {
-  onchainDataFramesjsMiddleware as onchainData,
+  farcasterDataFramesjsMiddleware as farcasterData,
   Features,
 } from "@airstack/frames";
 
@@ -2759,7 +1681,7 @@ const handleRequest = frames(
   },
   {
     middleware: [
-      onchainData({
+      farcasterData({
         apiKey: process.env.AIRSTACK_API_KEY as string,
         features: [Features.USER_DETAILS],
       }),
@@ -2792,7 +1714,7 @@ const handleRequest = frames(
 
 ### Allow List Middleware
 
-The Allow List middleware injects allow list logic to check if a user is allowed to access a frame or not, based on various criterias, such as token holdings, Farcaster follower counts, following certain Farcaster users, or attended certain POAPs.
+The Allow List middleware injects allow list logic to check if a user is allowed to access a frame or not, based on various criterias, such as Farcaster follower counts and following certain Farcaster users.
 
 For more details, check out the tutorial on Allow List Frames.js middleware [here](https://docs.airstack.xyz/airstack-docs-and-faqs/frames/airstack-framesjs-middleware/allow-list).
 
@@ -2810,7 +1732,6 @@ import { createFrames, Button } from "frames.js/next";
 import {
   AllowListCriteriaEnum as AllowListCriteria,
   allowListFramesjsMiddleware as allowList,
-  TokenBlockchain,
 } from "@airstack/frames";
 
 const frames = createFrames();
@@ -2862,40 +1783,7 @@ const handleRequest = frames(
 
 ## Enum
 
-The SDK offered several enums for some defined input values, such as blockchains and token types.
-
-### `TokenBlockchain`
-
-```ts
-export enum TokenBlockchain {
-  Base = "base",
-  Ethereum = "ethereum",
-  Gold = "gold",
-  Zora = "zora",
-  Degen = "degen",
-  Ham = "ham",
-  Stp = "stp",
-}
-```
-
-### `TokenType`
-
-```ts
-export enum TokenType {
-  ERC20 = "ERC20",
-  ERC721 = "ERC721",
-  ERC1155 = "ERC1155",
-}
-```
-
-### `NFTType`
-
-```ts
-export enum NFTType {
-  ERC721 = "ERC721",
-  ERC1155 = "ERC1155",
-}
-```
+The SDK offered several enums for some defined input values.
 
 ### `FarcasterReactionCriteria`
 
@@ -2914,62 +1802,6 @@ export enum FarcasterChannelActionType {
   Cast = "cast",
   Follow = "follow",
   Reply = "reply",
-}
-```
-
-### `Audience`
-
-```ts
-export enum Audience {
-  All = "all",
-  Farcaster = "farcaster",
-}
-```
-
-### `Criteria`
-
-```ts
-export enum Criteria {
-  TotalMints = "total_mints",
-  UniqueWallets = "unique_wallets",
-}
-```
-
-### `TrendingTokensCriteria`
-
-```ts
-export enum TrendingTokensCriteria {
-  TotalTransfers = "total_transfers",
-  UniqueHolders = "unique_holders",
-  UniqueWallets = "unique_wallets",
-}
-```
-
-### `TimeFrame`
-
-```ts
-export enum TimeFrame {
-  EightHours = "eight_hours",
-  OneDay = "one_day",
-  OneHour = "one_hour",
-  SevenDays = "seven_days",
-  TwoDays = "two_days",
-  TwoHours = "two_hours",
-}
-```
-
-### `TransferType`
-
-```ts
-export enum TransferType {
-  /**
-   * Include all transfer types
-   */
-  All = "all",
-  /**
-   * Only self initiated transfers, self-transfer or airdrops will be excluded
-   */
-  SelfInitiated = "self_initiated",
 }
 ```
 
@@ -2996,34 +1828,6 @@ export enum Features {
    * Fetches Farcaster user details, e.g. profile name, fid, number of followers/followings, etc.
    */
   USER_DETAILS = "user_details",
-  /**
-   * Fetches ERC20 mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
-   */
-  ERC20_MINTS = "erc20_mints",
-  /**
-   * Fetches NFT mints of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
-   */
-  NFT_MINTS = "nft_mints",
-  /**
-   * Fetches ERC20 balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
-   */
-  ERC20_BALANCES = "erc20_balances",
-  /**
-   * Fetches NFT balances of a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
-   */
-  NFT_BALANCES = "nft_balances",
-  /**
-   * Fetches POAP events attended by a Farcaster user.
-   */
-  POAPS = "poaps",
-  /**
-   * Fetches token transfers sent by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
-   */
-  TOKEN_TRANSFERS_SENT = "token_transfers_sent",
-  /**
-   * Fetches token transfers received by a Farcaster user across all chain supported by Airstack, including Ethereum, Base, Degen, and other [Airstack-supported chains](#tokenblockchain)
-   */
-  TOKEN_TRANSFERS_RECEIVED = "token_transfers_received",
   /**
    * Fetches Farcaster followings of a Farcaster user.
    */
@@ -3063,72 +1867,6 @@ export enum AllowListCriteriaEnum {
    * Check if the user is following the caster
    */
   FARCASTER_FOLLOWING_CASTER = "farcaster_following_caster",
-  /**
-   * Check if the user is holding certain token
-   */
-  TOKEN_HOLD = "token_hold",
-  /**
-   * Check if the user has minted certain token
-   */
-  TOKEN_MINT = "token_mint",
-}
-```
-
-### `TrendingSwapsBlockchain`
-
-```ts
-export enum TrendingSwapsBlockchain {
-  /**
-   * Base chain (L2)
-   */
-  Base = "base",
-  /**
-   * Ethereum mainnet
-   */
-  Ethereum = "ethereum",
-}
-```
-
-### `TrendingSwapsCriteria`
-
-```ts
-export enum TrendingSwapsCriteria {
-  /**
-   * Sort the trending swaps by the number of buy transactions.
-   */
-  BuyTransactionCount = "buy_transaction_count",
-  /**
-   * Sort the trending swaps by the number of buying volume.
-   */
-  BuyVolume = "buy_volume",
-  /**
-   * Sort the trending swaps by the number of sell transactions.
-   */
-  SellTransactionCount = "sell_transaction_count",
-  /**
-   * Sort the trending swaps by the number of selling volume.
-   */
-  SellVolume = "sell_volume",
-  /**
-   * Sort the trending swaps by the number of total buy & sell transactions.
-   */
-  TotalTransactionCount = "total_transaction_count",
-  /**
-   * Sort the trending swaps by the number of total unique buyer & seller wallets swapping.
-   */
-  TotalUniqueWallets = "total_unique_wallets",
-  /**
-   * Sort the trending swaps by the number of total buying & selling volume.
-   */
-  TotalVolume = "total_volume",
-  /**
-   * Sort the trending swaps by the number of unique buyer wallets swapping.
-   */
-  UniqueBuyWallets = "unique_buy_wallets",
-  /**
-   * Sort the trending swaps by the number of unique seller wallets swapping.
-   */
-  UniqueSellWallets = "unique_sell_wallets",
 }
 ```
 

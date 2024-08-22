@@ -1,38 +1,23 @@
 import {
   init,
   validateFramesMessage,
-  getFarcasterUserERC20Balances,
   getFarcasterUserDetails,
-  getFarcasterUserNFTBalances,
-  getFarcasterUserERC20Mints,
-  getFarcasterUserNFTMints,
-  getFarcasterUserPoaps,
   getFarcasterChannelsByParticipant,
   getFarcasterFollowers,
   getFarcasterFollowings,
 } from "../..";
 import type {
-  OnchainDataMiddlewareParameters,
-  OnchainDataVariables,
+  FarcasterDataMiddlewareParameters,
+  FarcasterDataVariables,
 } from "../../types";
 import type { MiddlewareHandler } from "hono";
 import { config } from "../../config";
 
-export const onchainDataFrogMiddleware = (
-  parameters: OnchainDataMiddlewareParameters
-): MiddlewareHandler<{ Variables: OnchainDataVariables }> => {
+export const farcasterDataFrogMiddleware = (
+  parameters: FarcasterDataMiddlewareParameters
+): MiddlewareHandler<{ Variables: FarcasterDataVariables }> => {
   const { apiKey, features, env = "prod" } = parameters ?? {};
-  const {
-    userDetails,
-    erc20Balances,
-    nftBalances,
-    erc20Mints,
-    nftMints,
-    poaps,
-    channels,
-    followers,
-    followings,
-  } = features ?? {};
+  const { userDetails, channels, followers, followings } = features ?? {};
   // If an apiKey is provided, initialize the SDK with custom API key
   if (apiKey && !config?.authKey) init(apiKey);
   return async (c, next) => {
@@ -51,32 +36,12 @@ export const onchainDataFrogMiddleware = (
     if (fid) {
       const [
         userDetailsResponse,
-        erc20BalancesResponse,
-        nftBalancesResponse,
-        erc20MintsResponse,
-        nftMintsResponse,
-        poapsResponse,
         channelsResponse,
         followersResponse,
         followingsResponse,
       ] = await Promise.all([
         userDetails
           ? getFarcasterUserDetails({ fid, ...(userDetails ?? {}) })
-          : Promise.resolve(undefined),
-        erc20Balances
-          ? getFarcasterUserERC20Balances({ fid, ...(erc20Balances ?? {}) })
-          : Promise.resolve(undefined),
-        nftBalances
-          ? getFarcasterUserNFTBalances({ fid, ...(nftBalances ?? {}) })
-          : Promise.resolve(undefined),
-        erc20Mints
-          ? getFarcasterUserERC20Mints({ fid, ...(erc20Mints ?? {}) })
-          : Promise.resolve(undefined),
-        nftMints
-          ? getFarcasterUserNFTMints({ fid, ...(nftMints ?? {}) })
-          : Promise.resolve(undefined),
-        poaps
-          ? getFarcasterUserPoaps({ fid, ...(poaps ?? {}) })
           : Promise.resolve(undefined),
         channels
           ? getFarcasterChannelsByParticipant({ fid, ...(channels ?? {}) })
@@ -91,15 +56,6 @@ export const onchainDataFrogMiddleware = (
 
       if (userDetailsResponse)
         c.set<"userDetails">("userDetails", userDetailsResponse.data);
-      if (erc20BalancesResponse)
-        c.set<"erc20Balances">("erc20Balances", erc20BalancesResponse.data);
-      if (nftBalancesResponse)
-        c.set<"nftBalances">("nftBalances", nftBalancesResponse.data);
-      if (erc20MintsResponse)
-        c.set<"erc20Mints">("erc20Mints", erc20MintsResponse.data);
-      if (nftMintsResponse)
-        c.set<"nftMints">("nftMints", nftMintsResponse.data);
-      if (poapsResponse) c.set<"poaps">("poaps", poapsResponse.data);
       if (channelsResponse)
         c.set<"channels">("channels", channelsResponse.data);
       if (followersResponse)
